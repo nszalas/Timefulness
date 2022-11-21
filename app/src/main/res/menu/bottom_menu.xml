@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Inne"
+        android:icon="@drawable/ic_other_menu" />
+    <item android:title ="Kalendarz"
+        android:icon ="@drawable/ic_calendar_menu"/>
+    <item android:title ="Dzisiaj"
+        android:icon = "@drawable/ic_today_menu"/>
+    <item android:title ="Mój profil"
+        android:icon ="@drawable/ic_profile_menu"/>
+
+</menu>
