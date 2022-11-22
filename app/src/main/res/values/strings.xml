@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in">Zaloguj się</string>
     <string name="sign_up">Zarejestruj się</string>
+
+    <string name="accept">Akceptuję warunki regulaminu korzystania z aplikacji Timefulness oraz zgadzam się na wszelkie zmiany w przyszłości. Rozumiem również że mam prawo odstąpienia od umowyw i  bla bla blabla bla bllabla bla bla</string>
 </resources>
