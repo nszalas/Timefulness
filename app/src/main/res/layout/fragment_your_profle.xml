@@ -18,20 +18,6 @@
             android:text="Twój profil"
             android:textSize="34sp" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="10dp"
-            android:elevation="20dp"
-            app:menu="@menu/bottom_menu"
-            android:background="@drawable/menu_rectangle"
-            android:layout_gravity="bottom"
-            app:itemIconTint="@color/black"
-            app:itemIconSize="40dp"
-            app:itemRippleColor="@color/greenMain"
-            app:itemTextColor="@color/greenMain"
-            />
 
     </LinearLayout>
 

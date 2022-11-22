@@ -56,5 +56,4 @@ class FragmentSignUp : Fragment() {
 
         return view
     }
-
 }
