@@ -39,5 +39,5 @@
         android:id="@+id/fragmentHome"
         android:name="com.nszalas.timefulness.FragmentHome"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_your_profle" />
 </navigation>
