@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentSignUpBinding
 import com.nszalas.timefulness.utils.showToast
 
@@ -37,32 +36,16 @@ class FragmentSignUp : Fragment() {
         val confirmPassword = binding.confirmPassword.text.toString()
 
         with(requireContext()) {
-            when {
-                !validateEmail(email) -> {
-                    showToast("Adres email nie jest poprawny!")
-                }
-                !validatePassword(password, confirmPassword) -> {
-                    showToast("Sprawdź poprawność hasła!")
-                }
-                else -> {
-                    viewModel.createUserWithEmailAndPassword(email, password) {
-                        if (it.isSuccessful) {
-                            showToast("Użytkownik utworzony pomyślnie!")
-                            findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn())
-                        } else {
-                            showToast("Coś poszło nie tak")
-                        }
+            viewModel.createUserWithEmailAndPassword(email, password, confirmPassword) {
+                if (it.isSuccess) {
+                    showToast("Użytkownik utworzony pomyślnie!")
+                    findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn())
+                } else {
+                    it.exceptionOrNull()?.message?.let { message ->
+                        showToast(message)
                     }
                 }
             }
         }
-    }
-
-    private fun validateEmail(email: String): Boolean {
-        return email.isNotBlank()
-    }
-
-    private fun validatePassword(password: String, confirmPassword: String): Boolean {
-        return password.isNotBlank() && confirmPassword.isNotBlank() && password == confirmPassword
     }
 }

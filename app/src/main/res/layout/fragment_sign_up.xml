@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/backgroundMain"
-    tools:context=".signUp.FragmentSignUp">
+    tools:context=".signUp.FragmentSignUp"
+    android:padding="20dp">
 
 
     <TextView
@@ -16,11 +17,9 @@
         android:layout_alignParentTop="true"
         android:text="Rejestracja"
         android:textSize="40sp"
-        android:layout_marginTop="35dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/nameLabel"
@@ -28,9 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/nameTil"
         android:layout_below="@id/registerTextView"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
         android:textColor="@color/black"
         android:textSize="14sp"
@@ -43,8 +40,7 @@
         android:layout_centerHorizontal="true"
         app:hintEnabled="false"
         android:layout_below="@+id/nameLabel"
-        android:paddingBottom="10dp"
-        android:layout_marginHorizontal="20dp">
+        android:layout_marginBottom="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -67,20 +63,18 @@
         android:textColor="@color/black"
         android:layout_below="@+id/nameTil"
         android:layout_alignStart="@+id/emailTil"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
         android:textSize="14sp"/>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/emailTil"
-        android:layout_marginTop="5dp"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/emailLabel"
-        app:hintEnabled="false"
-        android:paddingBottom="10dp">
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -103,7 +97,7 @@
         android:textColor="@color/black"
         android:layout_below="@+id/emailTil"
         android:layout_alignStart="@id/passwordTil"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
         android:textSize="14sp"/>
 
@@ -112,12 +106,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/passwordTil"
-        android:layout_marginTop="5dp"
-        android:layout_marginHorizontal="15dp"
         android:layout_below="@+id/passwordLabel"
         app:passwordToggleEnabled="true"
         app:hintEnabled="false"
-        android:paddingBottom="10dp">
+        android:layout_marginBottom="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -141,22 +133,19 @@
         android:textColor="@color/black"
         android:layout_below="@+id/passwordTil"
         android:layout_alignStart="@id/confirmPasswordTil"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
-        android:textSize="14sp"
-        />
+        android:textSize="14sp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirmPasswordTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:layout_below="@+id/confirmPasswordLabel"
         app:passwordToggleEnabled="true"
         app:hintEnabled="false"
-        android:paddingBottom="10dp">
+        android:layout_marginBottom="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -173,10 +162,9 @@
 
     <CheckBox
         android:id="@+id/checkboxAccept"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordTil"
-        android:layout_centerHorizontal="true"
         android:text="@string/accept"
         android:textColor="@color/black"
         android:textSize="12sp"
@@ -191,10 +179,9 @@
         android:background="@drawable/button_rectangle_full_purple"
         android:textColor="@color/white"
         android:text="Zarejestruj się"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textAllCaps="false"
         android:elevation="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"/>
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

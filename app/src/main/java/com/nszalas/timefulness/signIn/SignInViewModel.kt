@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.signUp
+package com.nszalas.timefulness.signIn
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -6,29 +6,30 @@ import com.nszalas.timefulness.error.InvalidEmailException
 import com.nszalas.timefulness.error.InvalidPasswordException
 import com.nszalas.timefulness.utils.LoginFormValidator
 
-class SignUpViewModel : ViewModel() {
-    private val firebaseAuth = FirebaseAuth.getInstance()
+class SignInViewModel : ViewModel() {
+
+    private var firebaseAuth = FirebaseAuth.getInstance()
     private val validator = LoginFormValidator()
 
-    fun createUserWithEmailAndPassword(
+    fun signInWithEmailAndPassword(
         email: String,
         password: String,
-        confirmPassword: String,
         result: (Result<Unit>) -> Unit
     ) {
         when {
             !validator.validateEmail(email) -> {
                 result(Result.failure(InvalidEmailException()))
             }
-            !validator.validatePassword(password, confirmPassword) -> {
+            !validator.validatePassword(password) -> {
                 result(Result.failure(InvalidPasswordException()))
             }
             else -> {
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
                         result(Result.success(Unit))
                     }
             }
         }
     }
+
 }

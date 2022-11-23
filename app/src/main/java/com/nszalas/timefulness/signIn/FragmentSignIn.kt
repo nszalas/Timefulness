@@ -5,47 +5,43 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.navigation.findNavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
-import com.nszalas.timefulness.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.nszalas.timefulness.databinding.FragmentSignInBinding
+import com.nszalas.timefulness.utils.showToast
 
 class FragmentSignIn : Fragment() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var _binding: FragmentSignInBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
-
-        firebaseAuth = FirebaseAuth.getInstance()
-
-        view.findViewById<Button>(R.id.signInButton).setOnClickListener {
-            val email = view.findViewById<TextInputEditText>(R.id.email).text.toString()
-            val password = view.findViewById<TextInputEditText>(R.id.password).text.toString()
-
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        view.findNavController().navigate(R.id.action_fragmentSignIn_to_fragmentHome)
-                    }
-                    else {
-                        Toast.makeText(activity, "Coś poszło nie tak", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } else {
-                Toast.makeText(activity, "Uzupełnij wszystkie pola", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return view
+    ): View {
+        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.signInButton.setOnClickListener {
+            signIn()
+        }
+    }
+
+    private fun signIn() {
+        val email = binding.email.text.toString()
+        val password = binding.password.text.toString()
+
+        viewModel.signInWithEmailAndPassword(email, password) {
+            if (it.isSuccess) {
+                findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToFragmentHome())
+            } else {
+                it.exceptionOrNull()?.message?.let { message -> requireContext().showToast(message) }
+            }
+        }
+    }
 }
