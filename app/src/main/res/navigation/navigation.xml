@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentSignIn"
-        android:name="com.nszalas.timefulness.FragmentSignIn"
+        android:name="com.nszalas.timefulness.signIn.FragmentSignIn"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSignUp"
-        android:name="com.nszalas.timefulness.FragmentSignUp"
+        android:name="com.nszalas.timefulness.signUp.FragmentSignUp"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentStart"
-        android:name="com.nszalas.timefulness.FragmentStart"
+        android:name="com.nszalas.timefulness.start.FragmentStart"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.nszalas.timefulness.FragmentHome"
+        android:name="com.nszalas.timefulness.home.FragmentHome"
         android:label="fragment_home"
         tools:layout="@layout/fragment_your_profle" />
 </navigation>

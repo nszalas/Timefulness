@@ -3,25 +3,34 @@ package com.nszalas.timefulness
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.nszalas.timefulness.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        val navController = this.findNavController(R.id.fragmentContainerView)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        val bottomView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
-            if (nd.id == R.id.fragmentSignIn || nd.id == R.id.fragmentSignUp|| nd.id == R.id.fragmentStart) {
-                bottomView.visibility = View.GONE
-            } else {
-                bottomView.visibility = View.VISIBLE
+        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
+            binding.bottomNavigation.isVisible = when(destination.id) {
+                R.id.fragmentSignIn,
+                R.id.fragmentSignUp,
+                R.id.fragmentStart -> { false }
+                else -> { true }
             }
         }
 

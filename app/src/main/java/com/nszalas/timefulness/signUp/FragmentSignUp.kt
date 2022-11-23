@@ -5,21 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.navigation.findNavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentSignUpBinding
+import com.nszalas.timefulness.utils.showToast
 
 class FragmentSignUp : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,31 +28,32 @@ class FragmentSignUp : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firebaseAuth = FirebaseAuth.getInstance()
+        binding.signUpButton.setOnClickListener { signUp() }
+    }
 
-        binding.signUpButton.setOnClickListener {
-            val email = binding.newEmail.text.toString()
-            val password = binding.newEmail.text.toString()
-            val confirmPassword = binding.newPassword.text.toString()
+    private fun signUp() {
+        val email = binding.newEmail.text.toString()
+        val password = binding.newPassword.text.toString()
+        val confirmPassword = binding.confirmPassword.text.toString()
 
-            if (validateEmail(email) && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
-                if (password == confirmPassword) {
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+        with(requireContext()) {
+            when {
+                !validateEmail(email) -> {
+                    showToast("Adres email nie jest poprawny!")
+                }
+                !validatePassword(password, confirmPassword) -> {
+                    showToast("Sprawdź poprawność hasła!")
+                }
+                else -> {
+                    viewModel.createUserWithEmailAndPassword(email, password) {
                         if (it.isSuccessful) {
-                            view.findNavController().navigate(R.id.action_fragmentSignUp_to_fragmentSignIn)
-                        }
-                        else {
-                            Toast.makeText(activity, "Coś poszło nie tak", Toast.LENGTH_SHORT).show()
+                            showToast("Użytkownik utworzony pomyślnie!")
+                            findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn())
+                        } else {
+                            showToast("Coś poszło nie tak")
                         }
                     }
-
-
-                } else {
-                    Toast.makeText(activity, "Hasła są różne", Toast.LENGTH_SHORT).show()
                 }
-
-            } else {
-                Toast.makeText(activity, "Uzupełnij wszystkie pola", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -65,7 +62,7 @@ class FragmentSignUp : Fragment() {
         return email.isNotBlank()
     }
 
-    private fun validatePassword(password: String, confirmPassword: String? = null): Boolean {
-
+    private fun validatePassword(password: String, confirmPassword: String): Boolean {
+        return password.isNotBlank() && confirmPassword.isNotBlank() && password == confirmPassword
     }
 }
