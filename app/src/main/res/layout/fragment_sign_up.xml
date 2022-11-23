@@ -6,207 +6,182 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/backgroundMain"
-    tools:context=".FragmentSignUp">
+    tools:context=".signUp.FragmentSignUp"
+    android:padding="20dp">
 
 
     <TextView
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:text="Rejestracja"
-        android:textSize="40dp"
-        android:paddingTop="35dp"
-        android:paddingBottom="15dp"
+        android:textSize="40sp"
+        android:layout_marginBottom="15dp"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/nameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/nameTil"
+        android:layout_below="@id/registerTextView"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/heebo"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="Imię/Pseudonim"/>
 
-    <RelativeLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_below="@id/registerTextView">
+        android:layout_centerHorizontal="true"
+        app:hintEnabled="false"
+        android:layout_below="@+id/nameLabel"
+        android:layout_marginBottom="10dp">
 
-        <TextView
-            android:id="@+id/nameText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:fontFamily="@font/heebo"
-            android:text="Imię/Pseudonim"
+            android:id="@+id/nameRegister"
+            android:background="@drawable/textvew_rectangle_storke_purple"
+            android:drawablePadding="10dp"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
             android:textColor="@color/black"
-            android:textSize="14dp"
-            android:layout_marginBottom="5dp"/>
+            android:textColorHint="@color/hintcolor"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="370dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail"
+        android:textColor="@color/black"
+        android:layout_below="@+id/nameTil"
+        android:layout_alignStart="@+id/emailTil"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/heebo"
+        android:textSize="14sp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/emailLabel"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/nameTil"
-            app:hintEnabled="false"
-            android:layout_below="@+id/nameText"
-            android:paddingBottom="10dp"
-
-            >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nameRegister"
-                android:background="@drawable/textvew_rectangle_storke_purple"
-                android:drawablePadding="10dp"
-                android:inputType="textPersonName|textCapWords"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/hintcolor"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/emailText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail"
+            android:id="@+id/newEmail"
+            android:background="@drawable/textvew_rectangle_storke_purple"
+            android:drawablePadding="10dp"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
             android:textColor="@color/black"
-            android:layout_below="@+id/nameTil"
-            android:layout_marginLeft="45dp"
-            android:fontFamily="@font/heebo"
-            android:textSize="14dp"
-            />
+            android:textColorHint="@color/hintcolor"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="370dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hasło"
+        android:textColor="@color/black"
+        android:layout_below="@+id/emailTil"
+        android:layout_alignStart="@id/passwordTil"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/heebo"
+        android:textSize="14sp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/passwordTil"
+        android:layout_below="@+id/passwordLabel"
+        app:passwordToggleEnabled="true"
+        app:hintEnabled="false"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/emailTil"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/emailText"
-            app:hintEnabled="false"
-            android:paddingBottom="10dp"
-            >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/newEmail"
-                android:background="@drawable/textvew_rectangle_storke_purple"
-                android:drawablePadding="10dp"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/hintcolor"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/passwordText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hasło"
+            android:id="@+id/newPassword"
+            android:background="@drawable/textvew_rectangle_storke_purple"
+            android:drawablePadding="10dp"
+            android:inputType="textPassword"
+            android:padding="10dp"
             android:textColor="@color/black"
-            android:layout_below="@+id/emailTil"
-            android:layout_marginLeft="45dp"
-            android:fontFamily="@font/heebo"
-            android:textSize="14dp"
-            />
+            android:textColorHint="@color/hintcolor"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="370dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/confirmPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powtórz hasło"
+        android:textColor="@color/black"
+        android:layout_below="@+id/passwordTil"
+        android:layout_alignStart="@id/confirmPasswordTil"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/heebo"
+        android:textSize="14sp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/confirmPasswordLabel"
+        app:passwordToggleEnabled="true"
+        app:hintEnabled="false"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/passwordTil"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/passwordText"
-            app:passwordToggleEnabled="true"
-            app:hintEnabled="false"
-            android:paddingBottom="10dp">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/newPassword"
-                android:background="@drawable/textvew_rectangle_storke_purple"
-                android:drawablePadding="10dp"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/hintcolor"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/cpasswordText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Powtórz hasło"
+            android:id="@+id/confirmPassword"
+            android:background="@drawable/textvew_rectangle_storke_purple"
+            android:drawablePadding="10dp"
+            android:inputType="textPassword"
+            android:padding="10dp"
             android:textColor="@color/black"
-            android:layout_below="@+id/passwordTil"
-            android:layout_marginLeft="45dp"
-            android:fontFamily="@font/heebo"
-            android:textSize="14dp"
-            />
+            android:textColorHint="@color/black"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="370dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/cpasswordTil"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/cpasswordText"
-            app:passwordToggleEnabled="true"
-            app:hintEnabled="false"
-            android:paddingBottom="10dp">
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/checkboxAccept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmPasswordTil"
+        android:text="@string/accept"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:justificationMode="inter_word"/>
 
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/confirmPassword"
-                android:background="@drawable/textvew_rectangle_storke_purple"
-                android:drawablePadding="10dp"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <CheckBox
-            android:id="@+id/checkboxAccept"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cpasswordTil"
-            android:layout_centerHorizontal="true"
-            android:text="@string/accept"
-            android:textColor="@color/black"
-            android:textSize="12dp"
-            android:justificationMode="inter_word"
-            />
-
-        <Button
-            android:layout_width="138dp"
-            android:layout_height="53dp"
-            android:id="@+id/signUpButton"
-            android:layout_below="@+id/checkboxAccept"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_rectangle_full_purple"
-            android:textColor="@color/white"
-            android:text="Zarejestruj się"
-            android:textSize="17dp"
-            android:textAllCaps="false"
-            android:elevation="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"/>
-
-    </RelativeLayout>
-
-
-
-
-
+    <Button
+        android:layout_width="138dp"
+        android:layout_height="53dp"
+        android:id="@+id/signUpButton"
+        android:layout_below="@+id/checkboxAccept"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_rectangle_full_purple"
+        android:textColor="@color/white"
+        android:text="Zarejestruj się"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        android:elevation="10dp"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

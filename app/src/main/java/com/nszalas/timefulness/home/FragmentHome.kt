@@ -1,10 +1,11 @@
-package com.nszalas.timefulness
+package com.nszalas.timefulness.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nszalas.timefulness.R
 
 class FragmentHome : Fragment() {
 

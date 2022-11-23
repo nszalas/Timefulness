@@ -1,4 +1,4 @@
-package com.nszalas.timefulness
+package com.nszalas.timefulness.start
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.findNavController
+import com.nszalas.timefulness.R
 
 class FragmentStart : Fragment() {
 
