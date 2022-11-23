@@ -1,4 +1,4 @@
-package com.nszalas.timefulness
+package com.nszalas.timefulness.signUp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,29 +11,35 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.nszalas.timefulness.R
+import com.nszalas.timefulness.databinding.FragmentSignUpBinding
 
 class FragmentSignUp : Fragment() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
+    ): View {
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        view.findViewById<Button>(R.id.signUpButton).setOnClickListener {
-            val email = view.findViewById<TextInputEditText>(R.id.newEmail).text.toString()
-            val password = view.findViewById<TextInputEditText>(R.id.newPassword).text.toString()
-            val confirmPassword = view.findViewById<TextInputEditText>(R.id.confirmPassword).text.toString()
+        binding.signUpButton.setOnClickListener {
+            val email = binding.newEmail.text.toString()
+            val password = binding.newEmail.text.toString()
+            val confirmPassword = binding.newPassword.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+            if (validateEmail(email) && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (password == confirmPassword) {
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -53,7 +59,13 @@ class FragmentSignUp : Fragment() {
                 Toast.makeText(activity, "Uzupełnij wszystkie pola", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
-        return view
+    private fun validateEmail(email: String): Boolean {
+        return email.isNotBlank()
+    }
+
+    private fun validatePassword(password: String, confirmPassword: String? = null): Boolean {
+
     }
 }
