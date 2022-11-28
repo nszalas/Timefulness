@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.nszalas.timefulness.R
 
 class FragmentHome : Fragment() {
@@ -18,6 +19,8 @@ class FragmentHome : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_your_profle, container, false)
+        val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+
         return view
     }
 
