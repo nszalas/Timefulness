@@ -1,9 +1,32 @@
 <resources>
     <string name="app_name">Timefulness</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="log_in">Zaloguj się</string>
     <string name="sign_up">Zarejestruj się</string>
 
-    <string name="accept">Akceptuję warunki regulaminu korzystania z aplikacji Timefulness oraz zgadzam się na wszelkie zmiany w przyszłości. Rozumiem również że mam prawo odstąpienia od umowyw i  bla bla blabla bla bllabla bla bla</string>
+    <string name="image_description_default">Image</string>
+    <string name="image_description_divider">Divider</string>
+
+    <string name="login_header">Logowanie</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Hasło</string>
+    <string name="login_forgot_password">Nie pamiętasz hasła?</string>
+    <string name="login_sign_in_with_google">Kontynuuj przez Google</string>
+
+    <string name="register_header">Rejestracja</string>
+    <string name="register_username">Imię/Pseudonim</string>
+    <string name="register_email">E-mail</string>
+    <string name="register_password">Hasło</string>
+    <string name="register_repeat_password">Powtórz hasło</string>
+    <string name="register_sign_up">Zarejestruj się</string>
+    <string name="register_user_created_success">Użytkownik utworzony pomyślnie!</string>
+
+    <string name="accept">Akceptuję warunki regulaminu korzystania z aplikacji Timefulness oraz
+        zgadzam się na wszelkie zmiany w przyszłości. Rozumiem również że mam prawo odstąpienia
+        od umowy…</string>
+
+    <string name="menu_other">Inne</string>
+    <string name="menu_calendar">Kalendarz</string>
+    <string name="menu_today">Dzisiaj</string>
+    <string name="menu_profile">Mój profil</string>
 </resources>

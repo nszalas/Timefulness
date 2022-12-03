@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.home
+package com.nszalas.timefulness.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

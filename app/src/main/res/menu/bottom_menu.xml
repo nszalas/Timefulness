@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Inne"
+    <item
+        android:id="@+id/navigation_other"
+        android:title="@string/menu_other"
         android:icon="@drawable/ic_other_menu" />
-    <item android:title ="Kalendarz"
+    <item
+        android:id="@+id/navigation_calendar"
+        android:title ="@string/menu_calendar"
         android:icon ="@drawable/ic_calendar_menu"/>
-    <item android:title ="Dzisiaj"
+    <item
+        android:id="@+id/navigation_today"
+        android:title ="@string/menu_today"
         android:icon = "@drawable/ic_today_menu"/>
-    <item android:title ="Mój profil"
+    <item
+        android:id="@+id/navigation_profile"
+        android:title ="@string/menu_profile"
         android:icon ="@drawable/ic_profile_menu"/>
 
 </menu>
