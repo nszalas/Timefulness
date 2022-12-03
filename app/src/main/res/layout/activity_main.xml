@@ -15,28 +15,19 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        />
+        app:navGraph="@navigation/navigation"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="10dp"
-        android:elevation="20dp"
         app:menu="@menu/bottom_menu"
         android:background="@drawable/menu_rectangle"
-        android:layout_gravity="bottom"
-        app:itemIconTint="@color/black"
-        app:itemIconSize="40dp"
-        app:itemRippleColor="@color/greenMain"
-        app:itemTextColor="@color/greenMain"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-
+        app:labelVisibilityMode="labeled"
+        app:itemIconSize="32dp"
+        app:itemIconTint="@color/bottom_navbar_icon_color"
+        app:itemTextColor="@color/bottom_navbar_icon_color"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemPaddingBottom="4dp"/>
 
 </LinearLayout>
