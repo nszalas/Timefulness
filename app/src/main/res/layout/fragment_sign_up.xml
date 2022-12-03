@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/backgroundMain"
-    tools:context=".signUp.FragmentSignUp"
+    tools:context=".ui.signUp.FragmentSignUp"
     android:padding="20dp">
 
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Rejestracja"
+        android:text="@string/register_header"
         android:textSize="40sp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/black"
@@ -31,7 +31,7 @@
         android:fontFamily="@font/heebo"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:text="Imię/Pseudonim"/>
+        android:text="@string/register_username"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameTil"
@@ -59,7 +59,7 @@
         android:id="@+id/emailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E-mail"
+        android:text="@string/register_email"
         android:textColor="@color/black"
         android:layout_below="@+id/nameTil"
         android:layout_alignStart="@+id/emailTil"
@@ -93,7 +93,7 @@
         android:id="@+id/passwordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hasło"
+        android:text="@string/register_password"
         android:textColor="@color/black"
         android:layout_below="@+id/emailTil"
         android:layout_alignStart="@id/passwordTil"
@@ -129,7 +129,7 @@
         android:id="@+id/confirmPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Powtórz hasło"
+        android:text="@string/register_repeat_password"
         android:textColor="@color/black"
         android:layout_below="@+id/passwordTil"
         android:layout_alignStart="@id/confirmPasswordTil"
@@ -178,7 +178,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_rectangle_full_purple"
         android:textColor="@color/white"
-        android:text="Zarejestruj się"
+        android:text="@string/register_sign_up"
         android:textSize="17sp"
         android:textAllCaps="false"
         android:elevation="10dp"

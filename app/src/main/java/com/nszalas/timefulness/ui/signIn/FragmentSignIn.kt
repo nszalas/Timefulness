@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.signIn
+package com.nszalas.timefulness.ui.signIn
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -38,7 +38,7 @@ class FragmentSignIn : Fragment() {
 
         viewModel.signInWithEmailAndPassword(email, password) {
             if (it.isSuccess) {
-                findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToFragmentHome())
+                findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToNavigationCalendar())
             } else {
                 it.exceptionOrNull()?.message?.let { message -> requireContext().showToast(message) }
             }

@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.start
+package com.nszalas.timefulness.ui.start
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,6 @@ import androidx.navigation.findNavController
 import com.nszalas.timefulness.R
 
 class FragmentStart : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

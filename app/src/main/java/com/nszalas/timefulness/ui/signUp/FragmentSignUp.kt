@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.signUp
+package com.nszalas.timefulness.ui.signUp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentSignUpBinding
 import com.nszalas.timefulness.utils.showToast
 
@@ -38,8 +39,8 @@ class FragmentSignUp : Fragment() {
         with(requireContext()) {
             viewModel.createUserWithEmailAndPassword(email, password, confirmPassword) {
                 if (it.isSuccess) {
-                    showToast("Użytkownik utworzony pomyślnie!")
-                    findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn())
+                    showToast(R.string.register_user_created_success)
+                    findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToNavigationCalendar())
                 } else {
                     it.exceptionOrNull()?.message?.let { message ->
                         showToast(message)

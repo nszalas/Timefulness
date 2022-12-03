@@ -6,9 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login_background"
     android:orientation="vertical"
-    android:paddingHorizontal="40dp"
+    android:paddingHorizontal="30dp"
     android:paddingTop="30dp"
-    tools:context=".signIn.FragmentSignIn">
+    tools:context=".ui.signIn.FragmentSignIn">
 
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/heebo"
         android:layout_marginBottom="48dp"
-        android:text="Logowanie"
+        android:text="@string/login_header"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="40sp"
@@ -30,10 +30,12 @@
         android:layout_below="@id/textViewLogin"
         android:layout_marginBottom="18dp"
         android:background="@drawable/textview_rectangle_stroke_green"
-        android:hint="E-mail"
+        android:hint="@string/login_email"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textColorHint="@color/black" />
+        android:textColorHint="@color/edittext_hint_color" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password"
@@ -42,11 +44,12 @@
         android:layout_below="@id/email"
         android:layout_marginBottom="6dp"
         android:background="@drawable/textview_rectangle_stroke_green"
-        android:hint="Hasło"
+        android:hint="@string/login_password"
         android:inputType="textPassword"
+        android:imeOptions="actionDone"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textColorHint="@color/black" />
+        android:textColorHint="@color/edittext_hint_color" />
 
     <TextView
         android:id="@+id/forgotPassword"
@@ -56,9 +59,8 @@
         android:layout_below="@id/password"
         android:layout_alignStart="@id/password"
         android:layout_marginStart="10dp"
-        android:text="Nie pamiętasz hasła?"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black" />
+        android:text="@string/login_forgot_password"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/signInButton"
@@ -84,7 +86,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/signInButton"
-        android:src="@drawable/line_line"/>
+        android:src="@drawable/line_line"
+        android:contentDescription="@string/image_description_divider"/>
 
     <Button
         android:id="@+id/signInGoogle"
@@ -101,7 +104,7 @@
         android:fontFamily="@font/heebo"
         android:textAllCaps="false"
         android:background="@drawable/button_rectangle_google"
-        android:text="Kontynuuj przez Google"
+        android:text="@string/login_sign_in_with_google"
         android:textSize="17sp"/>
 
 </RelativeLayout>
