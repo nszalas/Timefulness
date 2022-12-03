@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SimpleAndroidBarChart</string>
+
+<!--  for calendar  -->
+    <string name="event">Event</string>
+    <string name="new_event">New Event</string>
+    <string name="task">Task</string>
+    <string name="new_task">New Task</string>
+</resources>
