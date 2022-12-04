@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/regularLengthButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Pomodoro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="@string/other_pomodoro_normal"
+        app:layout_constraintEnd_toStartOf="@+id/shortBreakButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shortBreakButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Pomodoro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="@string/other_pomodoro_short_break"
+        app:layout_constraintEnd_toStartOf="@+id/longBreakButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/regularLengthButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/longBreakButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Pomodoro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="@string/other_pomodoro_long_break"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/shortBreakButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/timerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shortBreakButton">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/minutesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heebo_medium"
+            android:textColor="@color/black"
+            android:textSize="64sp"
+            tools:text="@string/other_pomodoro_minute_placeholder" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/timerColon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heebo_medium"
+            android:text="@string/other_pomodoro_colon"
+            android:textColor="@color/black"
+            android:textSize="64sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/secondsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heebo_medium"
+            android:textColor="@color/black"
+            android:textSize="64sp"
+            tools:text="@string/other_pomodoro_seconds_placeholder" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Pomodoro"
+        android:enabled="false"
+        android:backgroundTint="@color/pomodoro_button_background_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="40dp"
+        android:text="@string/other_pomodoro_start"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@id/longBreakButton"
+        app:layout_constraintStart_toStartOf="@id/regularLengthButton"
+        app:layout_constraintTop_toBottomOf="@id/timerLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

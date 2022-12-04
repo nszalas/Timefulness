@@ -36,6 +36,20 @@
     <string name="profile_task_completion_percentage">%1$d%%</string>
     <string name="profile_task_completion_percentage_placeholder">68%</string>
 
+    <string name="other_technique_title_placeholder">Tytuł techiki</string>
+    <string name="other_technique_description_placeholder">Opis techniki</string>
+    <string name="other_technique_image_description">Zdjęcie z osobą przy biurku</string>
+    <string name="other_advice_title_placeholder">Tytuł porady</string>
+    <string name="other_advice_description_placeholder">Opis porady</string>
+    <string name="other_pomodoro_minute_placeholder">25</string>
+    <string name="other_pomodoro_seconds_placeholder">00</string>
+    <string name="other_pomodoro_colon">:</string>
+    <string name="other_pomodoro_title">Timer Pomodoro</string>
+    <string name="other_pomodoro_start">Start</string>
+    <string name="other_pomodoro_normal">25 min</string>
+    <string name="other_pomodoro_short_break">5 min</string>
+    <string name="other_pomodoro_long_break">15 min</string>
+
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>
     <string name="menu_today">Dzisiaj</string>
