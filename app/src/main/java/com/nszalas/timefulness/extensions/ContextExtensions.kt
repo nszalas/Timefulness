@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.utils
+package com.nszalas.timefulness.extensions
 
 import android.content.Context
 import android.widget.Toast

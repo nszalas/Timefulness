@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/chartLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/max_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chart_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toStartOf="@+id/max_value"
+            tools:itemCount="7"
+            tools:listitem="@layout/adapter_bar_chart" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/max_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/space_16dp"
+        android:paddingEnd="@dimen/space_16dp"
+        android:textColor="@color/grayBorder"
+        android:textSize="@dimen/text_12sp"
+        app:layout_constraintStart_toEndOf="@id/chartLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chartLayout"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/mid_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/space_16dp"
+        android:paddingEnd="@dimen/space_16dp"
+        android:textColor="@color/grayBorder"
+        android:textSize="@dimen/text_12sp"
+        app:layout_constraintStart_toEndOf="@id/chartLayout"
+        app:layout_constraintTop_toTopOf="@+id/chartLayout"
+        app:layout_constraintBottom_toBottomOf="@id/chartLayout"
+        tools:text="5"/>
+
+    <TextView
+        android:id="@+id/min_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_23dp"
+        android:gravity="end"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/space_16dp"
+        android:paddingEnd="@dimen/space_16dp"
+        android:textColor="@color/grayBorder"
+        android:textSize="@dimen/text_12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/chartLayout"
+        app:layout_constraintStart_toEndOf="@+id/chartLayout"
+        tools:text="0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
