@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/backgroundMain"
-    tools:context=".ui.signUp.FragmentSignUp"
-    android:padding="20dp">
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ui.signUp.FragmentSignUp">
 
 
     <TextView
@@ -15,43 +15,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="@string/register_header"
-        android:textSize="40sp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
+        android:text="@string/register_header"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nameTil"
         android:layout_below="@id/registerTextView"
+        android:layout_alignStart="@+id/nameTil"
         android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
+        android:text="@string/register_username"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:text="@string/register_username"/>
+        android:textSize="14sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        app:hintEnabled="false"
         android:layout_below="@+id/nameLabel"
-        android:layout_marginBottom="10dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:hintEnabled="false"
+        app:shapeAppearanceOverlay="@style/pill">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/nameRegister"
             android:background="@drawable/textvew_rectangle_storke_purple"
             android:drawablePadding="10dp"
             android:inputType="textPersonName|textCapWords"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor"/>
+            android:textColorHint="@color/hintcolor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,33 +62,35 @@
         android:id="@+id/emailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_email"
-        android:textColor="@color/black"
         android:layout_below="@+id/nameTil"
         android:layout_alignStart="@+id/emailTil"
         android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
-        android:textSize="14sp"/>
+        android:text="@string/register_email"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/emailLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/newEmail"
             android:background="@drawable/textvew_rectangle_storke_purple"
             android:drawablePadding="10dp"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor"/>
+            android:textColorHint="@color/hintcolor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,34 +98,36 @@
         android:id="@+id/passwordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_password"
-        android:textColor="@color/black"
         android:layout_below="@+id/emailTil"
         android:layout_alignStart="@id/passwordTil"
         android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
-        android:textSize="14sp"/>
+        android:text="@string/register_password"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/passwordTil"
         android:layout_below="@+id/passwordLabel"
-        app:passwordToggleEnabled="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
-        android:layout_marginBottom="10dp">
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/newPassword"
             android:background="@drawable/textvew_rectangle_storke_purple"
             android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor"/>
+            android:textColorHint="@color/hintcolor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,34 +136,36 @@
         android:id="@+id/confirmPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_repeat_password"
-        android:textColor="@color/black"
         android:layout_below="@+id/passwordTil"
         android:layout_alignStart="@id/confirmPasswordTil"
         android:layout_marginStart="25dp"
         android:fontFamily="@font/heebo"
-        android:textSize="14sp"/>
+        android:text="@string/register_repeat_password"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirmPasswordTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/confirmPasswordLabel"
-        app:passwordToggleEnabled="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
-        android:layout_marginBottom="10dp">
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/confirmPassword"
             android:background="@drawable/textvew_rectangle_storke_purple"
             android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
+            android:textColorHint="@color/black" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,23 +174,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/confirmPasswordTil"
+        android:justificationMode="inter_word"
         android:text="@string/accept"
         android:textColor="@color/black"
-        android:textSize="12sp"
-        android:justificationMode="inter_word"/>
+        android:textSize="12sp" />
 
-    <Button
-        android:layout_width="138dp"
-        android:layout_height="53dp"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/checkboxAccept"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_rectangle_full_purple"
-        android:textColor="@color/white"
-        android:text="@string/register_sign_up"
-        android:textSize="17sp"
-        android:textAllCaps="false"
+        android:backgroundTint="@color/purpleMain"
         android:elevation="10dp"
-        android:layout_alignParentEnd="true"/>
+        android:fontFamily="@font/heebo"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="@string/register_sign_up"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:shapeAppearanceOverlay="@style/pill" />
 
 </RelativeLayout>

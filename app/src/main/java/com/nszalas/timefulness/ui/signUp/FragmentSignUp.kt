@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentSignUpBinding
-import com.nszalas.timefulness.utils.showToast
+import com.nszalas.timefulness.extensions.showToast
 
 class FragmentSignUp : Fragment() {
 

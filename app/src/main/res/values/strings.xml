@@ -25,6 +25,17 @@
         zgadzam się na wszelkie zmiany w przyszłości. Rozumiem również że mam prawo odstąpienia
         od umowy…</string>
 
+    <string name="profile_welcome_message">Witaj %1$s!</string>
+    <string name="profile_welcome_message_placeholder">Witaj Karolina!</string>
+    <string name="profile_email_placeholder">karolcia23@mojapoczta.pl</string>
+    <string name="profile_people_image_description">Zdjęcie z grupą osób</string>
+    <string name="profile_tasks_completed_for_today">Wykonane zadania na dziś:</string>
+    <string name="profile_task_count_placeholder">0</string>
+    <string name="profile_task_count_divider">/</string>
+    <string name="profile_effectiveness">Skuteczność:</string>
+    <string name="profile_task_completion_percentage">%1$d%%</string>
+    <string name="profile_task_completion_percentage_placeholder">68%</string>
+
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>
     <string name="menu_today">Dzisiaj</string>

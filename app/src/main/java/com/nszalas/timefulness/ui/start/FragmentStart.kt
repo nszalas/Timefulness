@@ -5,26 +5,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.findNavController
-import com.nszalas.timefulness.R
+import androidx.navigation.fragment.findNavController
+import com.nszalas.timefulness.databinding.FragmentStartBinding
 
 class FragmentStart : Fragment() {
+    private var _binding: FragmentStartBinding? = null
+    private val binding: FragmentStartBinding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_start, container, false)
+    ): View {
+        _binding = FragmentStartBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        view.findViewById<Button>(R.id.logIn).setOnClickListener {
-            view.findNavController().navigate(R.id.action_fragmentStart_to_fragmentSignIn)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupButtons()
+    }
+
+    private fun setupButtons() {
+        with(binding) {
+            loginButton.setOnClickListener {
+                findNavController().navigate(FragmentStartDirections.actionFragmentStartToFragmentSignIn())
+            }
+            registerButton.setOnClickListener {
+                findNavController().navigate(FragmentStartDirections.actionFragmentStartToFragmentSignUp())
+            }
         }
-
-        view.findViewById<Button>(R.id.register).setOnClickListener {
-            view.findNavController().navigate(R.id.action_fragmentStart_to_fragmentSignUp)
-        }
-
-        return view
     }
 
 }
