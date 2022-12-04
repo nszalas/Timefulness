@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentSignInBinding
-import com.nszalas.timefulness.utils.showToast
+import com.nszalas.timefulness.extensions.showToast
 
 class FragmentSignIn : Fragment() {
 

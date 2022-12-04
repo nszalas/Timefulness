@@ -14,7 +14,51 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Widget.Timefulness.ButtonStyle.Login" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Timefulness.Button.Login</item>
+        <item name="shapeAppearanceOverlay">@style/pill</item>
+    </style>
+
+    <style name="ThemeOverlay.Timefulness.Button.Login" parent="">
+        <item name="colorPrimary">@color/greenMain</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="Widget.Timefulness.ButtonStyle.Register" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Timefulness.Button.Register</item>
+        <item name="android:backgroundTint">@color/backgroundMain</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/purpleMain</item>
+        <item name="shapeAppearanceOverlay">@style/pill</item>
+    </style>
+
+    <style name="ThemeOverlay.Timefulness.Button.Register" parent="">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorOnPrimary">@color/purpleMain</item>
+    </style>
+
+    <style name="Widget.Timefulness.ButtonStyle.Login.Google" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Timefulness.Button.Login.Google</item>
+        <item name="shapeAppearanceOverlay">@style/pill</item>
+        <item name="icon">@drawable/ic_google</item>
+        <item name="iconTint">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.Timefulness.Button.Login.Google" parent="">
+        <item name="colorPrimary">@color/backgroundMain</item>
+        <item name="colorOnPrimary">#434343</item>
+    </style>
+
+    <style name="ThemeOverlay.Timefulness.TextInputLayout.Login" parent="">
+        <item name="colorPrimary">@color/greenMain</item>
+    </style>
+
     <style name="circle">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="pill">
+        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 </resources>

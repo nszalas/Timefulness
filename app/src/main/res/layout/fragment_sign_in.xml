@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login_background"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
@@ -15,96 +15,110 @@
         android:id="@+id/textViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/heebo"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp"
+        android:fontFamily="@font/heebo"
         android:text="@string/login_header"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="40sp"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="40sp" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/textViewLogin"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/textview_rectangle_stroke_green"
-        android:hint="@string/login_email"
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionNext"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHint="@color/edittext_hint_color" />
+        android:theme="@style/ThemeOverlay.Timefulness.TextInputLayout.Login"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/textview_rectangle_stroke_green"
+            android:hint="@string/login_email"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@id/email"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailLayout"
         android:layout_marginBottom="6dp"
-        android:background="@drawable/textview_rectangle_stroke_green"
-        android:hint="@string/login_password"
-        android:inputType="textPassword"
-        android:imeOptions="actionDone"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHint="@color/edittext_hint_color" />
+        android:theme="@style/ThemeOverlay.Timefulness.TextInputLayout.Login"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/textview_rectangle_stroke_green"
+            android:hint="@string/login_password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/passwordLayout"
+        android:layout_alignStart="@id/passwordLayout"
         android:layout_gravity="center"
-        android:layout_below="@id/password"
-        android:layout_alignStart="@id/password"
         android:layout_marginStart="10dp"
         android:text="@string/login_forgot_password"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signInButton"
-        android:layout_width="138dp"
-        android:layout_height="53dp"
+        style="@style/Widget.Timefulness.ButtonStyle.Login"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/forgotPassword"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
-        android:layout_below="@id/forgotPassword"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_rectangle_full_color"
         android:elevation="10dp"
+        android:fontFamily="@font/heebo"
+        android:paddingHorizontal="25dp"
         android:stateListAnimator="@null"
         android:text="@string/log_in"
-        android:fontFamily="@font/heebo"
-        android:textSize="17sp"
         android:textAllCaps="false"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
     <ImageView
         android:id="@+id/divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/signInButton"
-        android:src="@drawable/line_line"
-        android:contentDescription="@string/image_description_divider"/>
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/image_description_divider"
+        android:src="@drawable/line_line" />
 
     <Button
         android:id="@+id/signInGoogle"
+        style="@style/Widget.Timefulness.ButtonStyle.Login.Google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingHorizontal="15dp"
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
-        android:drawableStart="@drawable/ic_google"
-        android:drawablePadding="10dp"
-        app:elevation="5dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/heebo"
-        android:textAllCaps="false"
-        android:background="@drawable/button_rectangle_google"
+        android:paddingHorizontal="15dp"
         android:text="@string/login_sign_in_with_google"
-        android:textSize="17sp"/>
+        android:textAllCaps="false"
+        android:textSize="17sp"
+        app:elevation="5dp" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentProfileBinding
+import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import kotlinx.android.synthetic.main.profile_today_tasks_card.*
 
 class ProfileFragment : Fragment() {
@@ -26,13 +27,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
-        viewModel.loadTodayTaskCompletion()
-        viewModel.loadStatistics()
-    }
-
-    private fun observeViewModel() {
-        viewModel.state.observe(viewLifecycleOwner) { onNewState(it) }
+        collectOnViewLifecycle(viewModel.state, ::onNewState)
     }
 
     private fun onNewState(state: ProfileViewState) {
@@ -40,7 +35,8 @@ class ProfileFragment : Fragment() {
             tasksCompletedCountTextView.text = state.taskCompletedCount.toString()
             allTasksCountTextView.text = state.taskAllCount.toString()
 
-            percentageView.text = getString(R.string.profile_task_completion_percentage, state.percentage)
+            percentageView.text =
+                getString(R.string.profile_task_completion_percentage, state.percentage)
             progressCircular.progress = state.percentage
             simpleBarChart.setChartData(state.statistics)
         }

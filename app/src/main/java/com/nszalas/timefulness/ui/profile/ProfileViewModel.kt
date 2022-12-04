@@ -1,23 +1,37 @@
 package com.nszalas.timefulness.ui.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
+import com.nszalas.timefulness.extensions.mutate
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
 
-    private val _state = MutableLiveData(ProfileViewState())
-    val state: LiveData<ProfileViewState> = _state
+    private val _state = MutableStateFlow(ProfileViewState())
+    val state: StateFlow<ProfileViewState> = _state.asStateFlow()
 
-    fun loadTodayTaskCompletion() {
-        _state.value = _state.value?.copy(
-            taskAllCount = 10,
-            taskCompletedCount = 6
-        )
+    init {
+        loadTodayTaskCompletion()
+        loadStatistics()
     }
 
-    fun loadStatistics() {
+    private fun loadTodayTaskCompletion() {
+        viewModelScope.launch(IO) {
+            _state.mutate {
+                copy(
+                    taskAllCount = 10,
+                    taskCompletedCount = 6
+                )
+            }
+        }
+    }
+
+    private fun loadStatistics() {
         val statistics = listOf(
             ChartData(label = "Pon", value = 3, maxValue = 6),
             ChartData(label = "Wt", value = 5, maxValue = 7),
@@ -27,10 +41,14 @@ class ProfileViewModel : ViewModel() {
             ChartData(label = "So", value = 8, maxValue = 13),
             ChartData(label = "Nd", value = 3, maxValue = 4),
         )
-        _state.value = _state.value?.copy(
-            statistics = statistics,
-            percentage = calculatePercentage(statistics),
-        )
+        viewModelScope.launch(IO) {
+            _state.mutate {
+                copy(
+                    statistics = statistics,
+                    percentage = calculatePercentage(statistics),
+                )
+            }
+        }
     }
 
     private fun calculatePercentage(items: List<ChartData>): Int {
