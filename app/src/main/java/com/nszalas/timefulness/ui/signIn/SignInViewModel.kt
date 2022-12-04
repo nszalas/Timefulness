@@ -2,6 +2,7 @@ package com.nszalas.timefulness.ui.signIn
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.nszalas.timefulness.error.AuthenticationException
 import com.nszalas.timefulness.error.InvalidEmailException
 import com.nszalas.timefulness.error.InvalidPasswordException
 import com.nszalas.timefulness.utils.LoginFormValidator
@@ -25,8 +26,11 @@ class SignInViewModel : ViewModel() {
             }
             else -> {
                 firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener {
+                    .addOnSuccessListener {
                         result(Result.success(Unit))
+                    }
+                    .addOnFailureListener {
+                        result(Result.failure(AuthenticationException()))
                     }
             }
         }
