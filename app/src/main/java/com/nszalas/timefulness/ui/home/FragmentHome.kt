@@ -19,7 +19,7 @@ class FragmentHome : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_your_profle, container, false)
-        val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+
 
         return view
     }
