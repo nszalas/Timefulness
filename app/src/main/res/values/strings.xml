@@ -60,6 +60,10 @@
     <string name="add_save">Dodaj</string>
     <string name="add_corner_image_background_description">Tło w kształcie gwiazdy</string>
     <string name="add_corner_image_description">Kobieta na tle kalendarza</string>
+    <string name="add_error_task_name_invalid">Nazwa zadania jest niepoprawna</string>
+    <string name="add_error_task_name_short">Nazwa zadania jest zbyt krótka</string>
+    <string name="add_error_task_name_long">Nazwa zadania jest zbyt długa</string>
+    <string name="add_error_task_name_invalid_characters">Nazwa zadania nie powinna zawierać znaków specjalnych</string>
 
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>

@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigation.isVisible = when(destination.id) {
                 R.id.fragmentSignIn,
                 R.id.fragmentSignUp,
-                R.id.fragmentStart -> { false }
+                R.id.fragmentStart,
+                R.id.addTaskFragment -> { false }
                 else -> { true }
             }
         }

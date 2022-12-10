@@ -1,5 +1,7 @@
 package com.nszalas.timefulness.ui.addTask
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentAddTaskBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import com.nszalas.timefulness.extensions.setup
+import java.time.LocalDate
+import java.time.LocalTime
 
 class AddTaskFragment : Fragment() {
 
@@ -31,16 +36,42 @@ class AddTaskFragment : Fragment() {
         collectOnViewLifecycle(viewModel.event, ::onNewEvent)
         collectOnViewLifecycle(viewModel.state, ::onNewState)
         setupButtons()
+        setupViews()
+    }
+
+    private fun setupViews() {
+        with(binding) {
+            taskName.setup(viewModel::onEventNameEntered)
+            dateTextView.setOnClickListener { viewModel.onDateClicked() }
+            startTimeTextView.setOnClickListener { viewModel.onStartTimeClicked() }
+            endTimeTextView.setOnClickListener { viewModel.onEndTimeClicked() }
+        }
     }
 
     private fun onNewEvent(event: AddTaskViewEvent) {
-        if(event is AddTaskViewEvent.TaskAdded) {
-            findNavController().navigateUp()
+        when (event) {
+            AddTaskViewEvent.TaskAdded -> {
+                findNavController().navigateUp()
+            }
+            is AddTaskViewEvent.OpenDatePicker -> {
+                openDatePicker(event.localDate, viewModel::onDatePicked)
+            }
+            is AddTaskViewEvent.OpenTimePicker -> {
+                openTimePicker(event.localTime, event.taskTimeType, viewModel::onTimePicked)
+            }
         }
     }
 
     private fun onNewState(state: AddTaskViewState) {
+        with(binding) {
+            startTimeTextView.text = state.startTime
+            endTimeTextView.text = state.endTime
+            dateTextView.text = state.date
 
+            taskName.error = state.taskTitleError?.let { getString(it) }
+
+            addTaskButton.isEnabled = state.addButtonEnabled
+        }
     }
 
     private fun setupButtons() {
@@ -49,8 +80,35 @@ class AddTaskFragment : Fragment() {
         }
 
         binding.addTaskButton.setOnClickListener {
-            viewModel.addTask()
+            viewModel.onAddButtonClicked()
         }
+    }
+
+    private fun openDatePicker(
+        localDate: LocalDate,
+        onDatePicked: (Int, Int, Int) -> Unit
+    ) {
+        DatePickerDialog(
+            requireContext(),
+            { _, year, month, day -> onDatePicked(year, month + 1, day) },
+            localDate.year,
+            localDate.monthValue - 1,
+            localDate.dayOfMonth
+        ).show()
+    }
+
+    private fun openTimePicker(
+        localTime: LocalTime,
+        taskTimeType: TaskTimeType,
+        onTimePicked: (Int, Int, TaskTimeType) -> Unit
+    ) {
+        TimePickerDialog(
+            requireContext(),
+            { _, hours, minutes -> onTimePicked(hours, minutes, taskTimeType) },
+            localTime.hour,
+            localTime.minute,
+            true
+        ).show()
     }
 
 //    private fun addTask() {

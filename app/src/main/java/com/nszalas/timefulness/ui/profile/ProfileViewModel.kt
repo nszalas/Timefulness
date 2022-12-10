@@ -21,7 +21,7 @@ class ProfileViewModel : ViewModel() {
     }
 
     private fun loadTodayTaskCompletion() {
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     taskAllCount = 10,
@@ -41,7 +41,7 @@ class ProfileViewModel : ViewModel() {
             ChartData(label = "So", value = 8, maxValue = 13),
             ChartData(label = "Nd", value = 3, maxValue = 4),
         )
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     statistics = statistics,

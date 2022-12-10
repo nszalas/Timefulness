@@ -36,6 +36,7 @@
         android:layout_below="@id/taskNameLabel"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        app:hintEnabled="false"
         android:layout_marginHorizontal="36dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp">
