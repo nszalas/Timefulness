@@ -2,8 +2,9 @@ package com.nszalas.timefulness.utils
 
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class TimeFormatter {
+class TimeFormatter @Inject constructor() {
     private val timeFormatter = DateTimeFormatter.ofPattern(TIME_FORMAT_PATTERN)
 
     fun parseTimeToString(hours: Int, minutes: Int): String =

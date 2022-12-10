@@ -9,9 +9,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.databinding.FragmentOtherBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
+@AndroidEntryPoint
 class OtherFragment : Fragment() {
 
     private var _binding: FragmentOtherBinding? = null

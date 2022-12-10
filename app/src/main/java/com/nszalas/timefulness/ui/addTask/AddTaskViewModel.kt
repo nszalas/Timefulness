@@ -2,23 +2,32 @@ package com.nszalas.timefulness.ui.addTask
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.nszalas.timefulness.extensions.EventsChannel
 import com.nszalas.timefulness.extensions.mutate
 import com.nszalas.timefulness.extensions.sendIfActive
+import com.nszalas.timefulness.model.AppDatabase
+import com.nszalas.timefulness.model.Task
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
 import com.nszalas.timefulness.utils.TaskNameValidator
 import com.nszalas.timefulness.utils.TimeFormatter
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class AddTaskViewModel : ViewModel() {
-
-    private val dateTimeProvider = DateTimeProvider()
-    private val dateFormatter = DateFormatter()
-    private val timeFormatter = TimeFormatter()
-    private val taskNameValidator = TaskNameValidator()
-
+@HiltViewModel
+class AddTaskViewModel @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
+    private val dateTimeProvider: DateTimeProvider,
+    private val dateFormatter: DateFormatter,
+    private val timeFormatter: TimeFormatter,
+    private val taskNameValidator: TaskNameValidator,
+    private val database: AppDatabase,
+) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
 
@@ -84,7 +93,7 @@ class AddTaskViewModel : ViewModel() {
     fun onTimePicked(hours: Int, minutes: Int, taskTimeType: TaskTimeType) {
         viewModelScope.launch {
             _state.mutate {
-                when(taskTimeType) {
+                when (taskTimeType) {
                     TaskTimeType.START -> copy(
                         startTime = timeFormatter.parseTimeToString(hours, minutes)
                     )
@@ -98,7 +107,7 @@ class AddTaskViewModel : ViewModel() {
     }
 
     private fun validateTimePicked(taskTimeType: TaskTimeType = TaskTimeType.END) {
-        if(taskTimeType == TaskTimeType.START) {
+        if (taskTimeType == TaskTimeType.START) {
             validateEndTime()
         } else {
             validateStartTime()
@@ -175,8 +184,25 @@ class AddTaskViewModel : ViewModel() {
     }
 
     fun onAddButtonClicked() {
-        // todo add task to database
-        viewModelScope.launch {
+        addTask()
+    }
+
+    private fun addTask() {
+        val user = firebaseAuth.currentUser
+        user ?: return
+
+        val task = Task(
+            task_id = 0,
+            user_id = user.uid,
+            description = state.value.taskTitle!!,
+            date = state.value.date!!,
+            time = state.value.startTime!!,
+            category = "kategoria",
+            repeat = false,
+            done = false
+        )
+        runBlocking(IO) {
+            database.taskDao().insert(task)
             _event.sendIfActive(AddTaskViewEvent.TaskAdded)
         }
     }

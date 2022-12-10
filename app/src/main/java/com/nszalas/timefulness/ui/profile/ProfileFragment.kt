@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentProfileBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.profile_today_tasks_card.*
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!

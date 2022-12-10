@@ -6,8 +6,11 @@ import com.nszalas.timefulness.error.AuthenticationException
 import com.nszalas.timefulness.error.InvalidEmailException
 import com.nszalas.timefulness.error.InvalidPasswordException
 import com.nszalas.timefulness.utils.LoginFormValidator
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(): ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val validator = LoginFormValidator()
 

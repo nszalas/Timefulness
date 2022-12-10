@@ -1,6 +1,8 @@
 package com.nszalas.timefulness.utils
 
-class LoginFormValidator {
+import javax.inject.Inject
+
+class LoginFormValidator @Inject constructor() {
     fun validateEmail(email: String): Boolean {
         return email.isNotBlank()
     }

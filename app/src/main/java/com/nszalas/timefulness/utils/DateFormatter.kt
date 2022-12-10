@@ -5,8 +5,9 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class DateFormatter {
+class DateFormatter @Inject constructor() {
     private val dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
 
     fun parseDateToString(year: Int, month: Int, dayOfMonth: Int): String =

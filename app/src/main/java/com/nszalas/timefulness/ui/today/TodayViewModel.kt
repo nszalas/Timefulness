@@ -1,8 +1,5 @@
 package com.nszalas.timefulness.ui.today
 
-import android.app.Application
-import android.media.CamcorderProfile.getAll
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,14 +8,17 @@ import kotlinx.coroutines.launch
 import com.nszalas.timefulness.model.TaskRepository
 import com.nszalas.timefulness.model.Task
 import com.nszalas.timefulness.model.AppDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class TodayViewModel (application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class TodayViewModel @Inject constructor(
+    database: AppDatabase,
+): ViewModel() {
     val getAll: LiveData<List<Task>>
-    private val taskRepository: TaskRepository
+    private val taskRepository = TaskRepository(database.taskDao())
 
     init {
-        val appDao = AppDatabase.getInstance(application).taskDao()
-        taskRepository = TaskRepository(appDao)
         getAll = taskRepository.getAll
     }
 

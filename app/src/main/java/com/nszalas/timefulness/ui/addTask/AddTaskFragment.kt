@@ -12,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentAddTaskBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.extensions.setup
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
 
+@AndroidEntryPoint
 class AddTaskFragment : Fragment() {
 
     private val viewModel: AddTaskViewModel by viewModels()
@@ -110,18 +112,4 @@ class AddTaskFragment : Fragment() {
             true
         ).show()
     }
-
-//    private fun addTask() {
-//        val userId = FirebaseAuth.getInstance().currentUser!!.uid
-//        val description = binding.getDescription.text.toString()
-//        val date = binding.getDate.text.toString()
-//        val time = binding.getTime.text.toString()
-//        val category = binding.getCategory.text.toString()
-//        // val repeat = binding.getRepeat.text.toString()
-//
-//        val task = Task(0, userId, description, date, time, category, false, false)
-//        viewModel.insert(task)
-//        Toast.makeText(requireContext(),"Dodano pomyślnie", Toast.LENGTH_LONG).show()
-//        findNavController().navigate(R.id.action_addTaskFragment_to_navigation_today)
-//    }
 }

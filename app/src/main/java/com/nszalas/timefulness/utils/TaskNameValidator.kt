@@ -1,8 +1,9 @@
 package com.nszalas.timefulness.utils
 
 import com.nszalas.timefulness.R
+import javax.inject.Inject
 
-class TaskNameValidator {
+class TaskNameValidator @Inject constructor() {
     fun isValid(name: String?): Int? {
         return when {
             name == null || name.isEmpty() -> R.string.add_error_task_name_invalid
