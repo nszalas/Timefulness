@@ -59,6 +59,11 @@
     <string name="add_category_label">Kategoria:</string>
     <string name="add_category_image_description">Kategoria zadania</string>
     <string name="add_save">Dodaj</string>
+    <string name="add_update">Zmień</string>
+    <string name="add_delete">Usuń</string>
+    <string name="add_delete_rationale">Czy na pewno chcesz usunąć to zadanie?</string>
+    <string name="add_delete_rationale_positive">Tak</string>
+    <string name="add_delete_rationale_negative">Nie</string>
     <string name="add_corner_image_background_description">Tło w kształcie gwiazdy</string>
     <string name="add_corner_image_description">Kobieta na tle kalendarza</string>
     <string name="add_error_task_name_invalid">Nazwa zadania jest niepoprawna</string>

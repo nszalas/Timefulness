@@ -7,38 +7,27 @@
     tools:context=".ui.today.TodayFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewTaskList"
+        android:id="@+id/taskList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonDeleteAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="659dp"
-        android:backgroundTint="#5496E7"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/button_delete"
-        android:tint="@color/white"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonAddTask"/>
+        android:clipToPadding="false"
+        android:paddingBottom="72dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="15"
+        tools:listitem="@layout/today_task_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#5496E7"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_margin="12dp"
+        android:backgroundTint="@color/greenMain"
         android:src="@drawable/button_add"
-        android:tint="@color/white"
+        app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="36dp"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

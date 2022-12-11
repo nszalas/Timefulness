@@ -1,11 +1,11 @@
-package com.nszalas.timefulness.mapper.entity
+package com.nszalas.timefulness.mapper.ui
 
 import com.nszalas.timefulness.domain.model.Task
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
+import com.nszalas.timefulness.ui.model.TaskUI
 
-class TaskEntityMapper {
+class TaskUIMapper {
     operator fun invoke(task: Task) = with(task) {
-        TaskEntity(
+        TaskUI(
             id = id,
             userId = userId.orEmpty(),
             title = title.orEmpty(),
@@ -13,6 +13,7 @@ class TaskEntityMapper {
             endTimestamp = endTimestamp ?: 0,
             timezoneId = timezoneId.orEmpty(),
             categoryId = categoryId ?: 0,
+            repeat = repeat,
             completed = completed
         )
     }

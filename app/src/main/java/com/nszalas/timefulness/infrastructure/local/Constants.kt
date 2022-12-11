@@ -9,6 +9,8 @@ object Constants {
 
     const val COLUMN_TASK_ID = "id"
     const val COLUMN_TASK_CATEGORY_ID = "categoryId"
+    const val COLUMN_TASK_START_TIMESTAMP = "startTimestamp"
+    const val COLUMN_TASK_COMPLETED = "completed"
 
     const val COLUMN_CATEGORY_ID = "id"
 }

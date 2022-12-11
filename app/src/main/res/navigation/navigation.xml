@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/navigation_profile">
-<!--  LOGIN FLOW  -->
+    app:startDestination="@id/fragmentStart">
+    <!--  LOGIN FLOW  -->
     <fragment
         android:id="@+id/fragmentSignIn"
         android:name="com.nszalas.timefulness.ui.signIn.FragmentSignIn"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_fragmentSignIn_to_navigation_calendar"
             app:destination="@id/navigation_profile" />
@@ -18,7 +18,7 @@
         android:id="@+id/fragmentSignUp"
         android:name="com.nszalas.timefulness.ui.signUp.FragmentSignUp"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_fragmentSignUp_to_navigation_calendar"
             app:destination="@id/navigation_profile" />
@@ -27,7 +27,7 @@
         android:id="@+id/fragmentStart"
         android:name="com.nszalas.timefulness.ui.start.FragmentStart"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
+        tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_fragmentStart_to_fragmentSignIn"
             app:destination="@id/fragmentSignIn" />
@@ -35,13 +35,12 @@
             android:id="@+id/action_fragmentStart_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp" />
     </fragment>
-<!--  MAIN SCREENS  -->
+    <!--  MAIN SCREENS  -->
     <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.nszalas.timefulness.ui.calendar.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" >
-    </fragment>
+        tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/navigation_other"
         android:name="com.nszalas.timefulness.ui.other.OtherFragment"
@@ -56,7 +55,7 @@
         android:id="@+id/navigation_today"
         android:name="com.nszalas.timefulness.ui.today.TodayFragment"
         android:label="fragment_today"
-        tools:layout="@layout/fragment_today" >
+        tools:layout="@layout/fragment_today">
         <action
             android:id="@+id/action_navigation_today_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
@@ -65,6 +64,11 @@
         android:id="@+id/addTaskFragment"
         android:name="com.nszalas.timefulness.ui.addTask.AddTaskFragment"
         android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" >
+        tools:layout="@layout/fragment_add_task">
+        <argument
+            android:name="task"
+            android:defaultValue="@null"
+            app:argType="com.nszalas.timefulness.ui.model.TaskWithCategoryUI"
+            app:nullable="true" />
     </fragment>
 </navigation>

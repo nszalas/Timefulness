@@ -6,7 +6,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 
 fun LocalDateTime.asTimestamp(): Long =
-    this.toEpochSecond(ZoneOffset.UTC)
+    this.toEpochSecond(ZoneOffset.systemDefault().rules.getOffset(Instant.now()))
 
 fun Long.asLocalDateTime(timezoneId: String): LocalDateTime =
     LocalDateTime.ofEpochSecond(this, 0, ZoneId.of(timezoneId).rules.getOffset(Instant.now()))

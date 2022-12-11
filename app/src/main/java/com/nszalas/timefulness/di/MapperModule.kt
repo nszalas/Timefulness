@@ -1,9 +1,10 @@
 package com.nszalas.timefulness.di
 
-import com.nszalas.timefulness.mapper.domain.CategoryDomainMapper
-import com.nszalas.timefulness.mapper.domain.UserDomainMapper
+import com.nszalas.timefulness.mapper.domain.*
 import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import com.nszalas.timefulness.mapper.ui.CategoryUIMapper
+import com.nszalas.timefulness.mapper.ui.TaskUIMapper
+import com.nszalas.timefulness.mapper.ui.TaskWithCategoryUIMapper
 import com.nszalas.timefulness.mapper.ui.UserUIMapper
 import com.nszalas.timefulness.utils.PlaceholderPhotoProvider
 import dagger.Module
@@ -43,4 +44,32 @@ class MapperModule {
     @Provides
     @Reusable
     fun provideTaskEntityMapper() = TaskEntityMapper()
+
+    @Provides
+    @Reusable
+    fun provideTaskDomainMapper() = TaskDomainMapper()
+
+    @Provides
+    @Reusable
+    fun provideTaskUIMapper() = TaskUIMapper()
+
+    @Provides
+    @Reusable
+    fun provideTaskFromUIMapper() = TaskFromUIMapper()
+
+    // task with category
+
+    @Provides
+    @Reusable
+    fun provideTaskWithCategoryDomainMapper(
+        taskMapper: TaskDomainMapper,
+        categoryMapper: CategoryDomainMapper,
+    ) = TaskWithCategoryDomainMapper(taskMapper, categoryMapper)
+
+    @Provides
+    @Reusable
+    fun provideTaskWithCategoryUIMapper(
+        taskUIMapper: TaskUIMapper,
+        categoryUIMapper: CategoryUIMapper
+    ) = TaskWithCategoryUIMapper(taskUIMapper, categoryUIMapper)
 }
