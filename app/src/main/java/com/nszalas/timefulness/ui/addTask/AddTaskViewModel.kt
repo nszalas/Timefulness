@@ -55,7 +55,8 @@ class AddTaskViewModel @Inject constructor(
                     categories = categories
                 )
             }
-            validateTimePicked()
+            validateEndTime()
+            validateStartTime()
         }
     }
 
@@ -142,7 +143,7 @@ class AddTaskViewModel @Inject constructor(
                     startTime >= endTime && endTime.hour == 0 -> {
                         _state.mutate {
                             copy(
-                                startTime = timeFormatter.formatTime(startTime.withMinute(0))
+                                startTime = timeFormatter.formatTime(endTime.withMinute(0))
                             )
                         }
                     }

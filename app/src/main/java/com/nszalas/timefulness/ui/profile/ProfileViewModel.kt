@@ -4,7 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
 import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
+import com.nszalas.timefulness.domain.usecase.GetTasksForWeekUseCase
+import com.nszalas.timefulness.domain.usecase.GetTasksForDateUseCase
+import com.nszalas.timefulness.extensions.asLocalDateTime
 import com.nszalas.timefulness.extensions.mutate
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
+import com.nszalas.timefulness.utils.DateTimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,11 +17,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.format.TextStyle
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val currentUser: GetCurrentUserUseCase,
+    private val dateTimeProvider: DateTimeProvider,
+    private val getTasksForDate: GetTasksForDateUseCase,
+    private val getTasksForWeek: GetTasksForWeekUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileViewState())
@@ -24,6 +34,9 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadCurrentUser()
+    }
+
+    fun onRefresh() {
         loadTodayTaskCompletion()
         loadStatistics()
     }
@@ -32,7 +45,7 @@ class ProfileViewModel @Inject constructor(
         val user = runBlocking(IO) { currentUser() }
         user ?: return
 
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     user = user,
@@ -42,35 +55,44 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadTodayTaskCompletion() {
+        val tasks = runBlocking(IO) { getTasksForDate(dateTimeProvider.currentDate()) }
+
         viewModelScope.launch {
             _state.mutate {
                 copy(
-                    taskAllCount = 10,
-                    taskCompletedCount = 6
+                    taskAllCount = tasks.count(),
+                    taskCompletedCount = tasks.count { it.task.completed }
                 )
             }
         }
     }
 
     private fun loadStatistics() {
-        val statistics = listOf(
-            ChartData(label = "Pon", value = 3, maxValue = 6),
-            ChartData(label = "Wt", value = 5, maxValue = 7),
-            ChartData(label = "Śr", value = 5, maxValue = 5),
-            ChartData(label = "Czw", value = 7, maxValue = 8),
-            ChartData(label = "Pt", value = 7, maxValue = 7),
-            ChartData(label = "So", value = 8, maxValue = 13),
-            ChartData(label = "Nd", value = 3, maxValue = 4),
-        )
+        val tasks = runBlocking(IO) { getTasksForWeek(dateTimeProvider.currentDate()) }
+        val chartDataSet = runBlocking { generateChartData(tasks) }
+
         viewModelScope.launch {
             _state.mutate {
                 copy(
-                    statistics = statistics,
-                    percentage = calculatePercentage(statistics),
+                    statistics = chartDataSet,
+                    percentage = calculatePercentage(chartDataSet)
                 )
             }
         }
     }
+
+    private fun generateChartData(tasks: List<TaskWithCategoryUI>): List<ChartData> =
+        tasks.groupBy {
+            it.task.startTimestamp.asLocalDateTime(it.task.timezoneId).dayOfWeek
+        }
+            .toSortedMap()
+            .map { entries ->
+            ChartData(
+                label = entries.key.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                value = entries.value.count { task -> task.task.completed },
+                maxValue = entries.value.count()
+            )
+        }
 
     private fun calculatePercentage(items: List<ChartData>): Int {
         return (items.sumOf { it.value.toDouble() } / items.sumOf { it.maxValue } * 100).toInt()

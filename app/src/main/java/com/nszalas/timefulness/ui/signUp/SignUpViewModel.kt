@@ -21,6 +21,7 @@ class SignUpViewModel @Inject constructor(
         confirmPassword: String,
         onResult: (Result<Unit>) -> Unit
     ) {
+        // todo modify user so he has the username from the form
         when {
             !validator.validateEmail(email) -> {
                 onResult(Result.failure(InvalidEmailException()))
