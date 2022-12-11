@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_fragmentSignIn_to_navigation_calendar"
-            app:destination="@id/navigation_calendar" />
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSignUp"
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_fragmentSignUp_to_navigation_calendar"
-            app:destination="@id/navigation_calendar" />
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/fragmentStart"
@@ -71,8 +71,5 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.nszalas.timefulness.model.Task" />
-        <action
-            android:id="@+id/action_addTaskFragment_to_navigation_today"
-            app:destination="@id/navigation_today" />
     </fragment>
 </navigation>
