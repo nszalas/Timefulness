@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.databinding.FragmentCalendarBinding
 import com.nszalas.timefulness.ui.today.TodayViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null

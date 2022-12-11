@@ -6,7 +6,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.nszalas.timefulness.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -24,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigation.isVisible = when(destination.id) {
                 R.id.fragmentSignIn,
                 R.id.fragmentSignUp,
-                R.id.fragmentStart -> { false }
+                R.id.fragmentStart,
+                R.id.addTaskFragment -> { false }
                 else -> { true }
             }
         }

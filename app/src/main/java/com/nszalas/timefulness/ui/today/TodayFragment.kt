@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nszalas.timefulness.databinding.FragmentTodayBinding
-import com.nszalas.timefulness.model.Task
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TodayFragment : Fragment() {
 
     private var _binding: FragmentTodayBinding? = null
@@ -36,12 +36,8 @@ class TodayFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getAll.observe(viewLifecycleOwner) { task ->
-            adapter.setData(task)
-        }
-
         binding.buttonAddTask.setOnClickListener {
-            findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(null))
+            findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment())
         }
 
         binding.buttonDeleteAll.setOnClickListener {

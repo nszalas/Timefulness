@@ -50,10 +50,24 @@
     <string name="other_pomodoro_short_break">5 min</string>
     <string name="other_pomodoro_long_break">15 min</string>
 
+    <string name="add_back_button_description">Navigation back button</string>
+    <string name="add_task_name_label">Nazwa zadania</string>
+    <string name="add_task_name_hint">Wprowadź nazwę zadania…</string>
+    <string name="add_when">Kiedy?</string>
+    <string name="add_from">Od:</string>
+    <string name="add_to">Do:</string>
+    <string name="add_category_label">Kategoria:</string>
+    <string name="add_category_image_description">Kategoria zadania</string>
+    <string name="add_save">Dodaj</string>
+    <string name="add_corner_image_background_description">Tło w kształcie gwiazdy</string>
+    <string name="add_corner_image_description">Kobieta na tle kalendarza</string>
+    <string name="add_error_task_name_invalid">Nazwa zadania jest niepoprawna</string>
+    <string name="add_error_task_name_short">Nazwa zadania jest zbyt krótka</string>
+    <string name="add_error_task_name_long">Nazwa zadania jest zbyt długa</string>
+    <string name="add_error_task_name_invalid_characters">Nazwa zadania nie powinna zawierać znaków specjalnych</string>
+
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>
     <string name="menu_today">Dzisiaj</string>
     <string name="menu_profile">Mój profil</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

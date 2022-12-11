@@ -3,25 +3,46 @@ package com.nszalas.timefulness.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
+import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
 import com.nszalas.timefulness.extensions.mutate
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val currentUser: GetCurrentUserUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileViewState())
     val state: StateFlow<ProfileViewState> = _state.asStateFlow()
 
     init {
+        loadCurrentUser()
         loadTodayTaskCompletion()
         loadStatistics()
     }
 
-    private fun loadTodayTaskCompletion() {
+    private fun loadCurrentUser() {
+        val user = runBlocking(IO) { currentUser() }
+        user ?: return
+
         viewModelScope.launch(IO) {
+            _state.mutate {
+                copy(
+                    user = user,
+                )
+            }
+        }
+    }
+
+    private fun loadTodayTaskCompletion() {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     taskAllCount = 10,
@@ -41,7 +62,7 @@ class ProfileViewModel : ViewModel() {
             ChartData(label = "So", value = 8, maxValue = 13),
             ChartData(label = "Nd", value = 3, maxValue = 4),
         )
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     statistics = statistics,

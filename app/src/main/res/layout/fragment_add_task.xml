@@ -1,53 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.today.AddTaskFragment">
+    android:background="@color/backgroundMain"
+    tools:context=".ui.addTask.AddTaskFragment">
 
-    <EditText
-        android:id="@+id/getDescription"
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_back_button_description"
+        android:padding="5dp"
+        android:src="@drawable/ic_back"
+        tools:ignore="RedundantDescriptionCheck" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/backButton"
+        android:layout_alignStart="@id/taskNameLayout"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/heebo"
+        android:text="@string/add_task_name_label"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/taskNameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskNameLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="36dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/add_task_text_input_background"
+            android:hint="@string/add_task_name_hint"
+            android:paddingVertical="16dp"
+            android:textColorHint="@color/edittext_hint_color" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskNameLayout"
+        android:layout_alignStart="@id/dateTextView"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/heebo"
+        android:text="@string/add_when"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/add_task_text_input_background"
+        android:ems="6"
+        android:fontFamily="@font/heebo"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="27/10/2022" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/startTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/startTimeTextView"
+        android:layout_alignBottom="@id/startTimeTextView"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@id/startTimeTextView"
+        android:fontFamily="@font/heebo"
+        android:gravity="center"
+        android:text="@string/add_from"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/startTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/dateTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/add_task_text_input_background"
+        android:ems="4"
+        android:fontFamily="@font/heebo"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="09:00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/endTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/endTimeTextView"
+        android:layout_alignBottom="@id/endTimeTextView"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@id/endTimeTextView"
+        android:fontFamily="@font/heebo"
+        android:gravity="center"
+        android:text="@string/add_to"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/endTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startTimeTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/add_task_text_input_background"
+        android:ems="4"
+        android:fontFamily="@font/heebo"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="10:00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/endTimeTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/heebo"
+        android:text="@string/add_category_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14sp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/categoryCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="nazwa" />
+        android:layout_below="@id/categoryLabel"
+        android:layout_alignStart="@id/dateTextView"
+        android:layout_alignEnd="@id/startTimeTextView"
+        android:layout_marginTop="4dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
 
-    <EditText
-        android:id="@+id/getDate"
-        android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            tools:listitem="@layout/add_task_category_item" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="kiedy" />
+        android:layout_below="@id/categoryCard"
+        android:layout_alignEnd="@id/categoryCard"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/getTime"
-        android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addTaskButton"
+            style="@style/Widget.Timefulness.ButtonStyle.Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="12dp"
+            android:text="@string/add_save"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/cornerImageBackground"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="godzina" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/add_corner_image_background_description"
+        android:src="@drawable/star_background" />
 
-    <EditText
-        android:id="@+id/getCategory"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/cornerImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="kategoria" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/add_corner_image_description"
+        android:src="@drawable/woman_calendar_image" />
 
-    <Button
-        android:id="@+id/addTaskButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Zapisz" />
-
-    <Button
-        android:id="@+id/deleteTaskButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Usuń" />
-
-</LinearLayout>
+</RelativeLayout>

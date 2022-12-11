@@ -6,13 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.nszalas.timefulness.extensions.mutate
 import com.nszalas.timefulness.ui.model.AdviceUI
 import com.nszalas.timefulness.ui.model.TechniqueUI
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class OtherViewModel : ViewModel() {
+@HiltViewModel
+class OtherViewModel @Inject constructor(): ViewModel() {
     private val _state = MutableStateFlow(OtherViewState())
     val state: StateFlow<OtherViewState> = _state.asStateFlow()
 

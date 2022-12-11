@@ -9,8 +9,11 @@ import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentProfileBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import com.nszalas.timefulness.extensions.loadImage
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.profile_today_tasks_card.*
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +34,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onNewState(state: ProfileViewState) {
+        with(binding.profileUserCard) {
+            state.user?.let { user ->
+                welcomeTextView.text = getString(R.string.profile_welcome_message, user.name)
+                emailTextView.text = user.email
+                profileImage.loadImage(user.photoUrl)
+            }
+        }
+
         with(binding.profileStatisticsCard) {
             tasksCompletedCountTextView.text = state.taskCompletedCount.toString()
             allTasksCountTextView.text = state.taskAllCount.toString()

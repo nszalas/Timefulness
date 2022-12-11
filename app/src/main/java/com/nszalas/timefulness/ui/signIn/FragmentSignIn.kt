@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentSignInBinding
 import com.nszalas.timefulness.extensions.showToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentSignIn : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null

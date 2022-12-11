@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/fragmentStart">
+    app:startDestination="@id/navigation_profile">
 <!--  LOGIN FLOW  -->
     <fragment
         android:id="@+id/fragmentSignIn"
@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_fragmentSignIn_to_navigation_calendar"
-            app:destination="@id/navigation_calendar" />
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSignUp"
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_fragmentSignUp_to_navigation_calendar"
-            app:destination="@id/navigation_calendar" />
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/fragmentStart"
@@ -41,9 +41,6 @@
         android:name="com.nszalas.timefulness.ui.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" >
-        <action
-            android:id="@+id/action_navigation_calendar_to_navigation_today"
-            app:destination="@id/navigation_today" />
     </fragment>
     <fragment
         android:id="@+id/navigation_other"
@@ -62,20 +59,12 @@
         tools:layout="@layout/fragment_today" >
         <action
             android:id="@+id/action_navigation_today_to_addTaskFragment"
-            app:destination="@id/fragmentAddTask" />
+            app:destination="@id/addTaskFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentAddTask"
-        android:name="com.nszalas.timefulness.ui.today.AddTaskFragment"
+        android:id="@+id/addTaskFragment"
+        android:name="com.nszalas.timefulness.ui.addTask.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
-        <argument
-            android:name="currentTask"
-            android:defaultValue="@null"
-            app:nullable="true"
-            app:argType="com.nszalas.timefulness.model.Task" />
-        <action
-            android:id="@+id/action_addTaskFragment_to_navigation_today"
-            app:destination="@id/navigation_today" />
     </fragment>
 </navigation>
