@@ -190,7 +190,8 @@
         android:layout_below="@id/categoryCard"
         android:layout_alignEnd="@id/categoryCard"
         android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addTaskButton"
@@ -201,6 +202,18 @@
             android:paddingVertical="12dp"
             android:text="@string/add_save"
             tools:ignore="TextContrastCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteTaskButton"
+            style="@style/Widget.Timefulness.ButtonStyle.Delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="12dp"
+            android:text="@string/add_delete"
+            tools:ignore="TextContrastCheck"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

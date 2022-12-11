@@ -3,11 +3,13 @@ package com.nszalas.timefulness.ui.addTask
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nszalas.timefulness.domain.model.Task
+import com.nszalas.timefulness.domain.usecase.DeleteTaskWithIdUseCase
 import com.nszalas.timefulness.domain.usecase.GetCategoriesUseCase
 import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
 import com.nszalas.timefulness.domain.usecase.InsertTaskUseCase
 import com.nszalas.timefulness.extensions.*
 import com.nszalas.timefulness.ui.model.CategoryUI
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
 import com.nszalas.timefulness.utils.TaskNameValidator
@@ -30,6 +32,7 @@ class AddTaskViewModel @Inject constructor(
     private val getCategories: GetCategoriesUseCase,
     private val getCurrentUser: GetCurrentUserUseCase,
     private val insertTask: InsertTaskUseCase,
+    private val deleteTaskWithId: DeleteTaskWithIdUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -201,9 +204,35 @@ class AddTaskViewModel @Inject constructor(
 
     // task events
 
-    fun onAddButtonClicked() {
-        addTask()
+    fun onTaskEditing(taskWithCategory: TaskWithCategoryUI) {
+        with(taskWithCategory) {
+            val startDateTime = runBlocking { task.startTimestamp.asLocalDateTime(task.timezoneId) }
+            val endDateTime = runBlocking { task.endTimestamp.asLocalDateTime(task.timezoneId) }
+
+            val date = runBlocking { dateFormatter.formatDate(startDateTime.toLocalDate()) }
+            val startTime = runBlocking { timeFormatter.formatTime(startDateTime.toLocalTime()) }
+            val endTime = runBlocking { timeFormatter.formatTime(endDateTime.toLocalTime()) }
+
+            viewModelScope.launch {
+                _state.mutate {
+                    copy(
+                        taskTitle = task.title,
+                        date = date,
+                        startTime = startTime,
+                        endTime = endTime,
+                        categoryId = category.id,
+                        isEditing = true,
+                        editingTaskId = task.id,
+                        editingTaskCompleted = task.completed
+                    )
+                }
+            }
+        }
     }
+
+    fun onAddClicked() { addTask() }
+
+    fun onDeleteClicked() { deleteTask() }
 
     private fun addTask() {
         val user = getCurrentUser()
@@ -213,17 +242,33 @@ class AddTaskViewModel @Inject constructor(
         val localStartTime = timeFormatter.parseTime(state.value.startTime)
         val localEndTime = timeFormatter.parseTime(state.value.endTime)
 
+        val taskId = state.value.editingTaskId
+        val taskCompleted = state.value.editingTaskCompleted
+
         val task = Task(
+            id = taskId,
             userId = user.id,
             title = state.value.taskTitle,
             categoryId = state.value.categoryId,
             startTimestamp = LocalDateTime.of(localDate, localStartTime).asTimestamp(),
             endTimestamp = LocalDateTime.of(localDate, localEndTime).asTimestamp(),
-            timezoneId = ZoneId.systemDefault().id
+            timezoneId = ZoneId.systemDefault().id,
+            completed = taskCompleted,
         )
         runBlocking(IO) { insertTask(task) }
         viewModelScope.launch {
-            _event.sendIfActive(AddTaskViewEvent.TaskAdded)
+            _event.sendIfActive(AddTaskViewEvent.NavigateBack)
+        }
+    }
+
+    private fun deleteTask() {
+        if(state.value.isEditing) {
+            val taskId = state.value.editingTaskId
+
+            runBlocking(IO) { deleteTaskWithId(taskId) }
+            viewModelScope.launch {
+                _event.trySend(AddTaskViewEvent.NavigateBack)
+            }
         }
     }
 }

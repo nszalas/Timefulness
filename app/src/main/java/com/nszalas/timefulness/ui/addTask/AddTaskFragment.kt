@@ -1,5 +1,6 @@
 package com.nszalas.timefulness.ui.addTask
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -7,12 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentAddTaskBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.extensions.setup
 import com.nszalas.timefulness.ui.model.CategoryUI
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
@@ -24,6 +28,8 @@ class AddTaskFragment : Fragment() {
 
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
+
+    private var editingDataInserted = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +44,12 @@ class AddTaskFragment : Fragment() {
 
         collectOnViewLifecycle(viewModel.event, ::onNewEvent)
         collectOnViewLifecycle(viewModel.state, ::onNewState)
+
         setupButtons()
         setupViews()
+
+        val task = arguments?.get("task") as TaskWithCategoryUI?
+        task?.let { viewModel.onTaskEditing(it) }
     }
 
     private fun setupViews() {
@@ -48,6 +58,16 @@ class AddTaskFragment : Fragment() {
             dateTextView.setOnClickListener { viewModel.onDateClicked() }
             startTimeTextView.setOnClickListener { viewModel.onStartTimeClicked() }
             endTimeTextView.setOnClickListener { viewModel.onEndTimeClicked() }
+        }
+    }
+
+    private fun insertEditingData() {
+        if (editingDataInserted) return
+        editingDataInserted = true
+
+        with(binding) {
+            taskName.setText(viewModel.state.value.taskTitle)
+            categorySpinner.setSelection(viewModel.state.value.categoryId ?: 0)
         }
     }
 
@@ -64,7 +84,7 @@ class AddTaskFragment : Fragment() {
 
     private fun onNewEvent(event: AddTaskViewEvent) {
         when (event) {
-            AddTaskViewEvent.TaskAdded -> {
+            AddTaskViewEvent.NavigateBack -> {
                 findNavController().navigateUp()
             }
             is AddTaskViewEvent.OpenDatePicker -> {
@@ -85,8 +105,15 @@ class AddTaskFragment : Fragment() {
             taskName.error = state.taskTitleError?.let { getString(it) }
 
             addTaskButton.isEnabled = state.addButtonEnabled
+            addTaskButton.text = getString(
+                if (state.isEditing) { R.string.add_update } else { R.string.add_save }
+            )
+
+            deleteTaskButton.isVisible = state.isEditing
 
             categorySpinner.adapter ?: run { setupSpinner() }
+
+            if (state.isEditing) { insertEditingData() }
         }
     }
 
@@ -96,7 +123,11 @@ class AddTaskFragment : Fragment() {
         }
 
         binding.addTaskButton.setOnClickListener {
-            viewModel.onAddButtonClicked()
+            viewModel.onAddClicked()
+        }
+
+        binding.deleteTaskButton.setOnClickListener {
+            showDeleteDialog()
         }
     }
 
@@ -125,5 +156,16 @@ class AddTaskFragment : Fragment() {
             localTime.minute,
             true
         ).show()
+    }
+
+    private fun showDeleteDialog(){
+        AlertDialog.Builder(requireContext()).apply {
+            setPositiveButton(getString(R.string.add_delete_rationale_positive)){ _, _ -> viewModel.onDeleteClicked() }
+            setNegativeButton(R.string.add_delete_rationale_negative){ _, _ -> }
+            setMessage(getString(R.string.add_delete_rationale))
+            setCancelable(false)
+            create()
+            show()
+        }
     }
 }

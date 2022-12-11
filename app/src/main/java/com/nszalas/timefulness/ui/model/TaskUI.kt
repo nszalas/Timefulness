@@ -1,5 +1,9 @@
 package com.nszalas.timefulness.ui.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class TaskUI(
     val id: Int,
     val userId: String,
@@ -10,4 +14,4 @@ data class TaskUI(
     val categoryId: Int,
     val repeat: Boolean,
     val completed: Boolean,
-)
+) : Parcelable

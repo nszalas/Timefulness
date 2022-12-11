@@ -19,8 +19,18 @@
         <item name="shapeAppearanceOverlay">@style/pill</item>
     </style>
 
+    <style name="Widget.Timefulness.ButtonStyle.Delete" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Timefulness.Button.Delete</item>
+        <item name="shapeAppearanceOverlay">@style/pill</item>
+    </style>
+
     <style name="ThemeOverlay.Timefulness.Button.Login" parent="">
         <item name="colorPrimary">@color/greenMain</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.Timefulness.Button.Delete" parent="">
+        <item name="colorPrimary">#FD4F4F</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
 

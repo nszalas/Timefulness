@@ -1,6 +1,5 @@
 package com.nszalas.timefulness.ui.today
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentTodayBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
-import com.nszalas.timefulness.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,8 +46,8 @@ class TodayFragment : Fragment(), TaskListAdapter.TaskListActions {
                 // no op
             }
             is TodayViewEvent.TaskClicked -> {
-                requireContext().showToast("open in edit mode")
-                findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment())
+                val task = viewModel.state.value.tasks[event.id]
+                findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(task = task))
             }
         }
     }
@@ -67,17 +65,6 @@ class TodayFragment : Fragment(), TaskListAdapter.TaskListActions {
                 adapter = taskListAdapter
             }
         }
-    }
-
-    private fun deleteItems(){
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Tak"){ _, _ ->
-            // todo delete
-        }
-        builder.setNegativeButton("Nie"){ _, _ ->}
-        builder.setMessage("Czy na pewno chcesz wyczyścić listę zadań?")
-
-        builder.create().show()
     }
 
     // recyclerView onclick actions
