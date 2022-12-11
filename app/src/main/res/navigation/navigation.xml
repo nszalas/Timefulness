@@ -62,13 +62,18 @@
         tools:layout="@layout/fragment_today" >
         <action
             android:id="@+id/action_navigation_today_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
+            app:destination="@id/fragmentAddTask" />
     </fragment>
     <fragment
-        android:id="@+id/addTaskFragment"
+        android:id="@+id/fragmentAddTask"
         android:name="com.nszalas.timefulness.ui.today.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
+        <argument
+            android:name="currentTask"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.nszalas.timefulness.model.Task" />
         <action
             android:id="@+id/action_addTaskFragment_to_navigation_today"
             app:destination="@id/navigation_today" />

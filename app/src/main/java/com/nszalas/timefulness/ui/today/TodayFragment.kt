@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nszalas.timefulness.databinding.FragmentTodayBinding
+import com.nszalas.timefulness.model.Task
 
 class TodayFragment : Fragment() {
 
@@ -37,7 +38,7 @@ class TodayFragment : Fragment() {
         }
 
         binding.buttonAddTask.setOnClickListener {
-            findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment())
+            findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(null))
         }
     }
 

@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.model.Task
+import com.nszalas.timefulness.ui.today.TodayFragmentDirections
 import kotlinx.android.synthetic.main.task_row.view.*
 
 class TaskAdapter: RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
@@ -25,6 +27,10 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
         holder.itemView.taskTextView.text=currentItem.description
         holder.itemView.timeTextView.text=currentItem.time
         holder.itemView.categoryTextView.text=currentItem.category
+
+        holder.itemView.taskRow.setOnClickListener {
+            holder.itemView.findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(currentItem))
+        }
 
     }
 
