@@ -9,10 +9,13 @@ class UserUIMapper @Inject constructor(
     private val placeholderPhotoProvider: PlaceholderPhotoProvider,
 ) {
     operator fun invoke(user: User) = with(user) {
-        val username = name ?: "no username"
+        val username = name?.let {
+            it.takeIf { it.isNotEmpty() } ?: "User"
+        } ?: "User"
+
         UserUI(
             id = id,
-            email = email ?: "no email address",
+            email = email ?: "",
             name = username,
             photoUrl = photoUrl ?: placeholderPhotoProvider.getPhotoUrl(username)
         )

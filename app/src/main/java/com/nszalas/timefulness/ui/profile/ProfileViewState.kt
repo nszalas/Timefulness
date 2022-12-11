@@ -1,11 +1,10 @@
 package com.nszalas.timefulness.ui.profile
 
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
+import com.nszalas.timefulness.ui.model.UserUI
 
 data class ProfileViewState(
-    val imageUrl: String? = null,
-    val username: String = "",
-    val email: String = "",
+    val user: UserUI? = null,
     val taskCompletedCount: Int = 0,
     val taskAllCount: Int = 0,
     val percentage: Int = 0,
