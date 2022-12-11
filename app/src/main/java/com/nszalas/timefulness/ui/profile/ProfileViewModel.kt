@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
 import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
+import com.nszalas.timefulness.domain.usecase.GetTasksForDateUseCase
 import com.nszalas.timefulness.extensions.mutate
+import com.nszalas.timefulness.utils.DateTimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val currentUser: GetCurrentUserUseCase,
+    private val dateTimeProvider: DateTimeProvider,
+    private val getTasksForDate: GetTasksForDateUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileViewState())
@@ -24,6 +28,9 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadCurrentUser()
+    }
+
+    fun onRefresh() {
         loadTodayTaskCompletion()
         loadStatistics()
     }
@@ -32,7 +39,7 @@ class ProfileViewModel @Inject constructor(
         val user = runBlocking(IO) { currentUser() }
         user ?: return
 
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             _state.mutate {
                 copy(
                     user = user,
@@ -42,11 +49,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadTodayTaskCompletion() {
+        val tasks = runBlocking(IO) { getTasksForDate(dateTimeProvider.currentDate()) }
+
         viewModelScope.launch {
             _state.mutate {
                 copy(
-                    taskAllCount = 10,
-                    taskCompletedCount = 6
+                    taskAllCount = tasks.count(),
+                    taskCompletedCount = tasks.count { it.task.completed }
                 )
             }
         }

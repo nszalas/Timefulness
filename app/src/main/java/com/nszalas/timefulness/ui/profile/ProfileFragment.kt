@@ -31,6 +31,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         collectOnViewLifecycle(viewModel.state, ::onNewState)
+        viewModel.onRefresh()
     }
 
     private fun onNewState(state: ProfileViewState) {
