@@ -12,10 +12,14 @@
         android:id="@+id/backButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/add_back_button_description"
         android:padding="5dp"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_back"
+        tools:ignore="RedundantDescriptionCheck" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/taskNameLabel"
@@ -36,16 +40,19 @@
         android:layout_below="@id/taskNameLabel"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        app:hintEnabled="false"
         android:layout_marginHorizontal="36dp"
         app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp">
+        app:boxStrokeWidthFocused="0dp"
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/add_task_text_input_background" />
+            android:background="@drawable/add_task_text_input_background"
+            android:hint="@string/add_task_name_hint"
+            android:paddingVertical="16dp"
+            android:textColorHint="@color/edittext_hint_color" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -192,7 +199,8 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="36dp"
             android:paddingVertical="12dp"
-            android:text="@string/add_save" />
+            android:text="@string/add_save"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 

@@ -86,9 +86,7 @@ class AddTaskFragment : Fragment() {
 
             addTaskButton.isEnabled = state.addButtonEnabled
 
-            categorySpinner.adapter ?: run {
-                setupSpinner()
-            }
+            categorySpinner.adapter ?: run { setupSpinner() }
         }
     }
 

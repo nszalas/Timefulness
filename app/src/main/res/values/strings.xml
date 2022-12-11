@@ -52,6 +52,7 @@
 
     <string name="add_back_button_description">Navigation back button</string>
     <string name="add_task_name_label">Nazwa zadania</string>
+    <string name="add_task_name_hint">Wprowadź nazwę zadania…</string>
     <string name="add_when">Kiedy?</string>
     <string name="add_from">Od:</string>
     <string name="add_to">Do:</string>

@@ -2,8 +2,8 @@ package com.nszalas.timefulness.ui.addTask
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.nszalas.timefulness.domain.usecase.GetCategoriesUseCase
+import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
 import com.nszalas.timefulness.extensions.*
 import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
 import com.nszalas.timefulness.ui.model.CategoryUI
@@ -22,12 +22,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddTaskViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth,
     private val dateTimeProvider: DateTimeProvider,
     private val dateFormatter: DateFormatter,
     private val timeFormatter: TimeFormatter,
     private val taskNameValidator: TaskNameValidator,
     private val getCategories: GetCategoriesUseCase,
+    private val getCurrentUser: GetCurrentUserUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -38,7 +38,7 @@ class AddTaskViewModel @Inject constructor(
     init {
         val categories = runBlocking(IO) { getCategories() }
 
-        viewModelScope.launch(IO) {
+        viewModelScope.launch {
             val startTime = dateTimeProvider.currentTime()
             val endTime = startTime.plusHours(1)
 
@@ -202,7 +202,7 @@ class AddTaskViewModel @Inject constructor(
     }
 
     private fun addTask() {
-        val user = firebaseAuth.currentUser
+        val user = getCurrentUser()
         user ?: return
 
         val localDate = dateFormatter.parseDate(state.value.date)
@@ -210,7 +210,7 @@ class AddTaskViewModel @Inject constructor(
         val localEndTime = timeFormatter.parseTime(state.value.endTime)
 
         val task = TaskEntity(
-            userId = user.uid,
+            userId = user.id,
             title = state.value.taskTitle ?: "",
             categoryId = 0,
             startTimestamp = LocalDateTime.of(localDate, localStartTime).asTimestamp(),
