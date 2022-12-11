@@ -3,11 +3,10 @@ package com.nszalas.timefulness.ui.addTask
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.nszalas.timefulness.extensions.EventsChannel
-import com.nszalas.timefulness.extensions.mutate
-import com.nszalas.timefulness.extensions.sendIfActive
-import com.nszalas.timefulness.model.AppDatabase
-import com.nszalas.timefulness.model.Task
+import com.nszalas.timefulness.extensions.*
+import com.nszalas.timefulness.infrastructure.local.AppDatabase
+import com.nszalas.timefulness.infrastructure.local.CategoryDao
+import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
 import com.nszalas.timefulness.utils.TaskNameValidator
@@ -17,6 +16,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +28,7 @@ class AddTaskViewModel @Inject constructor(
     private val timeFormatter: TimeFormatter,
     private val taskNameValidator: TaskNameValidator,
     private val database: AppDatabase,
+    private val categoryDao: CategoryDao
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -35,7 +37,7 @@ class AddTaskViewModel @Inject constructor(
     val event: Flow<AddTaskViewEvent> = _event.receiveAsFlow()
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             val startTime = dateTimeProvider.currentTime()
             val endTime = startTime.plusHours(1)
 
@@ -191,18 +193,20 @@ class AddTaskViewModel @Inject constructor(
         val user = firebaseAuth.currentUser
         user ?: return
 
-        val task = Task(
-            task_id = 0,
-            user_id = user.uid,
-            description = state.value.taskTitle!!,
-            date = state.value.date!!,
-            time = state.value.startTime!!,
-            category = "kategoria",
-            repeat = false,
-            done = false
+        val localDate = dateFormatter.parseDate(state.value.date)
+        val localStartTime = timeFormatter.parseTime(state.value.startTime)
+        val localEndTime = timeFormatter.parseTime(state.value.endTime)
+
+        val task = TaskEntity(
+            userId = user.uid,
+            title = state.value.taskTitle ?: "",
+            categoryId = 0,
+            startTimestamp = LocalDateTime.of(localDate, localStartTime).asTimestamp(),
+            endTimestamp = LocalDateTime.of(localDate, localEndTime).asTimestamp(),
+            timezoneId = ZoneId.systemDefault().id
         )
         runBlocking(IO) {
-            database.taskDao().insert(task)
+            database.taskDao.insert(task)
             _event.sendIfActive(AddTaskViewEvent.TaskAdded)
         }
     }

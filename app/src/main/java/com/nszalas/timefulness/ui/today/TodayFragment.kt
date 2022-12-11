@@ -36,9 +36,9 @@ class TodayFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getAll.observe(viewLifecycleOwner) { task ->
-            adapter.setData(task)
-        }
+//        viewModel.{ task ->
+//            adapter.setData(task)
+//        }
 
         binding.buttonAddTask.setOnClickListener {
             findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(null))

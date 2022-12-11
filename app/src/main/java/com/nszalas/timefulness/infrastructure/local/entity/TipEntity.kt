@@ -1,13 +1,14 @@
-package com.nszalas.timefulness.model
+package com.nszalas.timefulness.infrastructure.local.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.nszalas.timefulness.infrastructure.local.Constants.TABLE_TIP
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "tip_table")
-data class Tip (
+@Entity(tableName = TABLE_TIP)
+data class TipEntity (
     @PrimaryKey(autoGenerate = true)
     val tip_id: Int,
     val title: String,

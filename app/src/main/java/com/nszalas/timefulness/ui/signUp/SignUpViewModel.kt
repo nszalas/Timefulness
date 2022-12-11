@@ -2,9 +2,9 @@ package com.nszalas.timefulness.ui.signUp
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.nszalas.timefulness.error.AuthenticationException
-import com.nszalas.timefulness.error.InvalidEmailException
-import com.nszalas.timefulness.error.InvalidPasswordException
+import com.nszalas.timefulness.domain.error.AuthenticationException
+import com.nszalas.timefulness.domain.error.InvalidEmailException
+import com.nszalas.timefulness.domain.error.InvalidPasswordException
 import com.nszalas.timefulness.utils.LoginFormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

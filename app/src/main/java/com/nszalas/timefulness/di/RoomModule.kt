@@ -1,7 +1,11 @@
 package com.nszalas.timefulness.di
 
 import android.content.Context
-import com.nszalas.timefulness.model.AppDatabase
+import androidx.room.Room
+import com.nszalas.timefulness.infrastructure.local.AppDatabase
+import com.nszalas.timefulness.infrastructure.local.CategoryDao
+import com.nszalas.timefulness.infrastructure.local.Constants.DATABASE_NAME
+import com.nszalas.timefulness.infrastructure.local.TaskDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +21,22 @@ class RoomModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase = AppDatabase.getInstance(context)
+    ): AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        DATABASE_NAME
+    ).createFromAsset("databases/timefulness.db").build()
+
+    @Provides
+    @Singleton
+    fun provideTaskDao(
+        database: AppDatabase
+    ): TaskDao = database.taskDao
+
+    @Provides
+    @Singleton
+    fun provideCategoryDao(
+        database: AppDatabase
+    ): CategoryDao = database.categoryDao
 
 }

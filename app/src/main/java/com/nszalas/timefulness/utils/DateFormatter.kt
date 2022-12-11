@@ -16,7 +16,7 @@ class DateFormatter @Inject constructor() {
     fun parseDate(year: Int, month: Int, dayOfMonth: Int): LocalDate =
         LocalDate.of(year, month, dayOfMonth)
 
-    fun parseDate(date: String): LocalDate = LocalDate.parse(date, dateFormatter)
+    fun parseDate(date: String?): LocalDate = LocalDate.parse(date, dateFormatter)
 
     fun formatDate(date: LocalDate): String? = try {
         date.format(dateFormatter)
