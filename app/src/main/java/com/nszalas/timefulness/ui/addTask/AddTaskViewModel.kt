@@ -2,10 +2,11 @@ package com.nszalas.timefulness.ui.addTask
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.domain.usecase.GetCategoriesUseCase
 import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
+import com.nszalas.timefulness.domain.usecase.InsertTaskUseCase
 import com.nszalas.timefulness.extensions.*
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
 import com.nszalas.timefulness.ui.model.CategoryUI
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
@@ -28,6 +29,7 @@ class AddTaskViewModel @Inject constructor(
     private val taskNameValidator: TaskNameValidator,
     private val getCategories: GetCategoriesUseCase,
     private val getCurrentUser: GetCurrentUserUseCase,
+    private val insertTask: InsertTaskUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -197,6 +199,8 @@ class AddTaskViewModel @Inject constructor(
         }
     }
 
+    // task events
+
     fun onAddButtonClicked() {
         addTask()
     }
@@ -209,16 +213,16 @@ class AddTaskViewModel @Inject constructor(
         val localStartTime = timeFormatter.parseTime(state.value.startTime)
         val localEndTime = timeFormatter.parseTime(state.value.endTime)
 
-        val task = TaskEntity(
+        val task = Task(
             userId = user.id,
-            title = state.value.taskTitle ?: "",
-            categoryId = 0,
+            title = state.value.taskTitle,
+            categoryId = state.value.categoryId,
             startTimestamp = LocalDateTime.of(localDate, localStartTime).asTimestamp(),
             endTimestamp = LocalDateTime.of(localDate, localEndTime).asTimestamp(),
             timezoneId = ZoneId.systemDefault().id
         )
-        runBlocking(IO) {
-//            database.taskDao.insert(task)
+        runBlocking(IO) { insertTask(task) }
+        viewModelScope.launch {
             _event.sendIfActive(AddTaskViewEvent.TaskAdded)
         }
     }

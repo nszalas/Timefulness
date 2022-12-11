@@ -2,6 +2,7 @@ package com.nszalas.timefulness.di
 
 import com.nszalas.timefulness.mapper.domain.CategoryDomainMapper
 import com.nszalas.timefulness.mapper.domain.UserDomainMapper
+import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import com.nszalas.timefulness.mapper.ui.CategoryUIMapper
 import com.nszalas.timefulness.mapper.ui.UserUIMapper
 import com.nszalas.timefulness.utils.PlaceholderPhotoProvider
@@ -15,6 +16,8 @@ import dagger.hilt.components.SingletonComponent
 @Module
 class MapperModule {
 
+    // category
+
     @Provides
     @Reusable
     fun provideCategoryDomainMapper() = CategoryDomainMapper()
@@ -22,6 +25,8 @@ class MapperModule {
     @Provides
     @Reusable
     fun provideCategoryUIMapper() = CategoryUIMapper()
+
+    // user
 
     @Provides
     @Reusable
@@ -32,4 +37,10 @@ class MapperModule {
     fun provideUserUIMapper(
         placeholderPhotoProvider: PlaceholderPhotoProvider
     ) = UserUIMapper(placeholderPhotoProvider)
+
+    // task
+
+    @Provides
+    @Reusable
+    fun provideTaskEntityMapper() = TaskEntityMapper()
 }

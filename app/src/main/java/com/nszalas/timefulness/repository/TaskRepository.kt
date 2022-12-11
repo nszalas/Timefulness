@@ -1,26 +1,21 @@
 package com.nszalas.timefulness.repository
 
+import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.infrastructure.local.TaskDao
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
 import com.nszalas.timefulness.infrastructure.local.entity.TaskWithCategoryEntity
+import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TaskRepository (private val appDao: TaskDao) {
-    val getAll: Flow<List<TaskWithCategoryEntity>> = appDao.getAll()
+class TaskRepository @Inject constructor(
+    private val taskDao: TaskDao,
+    private val taskEntityMapper: TaskEntityMapper,
+) {
+    fun getAll(): Flow<List<TaskWithCategoryEntity>> = taskDao.getAll()
 
-    suspend fun insert(task: TaskEntity) {
-        appDao.insert(task)
-    }
+    suspend fun insert(task: Task) = taskDao.insert(taskEntityMapper(task))
 
-    fun update(task: TaskEntity){
-        appDao.update(task)
-    }
+    suspend fun deleteTaskWithId(taskId: Int) = taskDao.deleteTaskWithId(taskId)
 
-    fun delete(task: TaskEntity){
-        appDao.delete(task)
-    }
-
-    fun deleteAll(){
-        appDao.deleteAll()
-    }
+    suspend fun deleteAll() = taskDao.deleteAll()
 }

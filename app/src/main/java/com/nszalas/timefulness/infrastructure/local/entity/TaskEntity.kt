@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = TABLE_TASK, indices = [(Index(value = [COLUMN_TASK_ID], unique = true))])
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = -1,
+    val id: Int = 0,
     val userId: String,
     val title: String,
     val startTimestamp: Long,
