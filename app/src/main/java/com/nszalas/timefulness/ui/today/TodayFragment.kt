@@ -35,6 +35,8 @@ class TodayFragment : Fragment(), TaskListAdapter.TaskListActions {
 
         collectOnViewLifecycle(viewModel.state, ::onNewState)
         collectOnViewLifecycle(viewModel.event, ::onNewEvent)
+
+        viewModel.onRefresh()
     }
 
     private fun onNewEvent(event: TodayViewEvent) {
