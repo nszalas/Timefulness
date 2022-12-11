@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center|start"
+    android:gravity="start"
     android:orientation="horizontal"
     android:paddingHorizontal="16dp"
     android:paddingVertical="8dp">
 
-    <ImageView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/categoryImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_family"
-        android:contentDescription="@string/add_category_image_description" />
+        android:textSize="20sp"
+        tools:text="👪"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/categoryName"

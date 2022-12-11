@@ -9,6 +9,6 @@ import com.nszalas.timefulness.infrastructure.local.entity.CategoryEntity
 interface CategoryDao {
 
     @Query("SELECT * FROM $TABLE_CATEGORY")
-    fun getCategories(): List<CategoryEntity>
+    suspend fun getCategories(): List<CategoryEntity>
 
 }

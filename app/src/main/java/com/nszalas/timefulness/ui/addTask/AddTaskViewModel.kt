@@ -3,10 +3,10 @@ package com.nszalas.timefulness.ui.addTask
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.nszalas.timefulness.domain.usecase.GetCategoriesUseCase
 import com.nszalas.timefulness.extensions.*
-import com.nszalas.timefulness.infrastructure.local.AppDatabase
-import com.nszalas.timefulness.infrastructure.local.CategoryDao
 import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
+import com.nszalas.timefulness.ui.model.CategoryUI
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
 import com.nszalas.timefulness.utils.TaskNameValidator
@@ -27,8 +27,7 @@ class AddTaskViewModel @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val timeFormatter: TimeFormatter,
     private val taskNameValidator: TaskNameValidator,
-    private val database: AppDatabase,
-    private val categoryDao: CategoryDao
+    private val getCategories: GetCategoriesUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -37,6 +36,8 @@ class AddTaskViewModel @Inject constructor(
     val event: Flow<AddTaskViewEvent> = _event.receiveAsFlow()
 
     init {
+        val categories = runBlocking(IO) { getCategories() }
+
         viewModelScope.launch(IO) {
             val startTime = dateTimeProvider.currentTime()
             val endTime = startTime.plusHours(1)
@@ -45,7 +46,8 @@ class AddTaskViewModel @Inject constructor(
                 copy(
                     date = dateFormatter.formatDate(dateTimeProvider.currentDate()),
                     startTime = timeFormatter.formatTime(startTime),
-                    endTime = timeFormatter.formatTime(endTime)
+                    endTime = timeFormatter.formatTime(endTime),
+                    categories = categories
                 )
             }
             validateTimePicked()
@@ -61,6 +63,16 @@ class AddTaskViewModel @Inject constructor(
                     taskTitle = name,
                     taskTitleError = error,
                     addButtonEnabled = buttonEnabled
+                )
+            }
+        }
+    }
+
+    fun onCategoryPicked(category: CategoryUI) {
+        viewModelScope.launch {
+            _state.mutate {
+                copy(
+                    categoryId = category.id
                 )
             }
         }
@@ -206,7 +218,7 @@ class AddTaskViewModel @Inject constructor(
             timezoneId = ZoneId.systemDefault().id
         )
         runBlocking(IO) {
-            database.taskDao.insert(task)
+//            database.taskDao.insert(task)
             _event.sendIfActive(AddTaskViewEvent.TaskAdded)
         }
     }

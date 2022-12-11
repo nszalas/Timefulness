@@ -5,11 +5,12 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class AddTaskViewState(
-    val categories: List<CategoryUI> = CategoryUI.values().map { it },
+    val categories: List<CategoryUI> = emptyList(),
     val date: String? = null,
     val startTime: String? = null,
     val endTime: String? = null,
     val taskTitle: String? = null,
+    val categoryId: Int? = null,
     val taskTitleError: Int? = null,
     val addButtonEnabled: Boolean = false,
 )

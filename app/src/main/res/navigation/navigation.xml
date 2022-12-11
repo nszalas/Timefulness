@@ -66,10 +66,5 @@
         android:name="com.nszalas.timefulness.ui.addTask.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
-        <argument
-            android:name="currentTask"
-            android:defaultValue="@null"
-            app:nullable="true"
-            app:argType="com.nszalas.timefulness.model.Task" />
     </fragment>
 </navigation>

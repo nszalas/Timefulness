@@ -29,7 +29,7 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
         holder.itemView.categoryTextView.text = currentItem.category.name
 
         holder.itemView.taskRow.setOnClickListener {
-            holder.itemView.findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment(currentItem))
+            holder.itemView.findNavController().navigate(TodayFragmentDirections.actionNavigationTodayToAddTaskFragment())
         }
 
         holder.itemView.taskTextView.text = currentItem.task.title

@@ -1,7 +1,10 @@
 package com.nszalas.timefulness.di
 
+import com.nszalas.timefulness.infrastructure.local.CategoryDao
 import com.nszalas.timefulness.infrastructure.local.TaskDao
 import com.nszalas.timefulness.infrastructure.local.TipDao
+import com.nszalas.timefulness.mapper.domain.CategoryDomainMapper
+import com.nszalas.timefulness.repository.CategoryRepository
 import com.nszalas.timefulness.repository.TaskRepository
 import com.nszalas.timefulness.repository.TipRepository
 import dagger.Module
@@ -19,6 +22,13 @@ class RepositoryModule {
     fun provideTaskRepository(
         taskDao: TaskDao
     ): TaskRepository = TaskRepository(taskDao)
+
+    @Provides
+    @Singleton
+    fun provideCategoryRepository(
+        categoryDao: CategoryDao,
+        mapper: CategoryDomainMapper,
+    ): CategoryRepository = CategoryRepository(categoryDao, mapper)
 
 //    @Provides
 //    @Singleton

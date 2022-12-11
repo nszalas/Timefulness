@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentAddTaskBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.extensions.setup
+import com.nszalas.timefulness.ui.model.CategoryUI
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
@@ -50,6 +51,17 @@ class AddTaskFragment : Fragment() {
         }
     }
 
+    private fun setupSpinner() {
+        val categories: List<CategoryUI> = viewModel.state.value.categories
+        val adapter = CategoryAdapter(requireContext(), categories)
+        binding.categorySpinner.apply {
+            this.adapter = adapter
+            onItemSelectedListener = CategoryItemSelectedListener { category ->
+                viewModel.onCategoryPicked(category)
+            }
+        }
+    }
+
     private fun onNewEvent(event: AddTaskViewEvent) {
         when (event) {
             AddTaskViewEvent.TaskAdded -> {
@@ -73,6 +85,10 @@ class AddTaskFragment : Fragment() {
             taskName.error = state.taskTitleError?.let { getString(it) }
 
             addTaskButton.isEnabled = state.addButtonEnabled
+
+            categorySpinner.adapter ?: run {
+                setupSpinner()
+            }
         }
     }
 

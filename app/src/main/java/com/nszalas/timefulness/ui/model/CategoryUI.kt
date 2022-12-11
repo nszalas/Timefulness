@@ -1,10 +1,9 @@
 package com.nszalas.timefulness.ui.model
 
-enum class CategoryUI(name: String, emoji: String) {
-    Home(name = "Home", emoji = "🏠"),
-    Health("Health", "💗"),
-    Family("Family", "👪"),
-    Work("Work", "💼"),
-    School("School", "📚"),
-    Friends("People", "🧑"),
-}
+data class CategoryUI(
+    val id: Int,
+    val name: String,
+    val colorMain: Int,
+    val colorText: Int,
+    val emoji: String,
+)
