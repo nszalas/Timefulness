@@ -4,6 +4,7 @@ import com.nszalas.timefulness.infrastructure.local.CategoryDao
 import com.nszalas.timefulness.infrastructure.local.TaskDao
 import com.nszalas.timefulness.infrastructure.remote.RemoteFirebaseDataSource
 import com.nszalas.timefulness.mapper.domain.CategoryDomainMapper
+import com.nszalas.timefulness.mapper.domain.TaskWithCategoryDomainMapper
 import com.nszalas.timefulness.mapper.domain.UserDomainMapper
 import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import com.nszalas.timefulness.repository.CategoryRepository
@@ -23,8 +24,9 @@ class RepositoryModule {
     @Singleton
     fun provideTaskRepository(
         taskDao: TaskDao,
-        taskEntityMapper: TaskEntityMapper
-    ): TaskRepository = TaskRepository(taskDao, taskEntityMapper)
+        taskEntityMapper: TaskEntityMapper,
+        taskWithCategoryDomainMapper: TaskWithCategoryDomainMapper
+    ): TaskRepository = TaskRepository(taskDao, taskEntityMapper, taskWithCategoryDomainMapper)
 
     @Provides
     @Singleton
