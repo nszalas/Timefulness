@@ -42,4 +42,12 @@
         android:layout_marginRight="20dp"
         android:text="Zapisz" />
 
+    <Button
+        android:id="@+id/deleteTaskButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Usuń" />
+
 </LinearLayout>
