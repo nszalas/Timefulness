@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,21 +16,31 @@
             android:id="@+id/profileUserCard"
             layout="@layout/profile_user_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp" />
+            android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/profileTaskCounter"
             layout="@layout/profile_today_tasks_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp" />
+            android:layout_marginTop="20dp" />
 
         <include
             android:id="@+id/profileStatisticsCard"
             layout="@layout/profile_statistics_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/redMain"
+            android:text="@string/profile_logout"
+            android:textSize="16sp"
+            app:shapeAppearanceOverlay="@style/pill" />
 
     </LinearLayout>
 

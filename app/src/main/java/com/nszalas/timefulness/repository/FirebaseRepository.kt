@@ -11,13 +11,23 @@ class FirebaseRepository @Inject constructor(
 ) {
     fun getCurrentUser(): User? = dataSource.getCurrentUser()?.let { mapper(it) }
 
-    fun signInWithEmailAndPassword(email: String, password: String, onResult: (Result<Unit>) -> Unit) {
+    fun logout(onResult: (Result<Unit>) -> Unit) = dataSource.logout(onResult)
+
+    fun signInWithEmailAndPassword(
+        email: String,
+        password: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
         dataSource.signInWithEmailAndPassword(email, password) { result ->
             onResult(result)
         }
     }
 
-    fun registerWithEmailAndPassword(email: String, password: String, onResult: (Result<Unit>) -> Unit) {
+    fun registerWithEmailAndPassword(
+        email: String,
+        password: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
         dataSource.registerWithEmailAndPassword(email, password) { result ->
             onResult(result)
         }
