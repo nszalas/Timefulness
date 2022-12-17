@@ -18,8 +18,12 @@ class TaskRepository @Inject constructor(
         list.map { taskCategoryMapper(it) }
     }
 
-    fun observeTasksFromTo(startTimestamp: Long, endTimestamp: Long): Flow<List<TaskWithCategory>> =
-        taskDao.getTasksFromTo(startTimestamp, endTimestamp).map { list ->
+    fun observeTasksForUserBetweenTimestamps(
+        startTimestamp: Long,
+        endTimestamp: Long,
+        userId: String
+    ): Flow<List<TaskWithCategory>> =
+        taskDao.getTasksFromTo(startTimestamp, endTimestamp, userId).map { list ->
             list.map { taskCategoryMapper(it) }
         }
 

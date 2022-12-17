@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.R
@@ -55,6 +56,7 @@ class ProfileFragment : Fragment() {
         }
 
         with(binding.profileStatisticsCard) {
+            root.isVisible = state.statistics.isNotEmpty()
             tasksCompletedCountTextView.text = state.taskCompletedCount.toString()
             allTasksCountTextView.text = state.taskAllCount.toString()
 
