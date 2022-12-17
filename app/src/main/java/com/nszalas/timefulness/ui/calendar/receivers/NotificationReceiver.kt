@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
 import com.nszalas.timefulness.ui.calendar.utils.EVENT_ID
-import com.nszalas.timefulness.ui.calendar.utils.eventsDB
-import com.nszalas.timefulness.ui.calendar.utils.scheduleNextEventReminder
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 
 class NotificationReceiver : BroadcastReceiver() {
@@ -25,9 +23,5 @@ class NotificationReceiver : BroadcastReceiver() {
         if (id == -1L) {
             return
         }
-
-        val event = context.eventsDB.getEventOrTaskWithId(id) ?: return
-
-        context.scheduleNextEventReminder(event, false)
     }
 }

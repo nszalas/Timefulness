@@ -6,7 +6,6 @@ import com.nszalas.timefulness.infrastructure.local.AppDatabase
 import com.nszalas.timefulness.infrastructure.local.CategoryDao
 import com.nszalas.timefulness.infrastructure.local.Constants.DATABASE_NAME
 import com.nszalas.timefulness.infrastructure.local.TaskDao
-import com.nszalas.timefulness.ui.calendar.room.EventsDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RoomModule {
-
-    @Provides
-    @Singleton
-    fun provideEventsDatabase(
-        @ApplicationContext context: Context
-    ): EventsDatabase = EventsDatabase.getInstance(context)
 
     @Provides
     @Singleton

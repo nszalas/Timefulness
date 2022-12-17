@@ -13,7 +13,6 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.R
-import com.nszalas.timefulness.ui.calendar.room.models.Event
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDateTimeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDayCodeFromDateTime
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getUTCDateTimeFromTS
@@ -57,7 +56,6 @@ class WeekFragment : Fragment(), WeeklyCalendar {
     private var currentTimeView: ImageView? = null
     private var allDayHolders = ArrayList<RelativeLayout>()
     private var allDayRows = ArrayList<HashSet<Int>>()
-    private var allDayEventToRow = LinkedHashMap<Event, Int>()
     private var dayColumns = ArrayList<RelativeLayout>()
     private var eventTimeRanges = LinkedHashMap<String, LinkedHashMap<Long, EventWeeklyView>>()
 
@@ -270,7 +268,6 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         allDayRows.add(HashSet())
         week_all_day_holder?.removeAllViews()
         addNewLine()
-        allDayEventToRow.clear()
 
         val minuteHeight = rowHeight / 60
         val minimalHeight = res.getDimension(R.dimen.weekly_view_minimal_event_height).toInt()

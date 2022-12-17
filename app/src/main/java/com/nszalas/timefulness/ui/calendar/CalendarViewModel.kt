@@ -3,13 +3,9 @@ package com.nszalas.timefulness.ui.calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nszalas.timefulness.extensions.EventsChannel
-import com.nszalas.timefulness.ui.calendar.room.EventsDatabase
-import com.nszalas.timefulness.ui.calendar.room.models.Event
 import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
