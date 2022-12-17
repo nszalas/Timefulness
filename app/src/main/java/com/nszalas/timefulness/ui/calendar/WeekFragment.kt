@@ -2,14 +2,14 @@ package com.nszalas.timefulness.ui.calendar
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Range
 import android.view.*
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.collection.LongSparseArray
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nszalas.timefulness.R
@@ -22,6 +22,7 @@ import com.nszalas.timefulness.ui.calendar.utils.WEEK_START_TIMESTAMP
 import com.nszalas.timefulness.ui.calendar.utils.checkViewStrikeThrough
 import com.nszalas.timefulness.ui.calendar.utils.getWeeklyViewItemHeight
 import com.nszalas.timefulness.ui.calendar.utils.intersects
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.views.MyTextView
@@ -53,15 +54,11 @@ class WeekFragment : Fragment(), WeeklyCalendar {
     private var isFragmentVisible = false
     private var wasFragmentInit = false
     private var wasExtraHeightAdded = false
-    private var dimPastEvents = true
-    private var dimCompletedTasks = true
     private var currentTimeView: ImageView? = null
     private var allDayHolders = ArrayList<RelativeLayout>()
     private var allDayRows = ArrayList<HashSet<Int>>()
     private var allDayEventToRow = LinkedHashMap<Event, Int>()
-    private var currEvents = ArrayList<Event>()
     private var dayColumns = ArrayList<RelativeLayout>()
-    private var eventTypeColors = LongSparseArray<Int>()
     private var eventTimeRanges = LinkedHashMap<String, LinkedHashMap<Long, EventWeeklyView>>()
 
     private lateinit var inflater: LayoutInflater
@@ -124,9 +121,6 @@ class WeekFragment : Fragment(), WeeklyCalendar {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getEventTypes().map { eventType ->
-            eventTypeColors.put(eventType.id, eventType.color)
-        }
 
         setupDayLabels()
         updateCalendar()
@@ -168,7 +162,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         viewModel.event.observe(viewLifecycleOwner) { viewModelEvent ->
             when (viewModelEvent) {
                 is WeekFragmentEvent.EventsLoaded -> {
-                    updateWeeklyCalendar(viewModelEvent.events)
+                    updateWeeklyCalendar(viewModelEvent.tasks)
                 }
                 WeekFragmentEvent.EventsUpdated -> updateCalendar()
             }
@@ -242,8 +236,8 @@ class WeekFragment : Fragment(), WeeklyCalendar {
             }
     }
 
-    override fun updateWeeklyCalendar(events: ArrayList<Event>) {
-        val newHash = events.hashCode()
+    override fun updateWeeklyCalendar(tasks: ArrayList<TaskWithCategoryUI>) {
+        val newHash = tasks.hashCode()
         if (newHash == lastHash || mWasDestroyed || context == null) {
             return
         }
@@ -252,7 +246,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
 
         requireActivity().runOnUiThread {
             if (context != null && activity != null && isAdded) {
-                addEvents(events)
+                addEvents(tasks)
             }
         }
     }
@@ -265,11 +259,10 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         scrollView.layoutParams.height = fullHeight - oneDp
         mView.week_horizontal_grid_holder.layoutParams.height = fullHeight
         mView.week_events_columns_holder.layoutParams.height = fullHeight
-        addEvents(currEvents)
     }
 
     @SuppressLint("InflateParams")
-    private fun addEvents(events: ArrayList<Event>) {
+    private fun addEvents(tasksWithCategories: ArrayList<TaskWithCategoryUI>) {
         initGrid()
         allDayHolders.clear()
         allDayRows.clear()
@@ -283,9 +276,9 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         val minimalHeight = res.getDimension(R.dimen.weekly_view_minimal_event_height).toInt()
         val density = res.displayMetrics.density.roundToInt()
 
-        events.forEach { event ->
-            val startDateTime = getDateTimeFromTS(event.startTS)
-            val endDateTime = getDateTimeFromTS(event.endTS)
+        tasksWithCategories.forEach { list ->
+            val startDateTime = getDateTimeFromTS(list.task.startTimestamp)
+            val endDateTime = getDateTimeFromTS(list.task.endTimestamp)
 
             val currentDayCode = getDayCodeFromDateTime(startDateTime)
 
@@ -303,7 +296,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
             if (!eventTimeRanges.containsKey(currentDayCode)) {
                 eventTimeRanges[currentDayCode] = LinkedHashMap()
             }
-            eventTimeRanges[currentDayCode]?.put(event.id, eventWeekly)
+            eventTimeRanges[currentDayCode]?.put(list.task.id.toLong(), eventWeekly)
         }
 
         eventTimeRanges.forEach { (_, eventDayList) ->
@@ -358,8 +351,8 @@ class WeekFragment : Fragment(), WeeklyCalendar {
             }
         }
 
-        dayevents@ for (event in events) {
-            val startDateTime = getDateTimeFromTS(event.startTS)
+        dayevents@ for (taskWithCategory in tasksWithCategories) {
+            val startDateTime = getDateTimeFromTS(taskWithCategory.task.startTimestamp)
 
             val currentDayCode = getDayCodeFromDateTime(startDateTime)
 
@@ -373,48 +366,40 @@ class WeekFragment : Fragment(), WeeklyCalendar {
                 R.layout.week_event_marker,
                 null,
                 false
-            ) as ConstraintLayout).apply {
-                var backgroundColor = eventTypeColors.get(event.eventType, primaryColor)
-                var textColor = backgroundColor.getContrastColor()
-                val currentEventWeeklyView = eventTimeRanges[currentDayCode]!![event.id]
-
-                val adjustAlpha = if (event.isTask()) {
-                    dimCompletedTasks && event.isTaskCompleted()
+            ) as LinearLayout).apply {
+                val backgroundColor = if (taskWithCategory.task.completed) {
+                    Color.GRAY
                 } else {
-                    dimPastEvents
-                }
-
-                if (adjustAlpha) {
-                    backgroundColor = backgroundColor.adjustAlpha(MEDIUM_ALPHA)
-                    textColor = textColor.adjustAlpha(HIGHER_ALPHA)
-                }
+                    taskWithCategory.category.colorMain
+                }.adjustAlpha(MEDIUM_ALPHA)
+                val textColor = backgroundColor.getContrastColor().adjustAlpha(HIGHER_ALPHA)
+                val currentEventWeeklyView =
+                    eventTimeRanges[currentDayCode]!![taskWithCategory.task.id.toLong()]
 
                 background = ColorDrawable(backgroundColor)
+
                 dayColumn.addView(this)
                 y = currentEventWeeklyView!!.range.lower * minuteHeight
 
-                week_event_task_image.beVisibleIf(event.isTask())
-                if (event.isTask()) {
-                    week_event_task_image.applyColorFilter(textColor)
-                }
-
                 week_event_label.apply {
                     setTextColor(textColor)
-                    maxLines = if (event.isTask() || event.startTS == event.endTS) {
-                        1
-                    } else {
-                        3
-                    }
+                    maxLines =
+                        if (taskWithCategory.task.startTimestamp == taskWithCategory.task.endTimestamp) {
+                            1
+                        } else {
+                            3
+                        }
 
-                    text = event.title
-                    checkViewStrikeThrough(event.isTaskCompleted())
+                    text = taskWithCategory.task.title
+                    checkViewStrikeThrough(taskWithCategory.task.completed)
                     contentDescription = text
 
-                    minHeight = if (event.startTS == event.endTS) {
-                        minimalHeight
-                    } else {
-                        ((currentEventWeeklyView.range.upper - currentEventWeeklyView.range.lower) * minuteHeight).toInt() - 1
-                    }
+                    minHeight =
+                        if (taskWithCategory.task.startTimestamp == taskWithCategory.task.endTimestamp) {
+                            minimalHeight
+                        } else {
+                            ((currentEventWeeklyView.range.upper - currentEventWeeklyView.range.lower) * minuteHeight).toInt() - 1
+                        }
                 }
 
                 (layoutParams as RelativeLayout.LayoutParams).apply {
@@ -425,7 +410,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
                         width -= density
                     }
                 }
-                setOnClickListener { listener?.eventSingleTouch(event.id) }
+                setOnClickListener { listener?.eventSingleTouch(taskWithCategory.task.id.toLong()) }
             }
         }
 

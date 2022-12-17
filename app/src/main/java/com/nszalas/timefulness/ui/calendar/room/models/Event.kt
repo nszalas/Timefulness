@@ -12,7 +12,7 @@ import java.io.Serializable
 
 @Entity(tableName = "events", indices = [(Index(value = ["id"], unique = true))])
 data class Event(
-    @PrimaryKey(autoGenerate = true) var id: Long = -1,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     @ColumnInfo(name = "start_ts") var startTS: Long = 0L,
     @ColumnInfo(name = "end_ts") var endTS: Long = 0L,
     @ColumnInfo(name = "title") var title: String = "",

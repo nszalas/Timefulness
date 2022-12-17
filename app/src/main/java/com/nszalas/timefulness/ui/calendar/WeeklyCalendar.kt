@@ -1,7 +1,7 @@
 package com.nszalas.timefulness.ui.calendar
 
-import com.nszalas.timefulness.ui.calendar.room.models.Event
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 
 interface WeeklyCalendar {
-    fun updateWeeklyCalendar(events: ArrayList<Event>)
+    fun updateWeeklyCalendar(tasks: ArrayList<TaskWithCategoryUI>)
 }

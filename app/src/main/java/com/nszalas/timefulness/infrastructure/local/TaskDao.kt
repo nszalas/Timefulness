@@ -37,5 +37,12 @@ interface TaskDao {
             "AND $COLUMN_TASK_END_TIMESTAMP < :endTimestamp " +
             "AND $COLUMN_TASK_USER_ID == :userId " +
             "ORDER BY $COLUMN_TASK_COMPLETED DESC, $COLUMN_TASK_START_TIMESTAMP ASC")
-    fun getTasksFromTo(startTimestamp: Long, endTimestamp: Long, userId: String): Flow<List<TaskWithCategoryEntity>>
+    fun observeTasksFromTo(startTimestamp: Long, endTimestamp: Long, userId: String): Flow<List<TaskWithCategoryEntity>>
+
+    @Query("SELECT * FROM $TABLE_TASK " +
+            "WHERE $COLUMN_TASK_START_TIMESTAMP >= :startTimestamp " +
+            "AND $COLUMN_TASK_END_TIMESTAMP < :endTimestamp " +
+            "AND $COLUMN_TASK_USER_ID == :userId " +
+            "ORDER BY $COLUMN_TASK_COMPLETED DESC, $COLUMN_TASK_START_TIMESTAMP ASC")
+    suspend fun getTasksFromTo(startTimestamp: Long, endTimestamp: Long, userId: String): List<TaskWithCategoryEntity>
 }
