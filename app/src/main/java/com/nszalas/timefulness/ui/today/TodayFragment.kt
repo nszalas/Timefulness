@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentTodayBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_today.*
 
 @AndroidEntryPoint
 class TodayFragment : Fragment(), TaskListAdapter.TaskListActions {
@@ -55,6 +58,11 @@ class TodayFragment : Fragment(), TaskListAdapter.TaskListActions {
     }
 
     private fun onNewState(state: TodayViewState) {
+        with(binding) {
+            dateTextView.text = state.currentDate
+            taskList.isGone = state.tasks.isEmpty()
+            noTasksTextView.isVisible = state.tasks.isEmpty()
+        }
         taskListAdapter.submitList(state.tasks)
     }
 

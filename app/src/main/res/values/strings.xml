@@ -71,6 +71,9 @@
     <string name="add_error_task_name_long">Nazwa zadania jest zbyt długa</string>
     <string name="add_error_task_name_invalid_characters">Nazwa zadania nie powinna zawierać znaków specjalnych</string>
 
+    <string name="today_tasks_for_today">Zadania na dzisiaj:</string>
+    <string name="today_no_tasks_added">Nie dodałeś/aś jeszcze żadnych zadań na dzisiaj.</string>
+
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>
     <string name="menu_today">Dzisiaj</string>

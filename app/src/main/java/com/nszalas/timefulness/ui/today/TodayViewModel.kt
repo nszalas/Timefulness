@@ -12,6 +12,7 @@ import com.nszalas.timefulness.utils.DateTimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +27,19 @@ class TodayViewModel @Inject constructor(
     private val _event = EventsChannel<TodayViewEvent>()
     val event: Flow<TodayViewEvent> = _event.receiveAsFlow()
 
-    fun onRefresh() { observeTaskList() }
+    fun onRefresh() {
+        updateCurrentDate()
+        observeTaskList()
+    }
+
+    private fun updateCurrentDate() {
+        val date = dateTimeProvider.currentDate().format(DateTimeFormatter.ofPattern(DATE_PATTERN))
+        viewModelScope.launch {
+            _state.mutate {
+                copy(currentDate = date)
+            }
+        }
+    }
 
     fun onAddTaskClicked() {
         _event.trySend(AddTaskClicked)
@@ -53,5 +66,9 @@ class TodayViewModel @Inject constructor(
                 _state.mutate { copy(tasks = tasks) }
             }
         }
+    }
+
+    companion object {
+        private const val DATE_PATTERN = "dd MMMM yyyy"
     }
 }
