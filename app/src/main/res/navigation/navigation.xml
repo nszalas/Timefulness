@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_fragmentStart_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp" />
+        <action
+            android:id="@+id/action_fragmentStart_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
     <!--  MAIN SCREENS  -->
     <fragment
