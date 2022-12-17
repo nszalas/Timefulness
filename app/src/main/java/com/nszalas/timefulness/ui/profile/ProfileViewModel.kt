@@ -6,15 +6,15 @@ import com.boyzdroizy.simpleandroidbarchart.model.ChartData
 import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
 import com.nszalas.timefulness.domain.usecase.GetTasksForWeekUseCase
 import com.nszalas.timefulness.domain.usecase.GetTasksForDateUseCase
+import com.nszalas.timefulness.domain.usecase.LogoutUserUseCase
+import com.nszalas.timefulness.extensions.EventsChannel
 import com.nszalas.timefulness.extensions.asLocalDateTime
 import com.nszalas.timefulness.extensions.mutate
 import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import com.nszalas.timefulness.utils.DateTimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.format.TextStyle
@@ -27,10 +27,14 @@ class ProfileViewModel @Inject constructor(
     private val dateTimeProvider: DateTimeProvider,
     private val getTasksForDate: GetTasksForDateUseCase,
     private val getTasksForWeek: GetTasksForWeekUseCase,
+    private val logoutUser: LogoutUserUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileViewState())
     val state: StateFlow<ProfileViewState> = _state.asStateFlow()
+
+    private val _event = EventsChannel<ProfileViewEvent>()
+    val event: Flow<ProfileViewEvent> = _event.receiveAsFlow()
 
     init {
         loadCurrentUser()
@@ -39,6 +43,15 @@ class ProfileViewModel @Inject constructor(
     fun onRefresh() {
         loadTodayTaskCompletion()
         loadStatistics()
+    }
+
+    fun onLogout() {
+        logoutUser { result ->
+            when {
+                result.isSuccess -> _event.trySend(ProfileViewEvent.UserLoggedOut)
+                result.isFailure -> _event.trySend(ProfileViewEvent.Error(result.exceptionOrNull()?.message))
+            }
+        }
     }
 
     private fun loadCurrentUser() {

@@ -11,3 +11,8 @@ data class ProfileViewState(
     val statistics: List<ChartData> = emptyList(),
     val isLoading: Boolean = false
 )
+
+sealed class ProfileViewEvent {
+    object UserLoggedOut : ProfileViewEvent()
+    data class Error(val message: String?) : ProfileViewEvent()
+}

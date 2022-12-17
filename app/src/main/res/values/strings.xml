@@ -35,6 +35,7 @@
     <string name="profile_effectiveness">Skuteczność:</string>
     <string name="profile_task_completion_percentage">%1$d%%</string>
     <string name="profile_task_completion_percentage_placeholder">68%</string>
+    <string name="profile_logout">Wyloguj</string>
 
     <string name="other_technique_title_placeholder">Tytuł techiki</string>
     <string name="other_technique_description_placeholder">Opis techniki</string>

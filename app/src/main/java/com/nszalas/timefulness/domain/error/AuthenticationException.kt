@@ -1,3 +1,3 @@
 package com.nszalas.timefulness.domain.error
 
-class AuthenticationException: Exception("Niepoprawne dane logowania")
+class AuthenticationException: Exception("Niepoprawnie wprowadzone dane")

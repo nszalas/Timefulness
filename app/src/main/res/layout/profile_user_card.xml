@@ -20,7 +20,7 @@
             android:layout_height="68dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/hintcolor"
+            android:background="@color/navigationBarBackground"
             android:padding="1dp"
             android:src="@drawable/profile_picture_placeholder"
             app:shapeAppearanceOverlay="@style/circle"

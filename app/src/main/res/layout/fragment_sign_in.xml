@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@drawable/login_background"
     android:orientation="vertical"
-    android:paddingHorizontal="30dp"
-    android:paddingTop="30dp"
     tools:context=".ui.signIn.FragmentSignIn">
-
 
     <TextView
         android:id="@+id/textViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="48dp"
         android:fontFamily="@font/heebo"
         android:text="@string/login_header"
@@ -28,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewLogin"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="18dp"
         android:theme="@style/ThemeOverlay.Timefulness.TextInputLayout.Login"
         app:boxStrokeWidth="0dp"
@@ -50,9 +50,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/emailLayout"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="6dp"
         android:theme="@style/ThemeOverlay.Timefulness.TextInputLayout.Login"
         app:boxStrokeWidth="0dp"
+        app:passwordToggleEnabled="true"
         app:boxStrokeWidthFocused="0dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -86,6 +88,7 @@
         android:layout_below="@id/forgotPassword"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:elevation="10dp"
@@ -103,6 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/signInButton"
         android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="30dp"
         android:contentDescription="@string/image_description_divider"
         android:src="@drawable/line_line" />
 
@@ -113,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/heebo"
         android:paddingHorizontal="15dp"
@@ -120,5 +125,27 @@
         android:textAllCaps="false"
         android:textSize="17sp"
         app:elevation="5dp" />
+
+    <FrameLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#80000000"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/greenMain" />
+
+    </FrameLayout>
 
 </RelativeLayout>

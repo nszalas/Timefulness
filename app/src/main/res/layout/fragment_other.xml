@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundMain"
     tools:context=".ui.other.OtherFragment">
 
     <LinearLayout
@@ -16,16 +17,16 @@
             layout="@layout/other_technique_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/adviceCard"
             layout="@layout/other_advice_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/pomodoroCard"
