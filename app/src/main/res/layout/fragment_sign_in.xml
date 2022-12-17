@@ -54,6 +54,7 @@
         android:layout_marginBottom="6dp"
         android:theme="@style/ThemeOverlay.Timefulness.TextInputLayout.Login"
         app:boxStrokeWidth="0dp"
+        app:passwordToggleEnabled="true"
         app:boxStrokeWidthFocused="0dp">
 
         <com.google.android.material.textfield.TextInputEditText

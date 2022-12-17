@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentSignUpBinding
+import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,25 +31,39 @@ class FragmentSignUp : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        collectOnViewLifecycle(viewModel.event, ::onNewEvent)
+        collectOnViewLifecycle(viewModel.state, ::onNewState)
+        setupViews()
+    }
+
+    private fun setupViews() {
         binding.signUpButton.setOnClickListener { signUp() }
     }
 
+    private fun onNewState(state: SignUpViewState) {
+        binding.progressLayout.isVisible = state.isLoading
+    }
+
+    private fun onNewEvent(event: SignUpViewEvent) {
+        when (event) {
+            is SignUpViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
+            SignUpViewEvent.SignUpSuccess -> findNavController().navigate(
+                FragmentSignUpDirections.actionFragmentSignUpToNavigationCalendar()
+            )
+        }
+    }
+
     private fun signUp() {
+        val name = binding.newUsername.text.toString()
         val email = binding.newEmail.text.toString()
         val password = binding.newPassword.text.toString()
         val confirmPassword = binding.confirmPassword.text.toString()
 
-        with(requireContext()) {
-            viewModel.createUserWithEmailAndPassword(email, password, confirmPassword) {
-                if (it.isSuccess) {
-                    showToast(R.string.register_user_created_success)
-                    findNavController().navigate(FragmentSignUpDirections.actionFragmentSignUpToNavigationCalendar())
-                } else {
-                    it.exceptionOrNull()?.message?.let { message ->
-                        showToast(message)
-                    }
-                }
-            }
-        }
+        viewModel.createUser(
+            name = name,
+            email = email,
+            password = password,
+            confirmPassword = confirmPassword
+        )
     }
 }

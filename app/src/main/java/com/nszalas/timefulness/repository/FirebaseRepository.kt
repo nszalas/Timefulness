@@ -18,9 +18,7 @@ class FirebaseRepository @Inject constructor(
         password: String,
         onResult: (Result<Unit>) -> Unit
     ) {
-        dataSource.signInWithEmailAndPassword(email, password) { result ->
-            onResult(result)
-        }
+        dataSource.signInWithEmailAndPassword(email, password, onResult)
     }
 
     fun registerWithEmailAndPassword(
@@ -28,8 +26,13 @@ class FirebaseRepository @Inject constructor(
         password: String,
         onResult: (Result<Unit>) -> Unit
     ) {
-        dataSource.registerWithEmailAndPassword(email, password) { result ->
-            onResult(result)
-        }
+        dataSource.registerWithEmailAndPassword(email, password, onResult)
+    }
+
+    fun updateUserDisplayName(
+        name: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        dataSource.updateUserDisplayName(name, onResult)
     }
 }
