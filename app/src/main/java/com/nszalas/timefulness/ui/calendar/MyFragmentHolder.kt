@@ -1,9 +1,8 @@
 package com.nszalas.timefulness.ui.calendar
 
-import androidx.fragment.app.Fragment
 import org.joda.time.DateTime
 
-abstract class MyFragmentHolder : Fragment() {
+abstract class MyFragmentHolder : BaseFragment() {
     abstract fun goToToday()
 
     abstract fun showGoToDateDialog()

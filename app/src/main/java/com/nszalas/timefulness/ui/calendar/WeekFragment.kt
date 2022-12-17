@@ -410,7 +410,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
                         width -= density
                     }
                 }
-                setOnClickListener { listener?.eventSingleTouch(taskWithCategory.task.id.toLong()) }
+                setOnClickListener { listener?.eventSingleTouch(taskWithCategory) }
             }
         }
 

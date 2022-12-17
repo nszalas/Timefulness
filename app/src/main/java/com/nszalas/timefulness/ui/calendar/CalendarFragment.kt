@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentCalendarBinding
-import com.nszalas.timefulness.extensions.showToast
-import com.nszalas.timefulness.ui.calendar.room.models.Event
+import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDateTimeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDayCodeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getHours
@@ -23,14 +23,13 @@ import com.nszalas.timefulness.ui.calendar.utils.Formatter.getUTCDateTimeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.getDatesWeekDateTime
 import com.nszalas.timefulness.ui.calendar.utils.getWeeklyViewItemHeight
 import com.nszalas.timefulness.ui.calendar.utils.seconds
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.WEEK_SECONDS
-import com.simplemobiletools.commons.views.MyViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_calendar.view.*
 import org.joda.time.DateTime
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 private const val PREFILLED_WEEKS = 151
@@ -43,7 +42,7 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
     private val binding get() = _binding!!
     private val viewModel by viewModels<CalendarViewModel>()
 
-    private val viewPager: MyViewPager by lazy {
+    private val viewPager: ViewPager by lazy {
         binding.weekViewHolder.weekViewViewPager
     }
     private val weekHolder: ViewGroup by lazy {
@@ -55,14 +54,20 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
     private var currentWeekTS = 0L
     private var isGoToTodayVisible = false
     private var weekScrollY = 0
-    private var newId: Long = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        return getPersistentView(_binding)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        collectOnViewLifecycle(viewModel.event, ::onNewEvent)
 
         val itemHeight = requireContext().getWeeklyViewItemHeight().toInt()
         binding.weekViewHolder.background =
@@ -75,35 +80,33 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
 
         viewPager.id = (System.currentTimeMillis() % 100000).toInt()
         setupFragment()
-
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.addImage.setOnClickListener { addEvent() }
-        binding.weekTextView.setOnClickListener { refreshEvents() }
-    }
-
-    private fun addEvent() {
-        val startTimestamp = DateTime.now().seconds()
-        val event = Event(
-            startTS = startTimestamp,
-            endTS = startTimestamp + TimeUnit.MINUTES.toSeconds(30),
-            title = "$newId",
-        )
-        viewModel.addEvent(event)
-        newId++
+    private fun onNewEvent(event: CalendarViewEvent) {
+        when (event) {
+            is CalendarViewEvent.NavigateEditTask -> {
+                findNavController().navigate(
+                    CalendarFragmentDirections.actionNavigationCalendarToAddTaskFragment(task = event.task)
+                )
+            }
+            CalendarViewEvent.NavigateToAddTask -> {
+                findNavController().navigate(
+                    CalendarFragmentDirections.actionNavigationCalendarToAddTaskFragment()
+                )
+            }
+        }
     }
 
     private fun setupFragment() {
+        binding.addImage.setOnClickListener { viewModel.onAddTaskClicked() }
         addHours()
         setupWeeklyViewPager()
     }
 
     private fun setupWeeklyViewPager() {
         val weekTSs = getWeekTimestamps(currentWeekTS)
-        val weeklyAdapter = MyWeekPagerAdapter(requireActivity().supportFragmentManager, weekTSs, this)
+        val weeklyAdapter =
+            MyWeekPagerAdapter(childFragmentManager, weekTSs, this)
 
         defaultWeeklyPage = weekTSs.size / 2
 
@@ -296,12 +299,11 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
         return weekViewHolderHeight - weekViewDaysDividerHeight
     }
 
-    override fun eventSingleTouch(eventID: Long?) {
-        // todo open a new fragment for editing events
-        requireContext().showToast("$eventID clicked!")
+    override fun eventSingleTouch(task: TaskWithCategoryUI?) {
+        task?.let { viewModel.onTaskClicked(it) }
     }
 
-    override fun getCurrentDate(): DateTime =  getUTCDateTimeFromTS(currentWeekTS)
+    override fun getCurrentDate(): DateTime = getUTCDateTimeFromTS(currentWeekTS)
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,5 +1,7 @@
 package com.nszalas.timefulness.ui.calendar
 
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
+
 interface WeekFragmentListener {
     fun scrollTo(y: Int)
 
@@ -11,5 +13,5 @@ interface WeekFragmentListener {
 
     fun getFullFragmentHeight(): Int
 
-    fun eventSingleTouch(eventID: Long?)
+    fun eventSingleTouch(task: TaskWithCategoryUI?)
 }
