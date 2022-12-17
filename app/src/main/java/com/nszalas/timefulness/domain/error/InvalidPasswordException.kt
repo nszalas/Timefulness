@@ -1,3 +1,3 @@
 package com.nszalas.timefulness.domain.error
 
-class InvalidPasswordException: Exception("Hasła są nie poprawne!")
+class InvalidPasswordException: Exception("Hasło nie jest poprawne!")

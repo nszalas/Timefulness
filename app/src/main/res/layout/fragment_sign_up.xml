@@ -54,7 +54,7 @@
             android:inputType="textPersonName|textCapWords"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor" />
+            android:textColorHint="@color/navigationBarBackground" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +90,7 @@
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor" />
+            android:textColorHint="@color/navigationBarBackground" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +127,7 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/hintcolor" />
+            android:textColorHint="@color/navigationBarBackground" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

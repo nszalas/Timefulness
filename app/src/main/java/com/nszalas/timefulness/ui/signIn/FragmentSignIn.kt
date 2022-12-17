@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.databinding.FragmentSignInBinding
+import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import com.nszalas.timefulness.extensions.setup
 import com.nszalas.timefulness.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,21 +32,32 @@ class FragmentSignIn : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.signInButton.setOnClickListener {
-            signIn()
+        collectOnViewLifecycle(viewModel.state, ::onNewState)
+        collectOnViewLifecycle(viewModel.event, ::onNewEvent)
+
+        setupViews()
+    }
+
+    private fun setupViews() {
+        binding.signInButton.setOnClickListener { viewModel.onSignIn() }
+        binding.email.setup(viewModel::onEmailEntered)
+        binding.password.setup(viewModel::onPasswordEntered)
+    }
+
+    private fun onNewState(state: SignInViewState) {
+        with(binding) {
+            signInButton.isEnabled = state.buttonEnabled
+            progressLayout.isVisible = state.isLoading
+
+            email.error = state.emailError
+            password.error = state.passwordError
         }
     }
 
-    private fun signIn() {
-        val email = binding.email.text.toString()
-        val password = binding.password.text.toString()
-
-        viewModel.signInWithEmailAndPassword(email, password) {
-            if (it.isSuccess) {
-                findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToNavigationCalendar())
-            } else {
-                it.exceptionOrNull()?.message?.let { message -> requireContext().showToast(message) }
-            }
+    private fun onNewEvent(event: SignInViewEvent) {
+        when (event) {
+            is SignInViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
+            SignInViewEvent.UserLoggedIn -> findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToNavigationCalendar())
         }
     }
 }
