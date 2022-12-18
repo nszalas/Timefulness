@@ -46,11 +46,16 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onLogout() {
-        logoutUser { result ->
-            when {
-                result.isSuccess -> _event.trySend(ProfileViewEvent.UserLoggedOut)
-                result.isFailure -> _event.trySend(ProfileViewEvent.Error(result.exceptionOrNull()?.message))
+        viewModelScope.launch {
+            _state.mutate { copy(isLoading = true) }
+            try {
+                if(logoutUser().isSuccess) {
+                    _event.trySend(ProfileViewEvent.UserLoggedOut)
+                }
+            } catch (e: Exception) {
+                _event.trySend(ProfileViewEvent.Error(e.message))
             }
+            _state.mutate { copy(isLoading = false) }
         }
     }
 

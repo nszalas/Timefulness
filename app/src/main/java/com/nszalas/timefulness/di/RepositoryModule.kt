@@ -8,7 +8,7 @@ import com.nszalas.timefulness.mapper.domain.TaskWithCategoryDomainMapper
 import com.nszalas.timefulness.mapper.domain.UserDomainMapper
 import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import com.nszalas.timefulness.repository.CategoryRepository
-import com.nszalas.timefulness.repository.FirebaseRepository
+import com.nszalas.timefulness.repository.AuthenticationRepository
 import com.nszalas.timefulness.repository.TaskRepository
 import dagger.Module
 import dagger.Provides
@@ -40,5 +40,5 @@ class RepositoryModule {
     fun provideFirebaseRepository(
         dataSource: RemoteFirebaseDataSource,
         mapper: UserDomainMapper,
-    ): FirebaseRepository = FirebaseRepository(dataSource, mapper)
+    ): AuthenticationRepository = AuthenticationRepository(dataSource, mapper)
 }

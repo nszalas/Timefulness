@@ -1,10 +1,18 @@
 package com.nszalas.timefulness.ui.signIn
 
+import android.content.Intent
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.AuthCredential
 import com.nszalas.timefulness.domain.error.AuthenticationException
 import com.nszalas.timefulness.domain.error.InvalidEmailException
 import com.nszalas.timefulness.domain.error.InvalidPasswordException
+import com.nszalas.timefulness.domain.usecase.GetCredentialFromAccountUseCase
+import com.nszalas.timefulness.domain.usecase.SignInWithCredentialUseCase
 import com.nszalas.timefulness.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.nszalas.timefulness.extensions.EventsChannel
 import com.nszalas.timefulness.extensions.mutate
@@ -18,6 +26,9 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val validator: LoginFormValidator,
     private val signIn: SignInWithEmailAndPasswordUseCase,
+    private val googleSignInClient: GoogleSignInClient,
+    private val getCredentialFromAccount: GetCredentialFromAccountUseCase,
+    private val signInWithCredential: SignInWithCredentialUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInViewState())
@@ -28,6 +39,20 @@ class SignInViewModel @Inject constructor(
 
     fun onSignIn() {
         signInWithEmailAndPassword()
+    }
+
+    fun onGoogleSignIn() {
+        viewModelScope.launch {
+            getGoogleSignInIntent().let { intent ->
+                _event.trySend(SignInViewEvent.LaunchActivityWithIntent(intent))
+            }
+        }
+    }
+
+    fun signInWithCredentialFromActivityResult(result: ActivityResult) {
+        getCredentialFromActivityResult(result)?.let { credential ->
+            signInWithAuthCredential(credential)
+        }
     }
 
     fun onEmailEntered(email: String?) {
@@ -67,6 +92,19 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    private fun getGoogleSignInIntent(): Intent = googleSignInClient.signInIntent
+
+    private fun getCredentialFromActivityResult(result: ActivityResult): AuthCredential? {
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        return try {
+            val account = task.getResult(ApiException::class.java)
+            getCredentialFromAccount(account)
+        } catch (e: ApiException) {
+            _event.trySend(SignInViewEvent.Error(e.message))
+            null
+        }
+    }
+
     private fun signInWithEmailAndPassword() {
         viewModelScope.launch {
             _state.mutate { copy(isLoading = true) }
@@ -80,6 +118,20 @@ class SignInViewModel @Inject constructor(
                 }
                 _state.mutate { copy(isLoading = false) }
             }
+        }
+    }
+
+    private fun signInWithAuthCredential(credential: AuthCredential) {
+        viewModelScope.launch {
+            _state.mutate { copy(isLoading = true) }
+            try {
+                if(signInWithCredential(credential).isSuccess) {
+                    _event.trySend(SignInViewEvent.UserLoggedIn)
+                }
+            } catch (e: Exception) {
+                _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
+            }
+            _state.mutate { copy(isLoading = false) }
         }
     }
 }

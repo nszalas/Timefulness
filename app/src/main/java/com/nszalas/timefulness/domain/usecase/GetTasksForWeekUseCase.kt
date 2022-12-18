@@ -1,7 +1,7 @@
 package com.nszalas.timefulness.domain.usecase
 
 import com.nszalas.timefulness.mapper.ui.TaskWithCategoryUIMapper
-import com.nszalas.timefulness.repository.FirebaseRepository
+import com.nszalas.timefulness.repository.AuthenticationRepository
 import com.nszalas.timefulness.repository.TaskRepository
 import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import kotlinx.coroutines.flow.first
@@ -13,7 +13,7 @@ class GetTasksForWeekUseCase @Inject constructor(
     private val getStartOfWeekTimestamp: GetStartOfWeekTimestampUseCase,
     private val getEndOfWeekTimestamp: GetEndOfWeekTimestampUseCase,
     private val taskRepository: TaskRepository,
-    private val firebaseRepository: FirebaseRepository,
+    private val firebaseRepository: AuthenticationRepository,
     private val mapper: TaskWithCategoryUIMapper,
 ) {
     suspend operator fun invoke(date: LocalDate): List<TaskWithCategoryUI> {

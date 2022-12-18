@@ -1,5 +1,6 @@
 package com.nszalas.timefulness.di
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.nszalas.timefulness.infrastructure.remote.RemoteFirebaseDataSource
 import dagger.Module
@@ -16,5 +17,6 @@ class DataSourceModule {
     @Singleton
     fun provideFirebaseDataSource(
         firebaseAuth: FirebaseAuth,
-    ) = RemoteFirebaseDataSource(firebaseAuth)
+        googleSignInClient: GoogleSignInClient,
+    ) = RemoteFirebaseDataSource(firebaseAuth, googleSignInClient)
 }

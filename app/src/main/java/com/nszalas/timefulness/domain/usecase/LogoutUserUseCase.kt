@@ -1,10 +1,10 @@
 package com.nszalas.timefulness.domain.usecase
 
-import com.nszalas.timefulness.repository.FirebaseRepository
+import com.nszalas.timefulness.repository.AuthenticationRepository
 import javax.inject.Inject
 
 class LogoutUserUseCase @Inject constructor(
-    private val repository: FirebaseRepository
+    private val repository: AuthenticationRepository
 ) {
-    operator fun invoke(onResult: (Result<Unit>) -> Unit) = repository.logout(onResult)
+    suspend operator fun invoke(): Result<Unit> = repository.logout()
 }
