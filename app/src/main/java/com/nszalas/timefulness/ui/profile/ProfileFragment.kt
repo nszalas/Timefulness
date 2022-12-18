@@ -70,9 +70,7 @@ class ProfileFragment : Fragment() {
     private fun onNewEvent(event: ProfileViewEvent) {
         when(event) {
             is ProfileViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
-            ProfileViewEvent.UserLoggedOut -> findNavController().navigate(
-                ProfileFragmentDirections.actionNavigationProfileToFragmentStart()
-            )
+            ProfileViewEvent.UserLoggedOut -> findNavController().popBackStack(R.id.fragmentStart, inclusive = false)
         }
     }
 
