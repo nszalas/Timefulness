@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.nszalas.timefulness.ui.calendar.MyScrollView
+    <com.nszalas.timefulness.ui.calendar.calendar.MyScrollView
         android:id="@+id/week_events_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.nszalas.timefulness.ui.calendar.WeeklyViewGrid
+            <com.nszalas.timefulness.ui.calendar.calendar.WeeklyViewGrid
                 android:id="@+id/week_horizontal_grid_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -31,7 +31,7 @@
                 android:orientation="horizontal" />
 
         </RelativeLayout>
-    </com.nszalas.timefulness.ui.calendar.MyScrollView>
+    </com.nszalas.timefulness.ui.calendar.calendar.MyScrollView>
 
     <RelativeLayout
         android:id="@+id/week_top_holder"

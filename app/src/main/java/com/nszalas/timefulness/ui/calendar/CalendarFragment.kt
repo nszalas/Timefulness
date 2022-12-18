@@ -14,6 +14,10 @@ import androidx.viewpager.widget.ViewPager
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentCalendarBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import com.nszalas.timefulness.ui.calendar.calendar.MyFragmentHolder
+import com.nszalas.timefulness.ui.calendar.calendar.MyScrollView
+import com.nszalas.timefulness.ui.calendar.calendar.MyWeekPagerAdapter
+import com.nszalas.timefulness.ui.calendar.calendar.WeekFragmentListener
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDateTimeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDayCodeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getHours
@@ -86,7 +90,9 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
         when (event) {
             is CalendarViewEvent.NavigateEditTask -> {
                 findNavController().navigate(
-                    CalendarFragmentDirections.actionNavigationCalendarToAddTaskFragment(task = event.task)
+                    CalendarFragmentDirections.actionNavigationCalendarToTaskDetailsDialogFragment(
+                        task = event.task
+                    )
                 )
             }
             CalendarViewEvent.NavigateToAddTask -> {

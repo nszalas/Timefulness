@@ -112,7 +112,7 @@
             android:background="@drawable/stroke_bottom_right"
             android:importantForAccessibility="no" />
 
-        <com.nszalas.timefulness.ui.calendar.MyScrollView
+        <com.nszalas.timefulness.ui.calendar.calendar.MyScrollView
             android:id="@+id/weekViewHoursScrollview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-        </com.nszalas.timefulness.ui.calendar.MyScrollView>
+        </com.nszalas.timefulness.ui.calendar.calendar.MyScrollView>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/weekViewViewPager"
