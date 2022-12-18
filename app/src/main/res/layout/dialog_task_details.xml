@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundMain"
+    android:padding="16dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/heebo_bold"
+        android:maxLines="3"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Przykładowy tytuł zadania " />
+
+    <LinearLayout
+        android:id="@+id/labelsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskTitle">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/dateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heebo"
+            android:text="Data:"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/heebo"
+            android:text="Od:"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/endTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/heebo"
+            android:text="Do:"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/categoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/heebo"
+            android:text="Kategoria:"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/valuesLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/labelsLayout"
+        app:layout_constraintTop_toTopOf="@id/labelsLayout">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/dateValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heebo"
+            android:textSize="16sp"
+            tools:text="21.01.2023" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startTimeValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/heebo"
+            android:textSize="16sp"
+            tools:text="09:00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/endTimeValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/heebo"
+            android:textSize="16sp"
+            tools:text="10:00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/categoryValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/heebo"
+            android:maxLines="1"
+            android:textSize="16sp"
+            tools:text="😁 Przykładowa kategoria" />
+
+    </LinearLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/completedCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelsLayout" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/completedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/heebo"
+        android:text="Wykonane?"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/completedCheckbox"
+        app:layout_constraintStart_toEndOf="@id/completedCheckbox"
+        app:layout_constraintTop_toTopOf="@id/completedCheckbox" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteTaskButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Usuń"
+        app:layout_constraintEnd_toStartOf="@id/editTaskButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/completedCheckbox"
+        app:shapeAppearanceOverlay="@style/pill" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editTaskButton"
+        style="@style/Widget.Timefulness.ButtonStyle.Login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Edytuj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/deleteTaskButton"
+        app:layout_constraintTop_toBottomOf="@id/completedCheckbox"
+        app:shapeAppearanceOverlay="@style/pill" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

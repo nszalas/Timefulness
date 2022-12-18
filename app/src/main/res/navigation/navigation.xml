@@ -63,7 +63,7 @@
         android:id="@+id/navigation_calendar"
         android:name="com.nszalas.timefulness.ui.calendar.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" >
+        tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_navigation_calendar_to_addTaskFragment"
             app:destination="@id/addTaskFragment"
@@ -71,6 +71,9 @@
             app:exitAnim="@animator/nav_default_exit_anim"
             app:popEnterAnim="@animator/nav_default_pop_enter_anim"
             app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_navigation_calendar_to_taskDetailsDialogFragment"
+            app:destination="@id/taskDetailsDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_other"
@@ -106,4 +109,18 @@
             app:argType="com.nszalas.timefulness.ui.model.TaskWithCategoryUI"
             app:nullable="true" />
     </fragment>
+    <dialog
+        android:id="@+id/taskDetailsDialogFragment"
+        android:name="com.nszalas.timefulness.ui.taskDetails.TaskDetailsDialogFragment"
+        android:label="TaskDetailsDialogFragment"
+        tools:layout="@layout/dialog_task_details">
+        <argument
+            android:name="task"
+            android:defaultValue="@null"
+            app:argType="com.nszalas.timefulness.ui.model.TaskWithCategoryUI"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_taskDetailsDialogFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </dialog>
 </navigation>

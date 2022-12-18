@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.ui.calendar
+package com.nszalas.timefulness.ui.calendar.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater

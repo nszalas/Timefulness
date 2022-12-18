@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.ui.calendar
+package com.nszalas.timefulness.ui.calendar.calendar
 
 import android.util.Range
 
