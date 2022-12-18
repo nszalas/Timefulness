@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.nszalas.timefulness.databinding.FragmentOtherBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ class OtherFragment : Fragment() {
 
     private var _binding: FragmentOtherBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<OtherViewModel>()
+    private val viewModel by activityViewModels<OtherViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +32,7 @@ class OtherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         collectOnViewLifecycle(viewModel.state, ::onNewState)
+        viewModel.onRefresh()
         setupPomodoroCard()
     }
 
