@@ -1,7 +1,7 @@
 package com.nszalas.timefulness.mapper.domain
 
 import com.nszalas.timefulness.domain.model.Category
-import com.nszalas.timefulness.infrastructure.local.entity.CategoryEntity
+import com.nszalas.timefulness.infrastructure.local.room.entity.CategoryEntity
 import javax.inject.Inject
 
 class CategoryDomainMapper @Inject constructor() {

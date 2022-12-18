@@ -3,10 +3,7 @@ package com.nszalas.timefulness.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boyzdroizy.simpleandroidbarchart.model.ChartData
-import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
-import com.nszalas.timefulness.domain.usecase.GetTasksForWeekUseCase
-import com.nszalas.timefulness.domain.usecase.GetTasksForDateUseCase
-import com.nszalas.timefulness.domain.usecase.LogoutUserUseCase
+import com.nszalas.timefulness.domain.usecase.*
 import com.nszalas.timefulness.extensions.EventsChannel
 import com.nszalas.timefulness.extensions.asLocalDateTime
 import com.nszalas.timefulness.extensions.mutate

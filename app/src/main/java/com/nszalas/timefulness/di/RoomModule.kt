@@ -2,10 +2,10 @@ package com.nszalas.timefulness.di
 
 import android.content.Context
 import androidx.room.Room
-import com.nszalas.timefulness.infrastructure.local.AppDatabase
-import com.nszalas.timefulness.infrastructure.local.CategoryDao
-import com.nszalas.timefulness.infrastructure.local.Constants.DATABASE_NAME
-import com.nszalas.timefulness.infrastructure.local.TaskDao
+import com.nszalas.timefulness.infrastructure.local.room.AppDatabase
+import com.nszalas.timefulness.infrastructure.local.room.CategoryDao
+import com.nszalas.timefulness.infrastructure.local.room.Constants.DATABASE_NAME
+import com.nszalas.timefulness.infrastructure.local.room.TaskDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

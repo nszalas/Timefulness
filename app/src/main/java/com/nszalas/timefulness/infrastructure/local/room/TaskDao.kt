@@ -1,14 +1,14 @@
-package com.nszalas.timefulness.infrastructure.local
+package com.nszalas.timefulness.infrastructure.local.room
 
 import androidx.room.*
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_COMPLETED
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_END_TIMESTAMP
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_ID
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_START_TIMESTAMP
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_USER_ID
-import com.nszalas.timefulness.infrastructure.local.Constants.TABLE_TASK
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
-import com.nszalas.timefulness.infrastructure.local.entity.TaskWithCategoryEntity
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_COMPLETED
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_END_TIMESTAMP
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_ID
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_START_TIMESTAMP
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_USER_ID
+import com.nszalas.timefulness.infrastructure.local.room.Constants.TABLE_TASK
+import com.nszalas.timefulness.infrastructure.local.room.entity.TaskEntity
+import com.nszalas.timefulness.infrastructure.local.room.entity.TaskWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

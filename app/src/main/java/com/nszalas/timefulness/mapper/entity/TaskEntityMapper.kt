@@ -1,7 +1,7 @@
 package com.nszalas.timefulness.mapper.entity
 
 import com.nszalas.timefulness.domain.model.Task
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
+import com.nszalas.timefulness.infrastructure.local.room.entity.TaskEntity
 
 class TaskEntityMapper {
     operator fun invoke(task: Task) = with(task) {
