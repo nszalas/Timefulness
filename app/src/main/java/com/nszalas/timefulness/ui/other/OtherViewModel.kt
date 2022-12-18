@@ -23,8 +23,18 @@ class OtherViewModel @Inject constructor(): ViewModel() {
 
     init {
         initializePomodoro()
+    }
+
+    fun onRefresh() {
         loadAdviceForToday()
         loadTechniqueForToday()
+    }
+
+    fun onLogOut() {
+        viewModelScope.launch {
+            timer?.cancel()
+            onTimerStatusChanged(PomodoroStatus.Regular())
+        }
     }
 
     fun onTimerStatusChanged(status: PomodoroStatus) {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nszalas.timefulness.R
@@ -13,6 +14,7 @@ import com.nszalas.timefulness.databinding.FragmentProfileBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
 import com.nszalas.timefulness.extensions.loadImage
 import com.nszalas.timefulness.extensions.showToast
+import com.nszalas.timefulness.ui.other.OtherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.profile_today_tasks_card.*
 
@@ -21,6 +23,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels()
+    private val otherViewModel by activityViewModels<OtherViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,8 +73,10 @@ class ProfileFragment : Fragment() {
     private fun onNewEvent(event: ProfileViewEvent) {
         when(event) {
             is ProfileViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
-            ProfileViewEvent.UserLoggedOut -> findNavController().popBackStack(R.id.fragmentStart, inclusive = false)
+            ProfileViewEvent.UserLoggedOut -> {
+                otherViewModel.onLogOut()
+                findNavController().popBackStack(R.id.fragmentStart, inclusive = false)
+            }
         }
     }
-
 }
