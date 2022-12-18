@@ -1,17 +1,21 @@
 package com.nszalas.timefulness.repository
 
+import com.google.firebase.auth.AuthCredential
 import com.nszalas.timefulness.domain.model.User
 import com.nszalas.timefulness.infrastructure.remote.RemoteFirebaseDataSource
 import com.nszalas.timefulness.mapper.domain.UserDomainMapper
 import javax.inject.Inject
 
-class FirebaseRepository @Inject constructor(
+class AuthenticationRepository @Inject constructor(
     private val dataSource: RemoteFirebaseDataSource,
     private val mapper: UserDomainMapper,
 ) {
     fun getCurrentUser(): User? = dataSource.getCurrentUser()?.let { mapper(it) }
 
-    fun logout(onResult: (Result<Unit>) -> Unit) = dataSource.logout(onResult)
+    suspend fun logout(): Result<Unit> = dataSource.logout()
+
+    suspend fun signInWithCredential(credential: AuthCredential): Result<Unit> =
+        dataSource.signInWithCredential(credential)
 
     fun signInWithEmailAndPassword(
         email: String,

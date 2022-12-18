@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,10 @@ class FragmentSignIn : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<SignInViewModel>()
+
+    private val launcher = registerForActivityResult(StartActivityForResult()) { result ->
+        viewModel.signInWithCredentialFromActivityResult(result)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +45,7 @@ class FragmentSignIn : Fragment() {
 
     private fun setupViews() {
         binding.signInButton.setOnClickListener { viewModel.onSignIn() }
+        binding.signInGoogle.setOnClickListener { viewModel.onGoogleSignIn() }
         binding.email.setup(viewModel::onEmailEntered)
         binding.password.setup(viewModel::onPasswordEntered)
     }
@@ -58,6 +64,7 @@ class FragmentSignIn : Fragment() {
         when (event) {
             is SignInViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
             SignInViewEvent.UserLoggedIn -> findNavController().navigate(FragmentSignInDirections.actionFragmentSignInToNavigationCalendar())
+            is SignInViewEvent.LaunchActivityWithIntent -> launcher.launch(event.intent)
         }
     }
 }
