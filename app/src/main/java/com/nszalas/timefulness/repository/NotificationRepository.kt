@@ -1,9 +1,9 @@
 package com.nszalas.timefulness.repository
 
 import com.nszalas.timefulness.domain.model.NotificationData
+import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.infrastructure.local.LocalNotificationDataSource
 import com.nszalas.timefulness.infrastructure.local.LocalSchedulingDataSource
-import java.util.*
 import javax.inject.Inject
 
 class NotificationRepository @Inject constructor(
@@ -15,18 +15,11 @@ class NotificationRepository @Inject constructor(
         notificationDataSource.sendNotification(notificationData)
     }
 
-    fun closeNotification(notificationId: Int) {
-        notificationDataSource.closeNotification(notificationId)
+    fun setTaskReminder(triggerAtMillis: Long, task: Task) {
+        schedulingDataSource.setTaskReminder(triggerAtMillis, task)
     }
 
-    fun getNotificationDate(notificationId: Int): Date? =
-        notificationDataSource.getNotificationDate(notificationId)
-
-    fun setTaskReminder(triggerAtMillis: Long) {
-        schedulingDataSource.setTaskReminder(triggerAtMillis)
-    }
-
-    fun cancelTaskReminder() {
-        schedulingDataSource.cancelTaskReminder()
+    fun cancelTaskReminder(task: Task) {
+        schedulingDataSource.cancelTaskReminder(task)
     }
 }

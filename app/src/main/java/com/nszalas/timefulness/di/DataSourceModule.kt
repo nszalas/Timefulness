@@ -8,6 +8,7 @@ import com.nszalas.timefulness.infrastructure.local.LocalNotificationDataSource
 import com.nszalas.timefulness.infrastructure.local.LocalSchedulingDataSource
 import com.nszalas.timefulness.infrastructure.remote.RemoteFirebaseDataSource
 import com.nszalas.timefulness.utils.DateTimeProvider
+import com.nszalas.timefulness.utils.TimeFormatter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +39,6 @@ class DataSourceModule {
     fun provideLocalSchedulingDataSource(
         @ApplicationContext context: Context,
         alarmManager: AlarmManager,
-        dateTimeProvider: DateTimeProvider,
-    ) = LocalSchedulingDataSource(context, alarmManager, dateTimeProvider)
+        timeFormatter: TimeFormatter,
+    ) = LocalSchedulingDataSource(context, alarmManager, timeFormatter)
 }

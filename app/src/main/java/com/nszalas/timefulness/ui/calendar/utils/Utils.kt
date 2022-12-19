@@ -12,33 +12,13 @@ import java.util.*
 
 fun DateTime.seconds() = millis / 1000L
 
-
-// hide the actual notification from the top bar
-// todo notification stuff
-//fun Context.cancelNotification(id: Long) {
-//    (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancel(id.toInt())
-//}
-//
-//fun Context.getNotificationIntent(event: Event): PendingIntent {
-//    val intent = Intent(this, NotificationReceiver::class.java)
-//    intent.putExtra(EVENT_ID, event.id)
-//    intent.putExtra(EVENT_OCCURRENCE_TS, event.startTS)
-//    return PendingIntent.getBroadcast(this, event.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-//}
-//
-//fun Context.cancelPendingIntent(id: Long) {
-//    val intent = Intent(this, NotificationReceiver::class.java)
-//    PendingIntent.getBroadcast(this, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE).cancel()
-//}
-
 fun Context.getWeeklyViewItemHeight(): Float {
     return resources.getDimension(R.dimen.weekly_view_row_height)
 }
 
-fun Context.getDatesWeekDateTime(date: DateTime): String {
+fun getDatesWeekDateTime(date: DateTime): String {
     val currentOffsetHours = TimeZone.getDefault().rawOffset / 1000 / 60 / 60
 
-    // not great, not terrible
     val useHours = if (currentOffsetHours >= 10) 8 else 12
     var thisWeek =
         date.withZone(DateTimeZone.UTC).withDayOfWeek(1).withHourOfDay(useHours).minusDays(

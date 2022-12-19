@@ -17,12 +17,17 @@ class NotificationTaskReminderReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        if(intent?.action == STATUS_REMINDER_ACTION) {
+        if(intent?.action == TASK_REMINDER_ACTION) {
+            val title = intent.getStringExtra(NOTIFICATION_EXTRA_TITLE) ?: "Timefulness"
+            val id = intent.getIntExtra(NOTIFICATION_EXTRA_ID, 0)
+            val altContent = "Nadchodzące wydarzenie"
+            val body = intent.getStringExtra(NOTIFICATION_EXTRA_TEXT) ?: altContent
             sendNotification(
                 NotificationData(
-                    title = "title",
-                    body = "body",
-                    alternativeContent = "alt content",
+                    id = id,
+                    title = title,
+                    body = body,
+                    alternativeContent = altContent,
                     smallIconRes = R.drawable.ic_launcher_foreground
                 )
             )

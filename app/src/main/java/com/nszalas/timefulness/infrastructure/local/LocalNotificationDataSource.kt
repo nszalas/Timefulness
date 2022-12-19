@@ -11,13 +11,11 @@ import com.nszalas.timefulness.R
 import com.nszalas.timefulness.domain.model.NotificationData
 import com.nszalas.timefulness.extensions.millis
 import com.nszalas.timefulness.utils.DateTimeProvider
-import java.util.*
 import javax.inject.Inject
 
 private const val NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_TASK"
 private const val NOTIFICATION_ACTION_REQUEST_CODE = 1001
 private const val NOTIFICATION_CHANNEL_NAME = "Task"
-private const val NOTIFICATION_ID = 17012006
 
 class LocalNotificationDataSource @Inject constructor(
     private val context: Context,
@@ -37,15 +35,6 @@ class LocalNotificationDataSource @Inject constructor(
         )
     }
 
-    fun getNotificationDate(notificationId: Int): Date? =
-        notificationManager.activeNotifications.firstOrNull {
-            it.id == notificationId
-        }?.notification?.`when`?.toDate()
-
-    fun closeNotification(notificationId: Int) {
-        notificationManager.cancel(notificationId)
-    }
-
     fun sendNotification(notificationData: NotificationData) {
         val channel = NotificationChannel(
             NOTIFICATION_CHANNEL_ID,
@@ -53,21 +42,19 @@ class LocalNotificationDataSource @Inject constructor(
             NotificationManager.IMPORTANCE_HIGH
         )
         val notification = context.getNotification(
-            NOTIFICATION_ID,
             channel,
             notificationData
         )
         with(notificationManager) {
             createNotificationChannel(channel)
-            notify(NOTIFICATION_ID, notification)
+            notify(notificationData.id, notification)
         }
     }
 
     private fun Context.getNotification(
-        notificationId: Int,
         channel: NotificationChannel,
         notificationData: NotificationData
-    ) = with(notificationData) {
+    ): Notification = with(notificationData) {
         Notification.Builder(context, channel.id).apply {
             setContentTitle(title)
             setContentText(body ?: alternativeContent)
@@ -81,6 +68,4 @@ class LocalNotificationDataSource @Inject constructor(
             setAutoCancel(true)
         }.build()
     }
-
-    private fun Long.toDate(): Date = Date(this)
 }

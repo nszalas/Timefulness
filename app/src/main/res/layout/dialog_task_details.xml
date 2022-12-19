@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/heebo"
-            android:text="Data:"
+            android:text="@string/dialog_task_details_date_label"
             android:textSize="16sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/heebo"
-            android:text="Od:"
+            android:text="@string/dialog_task_details_from_label"
             android:textSize="16sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/heebo"
-            android:text="Do:"
+            android:text="@string/dialog_task_details_to_label"
             android:textSize="16sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/heebo"
-            android:text="Kategoria:"
+            android:text="@string/dialog_task_details_category_label"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/heebo"
-        android:text="Wykonane?"
+        android:text="@string/dialog_task_details_completed"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/completedCheckbox"
         app:layout_constraintStart_toEndOf="@id/completedCheckbox"
@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="Usuń"
+        android:text="@string/dialog_task_details_delete"
         app:layout_constraintEnd_toStartOf="@id/editTaskButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/completedCheckbox"
@@ -157,7 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="Edytuj"
+        android:text="@string/dialog_task_details_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/deleteTaskButton"
         app:layout_constraintTop_toBottomOf="@id/completedCheckbox"

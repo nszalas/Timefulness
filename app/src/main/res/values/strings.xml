@@ -75,6 +75,14 @@
     <string name="today_tasks_for_today">Zadania na dzisiaj:</string>
     <string name="today_no_tasks_added">Nie dodałeś/aś jeszcze żadnych zadań na dzisiaj.</string>
 
+    <string name="dialog_task_details_date_label">Data:</string>
+    <string name="dialog_task_details_from_label">Od:</string>
+    <string name="dialog_task_details_to_label">Do:</string>
+    <string name="dialog_task_details_category_label">Kategoria:</string>
+    <string name="dialog_task_details_completed">Wykonane?</string>
+    <string name="dialog_task_details_delete">Usuń</string>
+    <string name="dialog_task_details_edit">Edytuj</string>
+
     <string name="menu_other">Inne</string>
     <string name="menu_calendar">Kalendarz</string>
     <string name="menu_today">Dzisiaj</string>
