@@ -1,11 +1,11 @@
-package com.nszalas.timefulness.infrastructure.local.entity
+package com.nszalas.timefulness.infrastructure.local.room.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.nszalas.timefulness.infrastructure.local.Constants.COLUMN_TASK_ID
-import com.nszalas.timefulness.infrastructure.local.Constants.TABLE_TASK
+import com.nszalas.timefulness.infrastructure.local.room.Constants.COLUMN_TASK_ID
+import com.nszalas.timefulness.infrastructure.local.room.Constants.TABLE_TASK
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

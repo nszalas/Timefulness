@@ -3,12 +3,10 @@ package com.nszalas.timefulness.ui.addTask
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nszalas.timefulness.domain.model.Task
-import com.nszalas.timefulness.domain.usecase.DeleteTaskWithIdUseCase
-import com.nszalas.timefulness.domain.usecase.GetCategoriesUseCase
-import com.nszalas.timefulness.domain.usecase.GetCurrentUserUseCase
-import com.nszalas.timefulness.domain.usecase.InsertTaskUseCase
+import com.nszalas.timefulness.domain.usecase.*
 import com.nszalas.timefulness.extensions.*
 import com.nszalas.timefulness.ui.model.CategoryUI
+import com.nszalas.timefulness.ui.model.TaskUI
 import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import com.nszalas.timefulness.utils.DateFormatter
 import com.nszalas.timefulness.utils.DateTimeProvider
@@ -32,7 +30,9 @@ class AddTaskViewModel @Inject constructor(
     private val getCategories: GetCategoriesUseCase,
     private val getCurrentUser: GetCurrentUserUseCase,
     private val insertTask: InsertTaskUseCase,
-    private val deleteTaskWithId: DeleteTaskWithIdUseCase
+    private val deleteTaskWithId: DeleteTaskWithIdUseCase,
+    private val setTaskReminderUseCase: SetTaskReminderUseCase,
+    private val cancelTaskReminderUseCase: CancelTaskReminderUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddTaskViewState())
     val state: StateFlow<AddTaskViewState> = _state.asStateFlow()
@@ -207,6 +207,10 @@ class AddTaskViewModel @Inject constructor(
 
     fun onTaskEditing(taskWithCategory: TaskWithCategoryUI) {
         with(taskWithCategory) {
+            viewModelScope.launch {
+                _state.mutate { copy(editingTask = taskWithCategory) }
+            }
+
             val startDateTime = runBlocking { task.startTimestamp.asLocalDateTime(task.timezoneId) }
             val endDateTime = runBlocking { task.endTimestamp.asLocalDateTime(task.timezoneId) }
 
@@ -224,20 +228,56 @@ class AddTaskViewModel @Inject constructor(
                         categoryId = category.id,
                         isEditing = true,
                         editingTaskId = task.id,
-                        editingTaskCompleted = task.completed
+                        editingTaskCompleted = task.completed,
                     )
                 }
             }
         }
     }
 
-    fun onAddClicked() { addTask() }
+    fun onAddClicked() {
+        addTask()
+    }
 
-    fun onDeleteClicked() { deleteTask() }
+    fun onDeleteClicked() {
+        deleteTask()
+    }
 
     private fun addTask() {
+        val task = getTaskFromState() ?: return
+
+        val taskId = runBlocking(IO) { insertTask(task) }
+
+        with(task.copy(id = taskId.toInt())) {
+            when (state.value.isEditing) {
+                true -> updateTaskReminder(this)
+                false -> setTaskReminder(this)
+            }
+        }
+
+        viewModelScope.launch {
+            _event.sendIfActive(AddTaskViewEvent.NavigateBack)
+        }
+    }
+
+    private fun deleteTask() {
+        val task = getTaskFromState() ?: return
+
+        if (state.value.isEditing) {
+            val taskId = state.value.editingTaskId
+
+            runBlocking(IO) { deleteTaskWithId(taskId) }
+            cancelTaskReminder(task)
+
+            viewModelScope.launch {
+                _event.trySend(AddTaskViewEvent.NavigateBack)
+            }
+        }
+    }
+
+    private fun getTaskFromState(): Task? {
         val user = getCurrentUser()
-        user ?: return
+        user ?: return null
 
         val localDate = dateFormatter.parseDate(state.value.date)
         val localStartTime = timeFormatter.parseTime(state.value.startTime)
@@ -246,7 +286,7 @@ class AddTaskViewModel @Inject constructor(
         val taskId = state.value.editingTaskId
         val taskCompleted = state.value.editingTaskCompleted
 
-        val task = Task(
+        return Task(
             id = taskId,
             userId = user.id,
             title = state.value.taskTitle,
@@ -256,20 +296,26 @@ class AddTaskViewModel @Inject constructor(
             timezoneId = ZoneId.systemDefault().id,
             completed = taskCompleted,
         )
-        runBlocking(IO) { insertTask(task) }
-        viewModelScope.launch {
-            _event.sendIfActive(AddTaskViewEvent.NavigateBack)
-        }
     }
 
-    private fun deleteTask() {
-        if(state.value.isEditing) {
-            val taskId = state.value.editingTaskId
+    // reminder notifications
 
-            runBlocking(IO) { deleteTaskWithId(taskId) }
-            viewModelScope.launch {
-                _event.trySend(AddTaskViewEvent.NavigateBack)
-            }
-        }
+    private fun updateTaskReminder(task: Task) {
+        val initialTask = state.value.editingTask?.task ?: return
+
+        cancelTaskReminder(initialTask)
+        setTaskReminder(task)
+    }
+
+    private fun setTaskReminder(task: Task) {
+        setTaskReminderUseCase(task)
+    }
+
+    private fun cancelTaskReminder(task: Task) {
+        cancelTaskReminderUseCase(task)
+    }
+
+    private fun cancelTaskReminder(task: TaskUI) {
+        cancelTaskReminderUseCase(task)
     }
 }

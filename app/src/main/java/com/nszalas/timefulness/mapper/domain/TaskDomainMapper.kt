@@ -1,7 +1,7 @@
 package com.nszalas.timefulness.mapper.domain
 
 import com.nszalas.timefulness.domain.model.Task
-import com.nszalas.timefulness.infrastructure.local.entity.TaskEntity
+import com.nszalas.timefulness.infrastructure.local.room.entity.TaskEntity
 import com.nszalas.timefulness.ui.model.TaskUI
 
 class TaskDomainMapper {

@@ -78,9 +78,9 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
             ColorDrawable(requireContext().getProperBackgroundColor())
         binding.weekViewHolder.weekViewHoursHolder.setPadding(0, 0, 0, itemHeight)
 
-        val dateTimeString = requireContext().getDatesWeekDateTime(DateTime())
+        val dateTimeString = getDatesWeekDateTime(DateTime())
         currentWeekTS = (DateTime.parse(dateTimeString) ?: DateTime()).seconds()
-        thisWeekTS = DateTime.parse(requireContext().getDatesWeekDateTime(DateTime())).seconds()
+        thisWeekTS = DateTime.parse(getDatesWeekDateTime(DateTime())).seconds()
 
         viewPager.id = (System.currentTimeMillis() % 100000).toInt()
         setupFragment()

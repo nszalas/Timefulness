@@ -1,4 +1,4 @@
-package com.nszalas.timefulness.infrastructure.local
+package com.nszalas.timefulness.infrastructure.local.room
 
 object Constants {
     const val DATABASE_NAME = "timefulness_database"

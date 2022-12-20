@@ -2,11 +2,10 @@ package com.nszalas.timefulness.repository
 
 import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.domain.model.TaskWithCategory
-import com.nszalas.timefulness.infrastructure.local.TaskDao
+import com.nszalas.timefulness.infrastructure.local.room.TaskDao
 import com.nszalas.timefulness.mapper.domain.TaskWithCategoryDomainMapper
 import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -37,7 +36,7 @@ class TaskRepository @Inject constructor(
              taskCategoryMapper(task)
         }
 
-    suspend fun insert(task: Task) = taskDao.insert(taskEntityMapper(task))
+    suspend fun insert(task: Task): Long = taskDao.insert(taskEntityMapper(task))
 
     suspend fun update(task: Task) = taskDao.update(taskEntityMapper(task))
 

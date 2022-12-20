@@ -2,6 +2,7 @@ package com.nszalas.timefulness.ui.taskDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nszalas.timefulness.domain.usecase.CancelTaskReminderUseCase
 import com.nszalas.timefulness.domain.usecase.DeleteTaskWithIdUseCase
 import com.nszalas.timefulness.domain.usecase.UpdateTaskUseCase
 import com.nszalas.timefulness.extensions.EventsChannel
@@ -23,6 +24,7 @@ class TaskDetailsViewModel @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val updateTask: UpdateTaskUseCase,
     private val deleteTaskWithId: DeleteTaskWithIdUseCase,
+    private val cancelTaskReminder: CancelTaskReminderUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(TaskDetailsViewState())
     val state: StateFlow<TaskDetailsViewState> = _state.asStateFlow()
@@ -48,6 +50,7 @@ class TaskDetailsViewModel @Inject constructor(
         val task = state.value.taskWithCategory?.task ?: return
         viewModelScope.launch {
             deleteTaskWithId(task.id)
+            cancelTaskReminder(task)
             _event.trySend(TaskDetailsViewEvent.DeleteTask)
         }
     }
