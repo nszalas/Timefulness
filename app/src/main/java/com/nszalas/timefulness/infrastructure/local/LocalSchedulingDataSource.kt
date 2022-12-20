@@ -4,14 +4,13 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.extensions.asLocalDateTime
 import com.nszalas.timefulness.utils.TimeFormatter
 import java.time.ZoneId
 import javax.inject.Inject
 
-const val TASK_REMINDER_ACTION = "STATUS_REMINDER_ACTION"
+const val TASK_REMINDER_ACTION = "TASK_REMINDER_ACTION"
 const val NOTIFICATION_EXTRA_TITLE = "NOTIFICATION_EXTRA_TITLE"
 const val NOTIFICATION_EXTRA_TEXT = "NOTIFICATION_EXTRA_TEXT"
 const val NOTIFICATION_EXTRA_ID = "NOTIFICATION_EXTRA_ID"
@@ -65,7 +64,7 @@ class LocalSchedulingDataSource @Inject constructor(
             context,
             task.id,
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
         )
     }
 }

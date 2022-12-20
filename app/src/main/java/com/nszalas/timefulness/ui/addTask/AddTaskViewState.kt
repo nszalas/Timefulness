@@ -1,6 +1,7 @@
 package com.nszalas.timefulness.ui.addTask
 
 import com.nszalas.timefulness.ui.model.CategoryUI
+import com.nszalas.timefulness.ui.model.TaskWithCategoryUI
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -15,6 +16,7 @@ data class AddTaskViewState(
     val addButtonEnabled: Boolean = false,
 
     val isEditing: Boolean = false,
+    val editingTask: TaskWithCategoryUI? = null,
     val editingTaskId: Int = 0,
     val editingTaskCompleted: Boolean = false
 )

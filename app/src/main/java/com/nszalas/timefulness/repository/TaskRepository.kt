@@ -36,7 +36,7 @@ class TaskRepository @Inject constructor(
              taskCategoryMapper(task)
         }
 
-    suspend fun insert(task: Task) = taskDao.insert(taskEntityMapper(task))
+    suspend fun insert(task: Task): Long = taskDao.insert(taskEntityMapper(task))
 
     suspend fun update(task: Task) = taskDao.update(taskEntityMapper(task))
 

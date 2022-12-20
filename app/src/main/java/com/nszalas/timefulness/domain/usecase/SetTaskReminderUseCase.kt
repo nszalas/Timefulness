@@ -16,6 +16,7 @@ class SetTaskReminderUseCase @Inject constructor(
         val notificationTime =
             task.startTimestamp.asLocalDateTime(task.timezoneId)
                 .minusMinutes(remindMinutesBeforeTask.toLong())
+                .withSecond(0)
         repository.setTaskReminder(triggerAtMillis = notificationTime.millis(), task)
     }
 }
