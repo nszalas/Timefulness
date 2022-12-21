@@ -14,10 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentCalendarBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
-import com.nszalas.timefulness.ui.calendar.calendar.MyFragmentHolder
-import com.nszalas.timefulness.ui.calendar.calendar.MyScrollView
-import com.nszalas.timefulness.ui.calendar.calendar.MyWeekPagerAdapter
-import com.nszalas.timefulness.ui.calendar.calendar.WeekFragmentListener
+import com.nszalas.timefulness.ui.calendar.calendar.*
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDateTimeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getDayCodeFromTS
 import com.nszalas.timefulness.ui.calendar.utils.Formatter.getHours
@@ -53,10 +50,11 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
         binding.weekViewHolder
     }
 
+    private lateinit var pageChangedListener: PageChangedListener
+
     private var defaultWeeklyPage = 0
     private var thisWeekTS = 0L
     private var currentWeekTS = 0L
-    private var isGoToTodayVisible = false
     private var weekScrollY = 0
 
     override fun onCreateView(
@@ -64,7 +62,9 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        if(_binding == null) {
+            _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        }
         return getPersistentView(_binding)
     }
 
@@ -118,27 +118,8 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
 
         viewPager.apply {
             adapter = weeklyAdapter
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {}
-
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                }
-
-                override fun onPageSelected(position: Int) {
-                    currentWeekTS = weekTSs[position]
-                    val shouldGoToTodayBeVisible = shouldGoToTodayBeVisible()
-                    if (isGoToTodayVisible != shouldGoToTodayBeVisible) {
-//                        (activity as? MainActivity)?.toggleGoToTodayVisibility(shouldGoToTodayBeVisible)
-                        isGoToTodayVisible = shouldGoToTodayBeVisible
-                    }
-
-                    setupWeeklyActionbarTitle(weekTSs[position])
-                }
-            })
+            pageChangedListener = PageChangedListener(currentWeekTS, weekTSs, ::setupWeeklyActionbarTitle)
+            addOnPageChangeListener(pageChangedListener)
             currentItem = defaultWeeklyPage
         }
 
@@ -204,6 +185,7 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
         }
         val weekString = "${getString(R.string.week)} ${startDateTime.plusDays(3).weekOfWeekyear}"
         val yearString = "${endDateTime.year}"
+
         binding.weekTextView.text = weekString
         binding.monthTextView.text = monthsString
         binding.yearTextView.text = yearString
@@ -313,6 +295,7 @@ class CalendarFragment : MyFragmentHolder(), WeekFragmentListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        viewPager.removeOnPageChangeListener(pageChangedListener)
+        //_binding = null
     }
 }
