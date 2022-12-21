@@ -33,6 +33,12 @@ interface TaskDao {
     fun getAllTasks(): Flow<List<TaskWithCategoryEntity>>
 
     @Query("SELECT * FROM $TABLE_TASK " +
+            "WHERE $COLUMN_TASK_USER_ID == :userId " +
+            "AND $COLUMN_TASK_START_TIMESTAMP >= :nowTimestamp " +
+            "AND $COLUMN_TASK_COMPLETED == 0")
+    suspend fun getAllFutureUncompletedTasks(nowTimestamp: Long, userId: String): List<TaskWithCategoryEntity>
+
+    @Query("SELECT * FROM $TABLE_TASK " +
             "WHERE $COLUMN_TASK_START_TIMESTAMP >= :startTimestamp " +
             "AND $COLUMN_TASK_END_TIMESTAMP < :endTimestamp " +
             "AND $COLUMN_TASK_USER_ID == :userId " +

@@ -6,6 +6,6 @@ import javax.inject.Inject
 class UpdateUserDisplayNameUseCase @Inject constructor(
     private val repository: AuthenticationRepository
 ) {
-    operator fun invoke(name: String, onResult: (Result<Unit>) -> Unit) =
-        repository.updateUserDisplayName(name, onResult)
+    suspend operator fun invoke(name: String): Result<Unit> =
+        repository.updateUserDisplayName(name)
 }
