@@ -18,6 +18,11 @@ class TaskRepository @Inject constructor(
         list.map { taskCategoryMapper(it) }
     }
 
+    suspend fun getFutureUncompletedTasks(nowTimestamp: Long, userId: String): List<TaskWithCategory> =
+        taskDao.getAllFutureUncompletedTasks(nowTimestamp, userId).map {
+            taskCategoryMapper(it)
+        }
+
     fun observeTasksForUserBetweenTimestamps(
         startTimestamp: Long,
         endTimestamp: Long,

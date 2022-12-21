@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import com.nszalas.timefulness.domain.model.Task
 import com.nszalas.timefulness.extensions.asLocalDateTime
+import com.nszalas.timefulness.extensions.log
 import com.nszalas.timefulness.utils.TimeFormatter
 import java.time.ZoneId
 import javax.inject.Inject
@@ -20,14 +21,18 @@ class LocalSchedulingDataSource @Inject constructor(
     private val alarmManager: AlarmManager,
     private val timeFormatter: TimeFormatter,
 ) {
-    fun setTaskReminder(triggerAtMillis: Long, task: Task) = try {
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            triggerAtMillis,
-            getTaskReminderPendingIntent(task)
-        )
-    } catch (e: Exception) {
-        // todo
+    fun setTaskReminder(triggerAtMillis: Long, task: Task) {
+        if (task.completed) return
+
+        try {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                triggerAtMillis,
+                getTaskReminderPendingIntent(task)
+            )
+        } catch (e: Exception) {
+            // todo
+        }
     }
 
     fun cancelTaskReminder(task: Task) = try {

@@ -6,7 +6,6 @@ import javax.inject.Inject
 class RegisterWithEmailAndPasswordUseCase @Inject constructor(
     private val repository: AuthenticationRepository,
 ) {
-    operator fun invoke(email: String, password: String, onResult: (Result<Unit>) -> Unit) {
-        repository.registerWithEmailAndPassword(email, password) { result -> onResult(result) }
-    }
+    suspend operator fun invoke(email: String, password: String): Result<Unit> =
+        repository.registerWithEmailAndPassword(email, password)
 }

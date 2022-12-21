@@ -5,6 +5,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.nszalas.timefulness.domain.error.NoLoggedInUserException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -33,47 +34,46 @@ class RemoteFirebaseDataSource @Inject constructor(
         }
     }
 
-    fun signInWithEmailAndPassword(
+    suspend fun signInWithEmailAndPassword(
         email: String,
         password: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                onResult(Result.success(Unit))
-            }.addOnFailureListener { exception ->
-                onResult(Result.failure(exception))
-            }
+    ): Result<Unit> {
+        return try {
+            firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
     }
 
-    fun registerWithEmailAndPassword(
+    suspend fun registerWithEmailAndPassword(
         email: String,
         password: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                onResult(Result.success(Unit))
-            }.addOnFailureListener { exception ->
-                onResult(Result.failure(exception))
-            }
+    ): Result<Unit> {
+        return try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    fun updateUserDisplayName(
+    suspend fun updateUserDisplayName(
         name: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        val user = getCurrentUser() ?: return
+    ): Result<Unit> {
+        val user = getCurrentUser() ?: return Result.failure(NoLoggedInUserException())
 
         val update = UserProfileChangeRequest.Builder()
             .setDisplayName(name)
             .build()
 
-        user.updateProfile(update)
-            .addOnSuccessListener {
-                onResult(Result.success(Unit))
-            }.addOnFailureListener { exception ->
-                onResult(Result.failure(exception))
-            }
+        return try {
+            user.updateProfile(update).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
     }
 }

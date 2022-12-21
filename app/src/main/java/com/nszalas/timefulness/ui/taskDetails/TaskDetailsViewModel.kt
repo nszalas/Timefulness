@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nszalas.timefulness.domain.usecase.CancelTaskReminderUseCase
 import com.nszalas.timefulness.domain.usecase.DeleteTaskWithIdUseCase
-import com.nszalas.timefulness.domain.usecase.UpdateTaskUseCase
+import com.nszalas.timefulness.domain.usecase.UpdateTaskCompletionUseCase
 import com.nszalas.timefulness.extensions.EventsChannel
 import com.nszalas.timefulness.extensions.asLocalDateTime
 import com.nszalas.timefulness.extensions.mutate
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class TaskDetailsViewModel @Inject constructor(
     private val timeFormatter: TimeFormatter,
     private val dateFormatter: DateFormatter,
-    private val updateTask: UpdateTaskUseCase,
+    private val updateTask: UpdateTaskCompletionUseCase,
     private val deleteTaskWithId: DeleteTaskWithIdUseCase,
     private val cancelTaskReminder: CancelTaskReminderUseCase,
 ) : ViewModel() {
@@ -36,7 +36,7 @@ class TaskDetailsViewModel @Inject constructor(
         val task = state.value.taskWithCategory?.task ?: return
         viewModelScope.launch {
             runBlocking(Dispatchers.IO) {
-                updateTask(task.copy(completed = completed))
+                updateTask(task, completed)
             }
             _state.mutate { copy(completed = completed) }
         }

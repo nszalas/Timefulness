@@ -4,9 +4,16 @@ import com.nszalas.timefulness.repository.AuthenticationRepository
 import javax.inject.Inject
 
 class SignInWithEmailAndPasswordUseCase @Inject constructor(
-    private val repository: AuthenticationRepository
+    private val repository: AuthenticationRepository,
+    private val setAllFutureTasksReminders: SetAllFutureTasksRemindersUseCase,
 ) {
-    operator fun invoke(email: String, password: String, onResult: (Result<Unit>) -> Unit) {
-        repository.signInWithEmailAndPassword(email, password) { result -> onResult(result) }
+    suspend operator fun invoke(email: String, password: String): Result<Unit> {
+        val result = repository.signInWithEmailAndPassword(email, password)
+
+        if (result.isSuccess) {
+            setAllFutureTasksReminders()
+        }
+
+        return result
     }
 }

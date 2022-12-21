@@ -46,23 +46,27 @@ class SignUpViewModel @Inject constructor(
                     _state.mutate { copy(isLoading = false) }
                 }
                 else -> {
-                    register(email, password) { result ->
-                        if (result.isFailure) {
-                            _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
-                            _state.mutate { copy(isLoading = false) }
-                        } else {
-                            setUserName(name) {
+                    try{
+                        if(register(email, password).isSuccess) {
+                            if(setUserName(name).isSuccess) {
                                 _event.trySend(SignUpViewEvent.SignUpSuccess)
                                 _state.mutate { copy(isLoading = false) }
+                            } else {
+                                _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
+                                _state.mutate { copy(isLoading = false) }
                             }
+                        } else {
+                            _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
+                            _state.mutate { copy(isLoading = false) }
                         }
+                    } catch (e: Exception) {
+                        _state.mutate { copy(isLoading = false) }
+                        _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
                     }
                 }
             }
         }
     }
 
-    private fun setUserName(name: String, onResult: (Result<Unit>) -> Unit) {
-        updateUserName(name, onResult)
-    }
+    private suspend fun setUserName(name: String): Result<Unit> = updateUserName(name)
 }

@@ -108,16 +108,16 @@ class SignInViewModel @Inject constructor(
     private fun signInWithEmailAndPassword() {
         viewModelScope.launch {
             _state.mutate { copy(isLoading = true) }
-            val email = state.value.email ?: return@launch
-            val password = state.value.password ?: return@launch
-            signIn(email, password) { result ->
-                if (result.isFailure) {
-                    _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
-                } else {
+            try {
+                val email = state.value.email ?: return@launch
+                val password = state.value.password ?: return@launch
+                if(signIn(email, password).isSuccess) {
                     _event.trySend(SignInViewEvent.UserLoggedIn)
                 }
-                _state.mutate { copy(isLoading = false) }
+            } catch (e: Exception) {
+                _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
             }
+            _state.mutate { copy(isLoading = false) }
         }
     }
 

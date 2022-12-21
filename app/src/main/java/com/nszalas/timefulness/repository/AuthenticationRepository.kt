@@ -17,26 +17,17 @@ class AuthenticationRepository @Inject constructor(
     suspend fun signInWithCredential(credential: AuthCredential): Result<Unit> =
         dataSource.signInWithCredential(credential)
 
-    fun signInWithEmailAndPassword(
+    suspend fun signInWithEmailAndPassword(
         email: String,
         password: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        dataSource.signInWithEmailAndPassword(email, password, onResult)
-    }
+    ): Result<Unit> = dataSource.signInWithEmailAndPassword(email, password)
 
-    fun registerWithEmailAndPassword(
+    suspend fun registerWithEmailAndPassword(
         email: String,
         password: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        dataSource.registerWithEmailAndPassword(email, password, onResult)
-    }
+    ): Result<Unit> = dataSource.registerWithEmailAndPassword(email, password)
 
-    fun updateUserDisplayName(
+    suspend fun updateUserDisplayName(
         name: String,
-        onResult: (Result<Unit>) -> Unit
-    ) {
-        dataSource.updateUserDisplayName(name, onResult)
-    }
+    ): Result<Unit> = dataSource.updateUserDisplayName(name)
 }

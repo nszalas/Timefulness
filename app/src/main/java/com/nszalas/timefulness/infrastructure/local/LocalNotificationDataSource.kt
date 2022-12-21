@@ -21,7 +21,6 @@ class LocalNotificationDataSource @Inject constructor(
     private val context: Context,
     private val dateTimeProvider: DateTimeProvider,
 ) {
-
     private val notificationManager by lazy {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
