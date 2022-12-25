@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:591512066356:android:23b6f20beaacb629ea2d61",
+        "mobilesdk_app_id": "1:591512066356:android:39bf6611cb4ccb62ea2d61",
         "android_client_info": {
-          "package_name": "com.example.timefulness"
+          "package_name": "com.nszalas.timefulness"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "591512066356-hl9egdmdrvqh0aoutk4cu0aipv07pjc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nszalas.timefulness",
+            "certificate_hash": "74821d65e6be5581d1aed41bb3cc6d0866d33b06"
+          }
+        },
         {
           "client_id": "591512066356-i3r76ldovvguit9koe5ms8miqcoomb9s.apps.googleusercontent.com",
           "client_type": 3
@@ -37,18 +45,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:591512066356:android:39bf6611cb4ccb62ea2d61",
+        "mobilesdk_app_id": "1:591512066356:android:fdcf4a6aa0746975ea2d61",
         "android_client_info": {
-          "package_name": "com.nszalas.timefulness"
+          "package_name": "com.nszalas.timefulness.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "591512066356-4nfv4efq8dienp7ilo9ppdvsuldbs1ij.apps.googleusercontent.com",
+          "client_id": "591512066356-5g1a9pi93kddp9h1aier9nlh88aihq7g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.nszalas.timefulness",
-            "certificate_hash": "4cdb63c9c2d0aa0956c3bf1bcd53038b71450c99"
+            "package_name": "com.nszalas.timefulness.debug",
+            "certificate_hash": "c786270b724110adf81783e55d9bb26ab19b399e"
           }
         },
         {

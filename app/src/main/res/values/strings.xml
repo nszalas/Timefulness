@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Timefulness</string>
-
     <string name="log_in">Zaloguj się</string>
     <string name="sign_up">Zarejestruj się</string>
 
