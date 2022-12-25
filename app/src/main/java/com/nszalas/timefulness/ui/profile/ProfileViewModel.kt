@@ -98,12 +98,12 @@ class ProfileViewModel @Inject constructor(
 
     private fun generateChartData(tasks: List<TaskWithCategoryUI>): List<ChartData> =
         tasks.groupBy {
-            it.task.startTimestamp.asLocalDateTime(it.task.timezoneId).dayOfWeek
+            it.task.startTimestamp.asLocalDateTime(it.task.timezoneId).toLocalDate()
         }
             .toSortedMap()
             .map { entries ->
             ChartData(
-                label = entries.key.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                label = entries.key.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
                 value = entries.value.count { task -> task.task.completed },
                 maxValue = entries.value.count()
             )
