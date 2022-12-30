@@ -58,7 +58,7 @@ class LocalNotificationDataSource @Inject constructor(
             setContentTitle(title)
             setContentText(body ?: alternativeContent)
             style = Notification.BigTextStyle().bigText(body)
-            setSmallIcon(R.drawable.ic_launcher_foreground)
+            setSmallIcon(R.drawable.ic_logo)
             setShowWhen(true)
             setWhen(dateTimeProvider.currentDateTime().millis())
             setColor(applicationContext.getColor(R.color.greenMain))

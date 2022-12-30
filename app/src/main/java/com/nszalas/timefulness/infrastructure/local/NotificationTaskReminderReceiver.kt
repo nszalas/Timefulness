@@ -28,7 +28,7 @@ class NotificationTaskReminderReceiver: BroadcastReceiver() {
                     title = title,
                     body = body,
                     alternativeContent = altContent,
-                    smallIconRes = R.drawable.ic_launcher_foreground
+                    smallIconRes = R.drawable.ic_logo
                 )
             )
         }
