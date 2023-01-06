@@ -1,14 +1,21 @@
 package com.nszalas.timefulness.ui.other
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.text.toSpannable
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import com.nszalas.timefulness.R
 import com.nszalas.timefulness.databinding.FragmentOtherBinding
 import com.nszalas.timefulness.extensions.collectOnViewLifecycle
+import com.nszalas.timefulness.utils.LeadingMargin
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -49,7 +56,6 @@ class OtherFragment : Fragment() {
         with(binding.adviceCard) {
             root.isVisible = state.advice != null
 
-            this.title.text = state.advice?.title
             this.description.text = state.advice?.description
         }
 
@@ -57,7 +63,16 @@ class OtherFragment : Fragment() {
             root.isVisible = state.technique != null
 
             this.title.text = state.technique?.title
-            this.description.text = state.technique?.description
+
+            val image: Drawable? = getDrawable(requireContext(), R.drawable.ic_person_at_desk)
+            val spannable: SpannableString? = state.technique?.let { SpannableString(it.description) }
+
+            image?.let {
+                val margin = image.intrinsicWidth + 12
+                spannable?.setSpan(LeadingMargin(margin, 4), 0, spannable.length ?: 0, 0)
+            }
+
+            this.description.text = spannable
         }
 
         with(binding.pomodoroCard.pomodoroTimer) {

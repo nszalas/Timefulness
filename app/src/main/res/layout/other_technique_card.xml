@@ -35,7 +35,7 @@
             android:layout_marginBottom="11dp"
             app:dividerColor="@color/black" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider"
@@ -45,23 +45,27 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/description"
                 android:layout_width="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginEnd="18dp"
-                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
                 android:fontFamily="@font/heebo"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                tools:text="@string/other_technique_description_placeholder" />
+                tools:text="string/other_technique_description_placeholder string/other_technique_description_placeholder string/other_technique_description_placeholder string/other_technique_description_placeholder string/other_technique_description_placeholder" />
 
             <ImageView
                 android:id="@+id/techniqueImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
                 android:contentDescription="@string/other_technique_image_description"
                 android:src="@drawable/ic_person_at_desk" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 
