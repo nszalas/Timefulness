@@ -3,19 +3,24 @@ package com.nszalas.timefulness.ui.other
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nszalas.timefulness.domain.usecase.GetAdviceForTodayUseCase
+import com.nszalas.timefulness.domain.usecase.GetTechniqueForTodayUseCase
 import com.nszalas.timefulness.extensions.mutate
-import com.nszalas.timefulness.ui.model.AdviceUI
-import com.nszalas.timefulness.ui.model.TechniqueUI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class OtherViewModel @Inject constructor(): ViewModel() {
+class OtherViewModel @Inject constructor(
+    private val getTechniqueForToday: GetTechniqueForTodayUseCase,
+    private val getAdviceForToday: GetAdviceForTodayUseCase,
+) : ViewModel() {
     private val _state = MutableStateFlow(OtherViewState())
     val state: StateFlow<OtherViewState> = _state.asStateFlow()
 
@@ -82,17 +87,19 @@ class OtherViewModel @Inject constructor(): ViewModel() {
     }
 
     private fun loadTechniqueForToday() {
-        val technique = TechniqueUI(
-            title = "Przykładowa technika",
-            description = """
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
-                voluptate velit esse cillum dolore.
-            """.trimIndent().replace("\n", "")
-        )
+//        val technique = TechniqueUI(
+//            title = "Przykładowa technika",
+//            description = """
+//                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+//                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+//                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+//                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+//                voluptate velit esse cillum dolore.
+//            """.trimIndent().replace("\n", "")
+//        )
         viewModelScope.launch {
+            val technique = withContext(IO) { getTechniqueForToday() }
+
             _state.mutate {
                 copy(
                     technique = technique
@@ -102,17 +109,18 @@ class OtherViewModel @Inject constructor(): ViewModel() {
     }
 
     private fun loadAdviceForToday() {
-        val advice = AdviceUI(
-            title = "Porada na dziś",
-            description = """
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
-                voluptate velit esse cillum dolore.
-            """.trimIndent().replace("\n", "")
-        )
+//        val advice = AdviceUI(
+//            description = """
+//                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+//                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+//                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+//                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+//                voluptate velit esse cillum dolore.
+//            """.trimIndent().replace("\n", "")
+//        )
         viewModelScope.launch {
+            val advice = withContext(IO) { getAdviceForToday() }
+
             _state.mutate {
                 copy(
                     advice = advice,

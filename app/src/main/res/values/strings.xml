@@ -38,7 +38,7 @@
     <string name="other_technique_title_placeholder">Tytuł techiki</string>
     <string name="other_technique_description_placeholder">Opis techniki</string>
     <string name="other_technique_image_description">Zdjęcie z osobą przy biurku</string>
-    <string name="other_advice_title_placeholder">Tytuł porady</string>
+    <string name="other_advice_title">Porada na dziś</string>
     <string name="other_advice_description_placeholder">Opis porady</string>
     <string name="other_pomodoro_minute_placeholder">25</string>
     <string name="other_pomodoro_seconds_placeholder">00</string>

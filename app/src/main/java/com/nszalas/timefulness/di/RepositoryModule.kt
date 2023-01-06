@@ -2,17 +2,14 @@ package com.nszalas.timefulness.di
 
 import com.nszalas.timefulness.infrastructure.local.LocalNotificationDataSource
 import com.nszalas.timefulness.infrastructure.local.LocalSchedulingDataSource
+import com.nszalas.timefulness.infrastructure.local.room.AdviceDao
 import com.nszalas.timefulness.infrastructure.local.room.CategoryDao
 import com.nszalas.timefulness.infrastructure.local.room.TaskDao
+import com.nszalas.timefulness.infrastructure.local.room.TechniqueDao
 import com.nszalas.timefulness.infrastructure.remote.RemoteFirebaseDataSource
-import com.nszalas.timefulness.mapper.domain.CategoryDomainMapper
-import com.nszalas.timefulness.mapper.domain.TaskWithCategoryDomainMapper
-import com.nszalas.timefulness.mapper.domain.UserDomainMapper
+import com.nszalas.timefulness.mapper.domain.*
 import com.nszalas.timefulness.mapper.entity.TaskEntityMapper
-import com.nszalas.timefulness.repository.CategoryRepository
-import com.nszalas.timefulness.repository.AuthenticationRepository
-import com.nszalas.timefulness.repository.NotificationRepository
-import com.nszalas.timefulness.repository.TaskRepository
+import com.nszalas.timefulness.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,4 +48,18 @@ class RepositoryModule {
         schedulingDataSource: LocalSchedulingDataSource,
         notificationDataSource: LocalNotificationDataSource
     ) = NotificationRepository(schedulingDataSource, notificationDataSource)
+
+    @Provides
+    @Singleton
+    fun provideAdviceRepository(
+        adviceDao: AdviceDao,
+        adviceDomainMapper: AdviceDomainMapper
+    ) = AdviceRepository(adviceDao, adviceDomainMapper)
+
+    @Provides
+    @Singleton
+    fun provideTechniqueRepository(
+        techniqueDao: TechniqueDao,
+        techniqueDomainMapper: TechniqueDomainMapper
+    ) = TechniqueRepository(techniqueDao, techniqueDomainMapper)
 }
