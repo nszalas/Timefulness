@@ -38,6 +38,9 @@ class FragmentSignUp : Fragment() {
 
     private fun setupViews() {
         binding.signUpButton.setOnClickListener { signUp() }
+        binding.checkboxAccept.setOnCheckedChangeListener { _, checked ->
+            viewModel.onTacChecked(checked)
+        }
     }
 
     private fun onNewState(state: SignUpViewState) {

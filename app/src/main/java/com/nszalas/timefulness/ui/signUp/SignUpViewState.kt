@@ -1,7 +1,8 @@
 package com.nszalas.timefulness.ui.signUp
 
 data class SignUpViewState(
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val agreedToTAC: Boolean = false,
 )
 
 sealed class SignUpViewEvent {
