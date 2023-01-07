@@ -1,6 +1,7 @@
 package com.nszalas.timefulness.di
 
 import com.nszalas.timefulness.infrastructure.local.LocalNotificationDataSource
+import com.nszalas.timefulness.infrastructure.local.LocalPermissionsDataSource
 import com.nszalas.timefulness.infrastructure.local.LocalSchedulingDataSource
 import com.nszalas.timefulness.infrastructure.local.room.AdviceDao
 import com.nszalas.timefulness.infrastructure.local.room.CategoryDao
@@ -19,6 +20,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideApplicationSettingsRepository(
+        localPermissionsDataSource: LocalPermissionsDataSource
+    ) = ApplicationSettingsRepository(localPermissionsDataSource)
 
     @Provides
     @Singleton

@@ -15,4 +15,5 @@ data class ProfileViewState(
 sealed class ProfileViewEvent {
     object UserLoggedOut : ProfileViewEvent()
     data class Error(val message: String?) : ProfileViewEvent()
+    object MissingNotificationPermission : ProfileViewEvent()
 }

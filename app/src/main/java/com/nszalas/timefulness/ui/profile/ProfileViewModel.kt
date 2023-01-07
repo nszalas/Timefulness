@@ -25,6 +25,7 @@ class ProfileViewModel @Inject constructor(
     private val getTasksForDate: GetTasksForDateUseCase,
     private val getTasksForWeek: GetTasksForWeekUseCase,
     private val logoutUser: LogoutUserUseCase,
+    private val hasNotificationPermission: HasNotificationPermissionUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileViewState())
@@ -35,6 +36,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadCurrentUser()
+        checkNotificationPermission()
     }
 
     fun onRefresh() {
@@ -53,6 +55,14 @@ class ProfileViewModel @Inject constructor(
                 _event.trySend(ProfileViewEvent.Error(e.message))
             }
             _state.mutate { copy(isLoading = false) }
+        }
+    }
+
+    private fun checkNotificationPermission() {
+        viewModelScope.launch {
+            if(!hasNotificationPermission()) {
+                _event.trySend(ProfileViewEvent.MissingNotificationPermission)
+            }
         }
     }
 
