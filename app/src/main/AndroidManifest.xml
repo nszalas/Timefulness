@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".Application"
@@ -30,7 +31,8 @@
         </activity>
 
         <!-- alarm manager -->
-        <receiver android:name=".infrastructure.local.NotificationTaskReminderReceiver"
+        <receiver
+            android:name=".infrastructure.local.NotificationTaskReminderReceiver"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver">

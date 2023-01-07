@@ -21,7 +21,7 @@
 
     <string name="accept">Akceptuję warunki regulaminu korzystania z aplikacji Timefulness oraz
         zgadzam się na wszelkie zmiany w przyszłości. Rozumiem również że mam prawo odstąpienia
-        od umowy…</string>
+        od umowy oraz, że moje dane są przechowywane przez twórców aplikacji.</string>
 
     <string name="profile_welcome_message">Witaj %1$s!</string>
     <string name="profile_welcome_message_placeholder">Witaj Karolina!</string>

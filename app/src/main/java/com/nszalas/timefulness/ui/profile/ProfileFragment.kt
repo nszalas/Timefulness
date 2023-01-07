@@ -1,10 +1,13 @@
 package com.nszalas.timefulness.ui.profile
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,6 +27,15 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels()
     private val otherViewModel by activityViewModels<OtherViewModel>()
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                // todo permission granted
+            } else {
+                // todo permission denied
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,12 +83,16 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onNewEvent(event: ProfileViewEvent) {
-        when(event) {
+        when (event) {
             is ProfileViewEvent.Error -> event.message?.let { requireContext().showToast(it) }
             ProfileViewEvent.UserLoggedOut -> {
                 otherViewModel.onLogOut()
                 findNavController().popBackStack(R.id.fragmentStart, inclusive = false)
             }
+            ProfileViewEvent.MissingNotificationPermission ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
         }
     }
 }
