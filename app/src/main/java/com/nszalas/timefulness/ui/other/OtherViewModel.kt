@@ -87,16 +87,6 @@ class OtherViewModel @Inject constructor(
     }
 
     private fun loadTechniqueForToday() {
-//        val technique = TechniqueUI(
-//            title = "Przykładowa technika",
-//            description = """
-//                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-//                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-//                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-//                voluptate velit esse cillum dolore.
-//            """.trimIndent().replace("\n", "")
-//        )
         viewModelScope.launch {
             val technique = withContext(IO) { getTechniqueForToday() }
 
@@ -109,15 +99,6 @@ class OtherViewModel @Inject constructor(
     }
 
     private fun loadAdviceForToday() {
-//        val advice = AdviceUI(
-//            description = """
-//                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-//                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-//                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-//                voluptate velit esse cillum dolore.
-//            """.trimIndent().replace("\n", "")
-//        )
         viewModelScope.launch {
             val advice = withContext(IO) { getAdviceForToday() }
 
