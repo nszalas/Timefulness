@@ -3,8 +3,11 @@ package com.nszalas.timefulness.ui.other
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nszalas.timefulness.R
+import com.nszalas.timefulness.domain.model.NotificationData
 import com.nszalas.timefulness.domain.usecase.GetAdviceForTodayUseCase
 import com.nszalas.timefulness.domain.usecase.GetTechniqueForTodayUseCase
+import com.nszalas.timefulness.domain.usecase.SendNotificationUseCase
 import com.nszalas.timefulness.extensions.mutate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -20,6 +23,7 @@ import javax.inject.Inject
 class OtherViewModel @Inject constructor(
     private val getTechniqueForToday: GetTechniqueForTodayUseCase,
     private val getAdviceForToday: GetAdviceForTodayUseCase,
+    private val sendNotification: SendNotificationUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(OtherViewState())
     val state: StateFlow<OtherViewState> = _state.asStateFlow()
@@ -69,12 +73,23 @@ class OtherViewModel @Inject constructor(
                 }
 
                 override fun onFinish() {
+                    notifyUser()
                     _state.mutate {
                         copy(pomodoroStatus = PomodoroStatus.Stopped())
                     }
                 }
             }.start()
         }
+    }
+
+    private fun notifyUser() {
+        sendNotification(notificationData = NotificationData(
+            id = -1,
+            title = "Czas upłynął!",
+            body = "Pora zacząć kolejny etap Pomodoro!",
+            alternativeContent = null,
+            smallIconRes = R.drawable.ic_logo
+        ))
     }
 
     private fun initializePomodoro() {
