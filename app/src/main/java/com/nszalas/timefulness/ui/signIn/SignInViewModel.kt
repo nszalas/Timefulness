@@ -100,7 +100,6 @@ class SignInViewModel @Inject constructor(
             val account = task.getResult(ApiException::class.java)
             getCredentialFromAccount(account)
         } catch (e: ApiException) {
-            _event.trySend(SignInViewEvent.Error(e.message))
             null
         }
     }
@@ -111,8 +110,10 @@ class SignInViewModel @Inject constructor(
             try {
                 val email = state.value.email ?: return@launch
                 val password = state.value.password ?: return@launch
-                if(signIn(email, password).isSuccess) {
+                if (signIn(email, password).isSuccess) {
                     _event.trySend(SignInViewEvent.UserLoggedIn)
+                } else {
+                    _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
                 }
             } catch (e: Exception) {
                 _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
@@ -125,8 +126,10 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             _state.mutate { copy(isLoading = true) }
             try {
-                if(signInWithCredential(credential).isSuccess) {
+                if (signInWithCredential(credential).isSuccess) {
                     _event.trySend(SignInViewEvent.UserLoggedIn)
+                } else {
+                    _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
                 }
             } catch (e: Exception) {
                 _event.trySend(SignInViewEvent.Error(AuthenticationException().message))
