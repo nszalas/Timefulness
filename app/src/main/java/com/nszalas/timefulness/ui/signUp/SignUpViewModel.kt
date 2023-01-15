@@ -43,38 +43,43 @@ class SignUpViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             _state.mutate { copy(isLoading = true) }
-            when {
-                !validator.isEmailValid(email) -> {
-                    _event.trySend(SignUpViewEvent.Error(InvalidEmailException().message))
-                    _state.mutate { copy(isLoading = false) }
-                }
-                !validator.isPasswordValid(password, confirmPassword) -> {
-                    _event.trySend(SignUpViewEvent.Error(InvalidPasswordException().message))
-                    _state.mutate { copy(isLoading = false) }
-                }
-                !state.value.agreedToTAC -> {
-                    _event.trySend(SignUpViewEvent.Error(MissingTacException().message))
-                    _state.mutate { copy(isLoading = false) }
-                }
-                else -> {
-                    try {
-                        if (register(email, password).isSuccess) {
-                            if (setUserName(name).isSuccess) {
-                                _event.trySend(SignUpViewEvent.SignUpSuccess)
-                                _state.mutate { copy(isLoading = false) }
+            try {
+                when {
+                    !validator.isEmailValid(email) -> {
+                        _event.trySend(SignUpViewEvent.Error(InvalidEmailException().message))
+                        _state.mutate { copy(isLoading = false) }
+                    }
+                    !validator.isPasswordValid(password, confirmPassword) -> {
+                        _event.trySend(SignUpViewEvent.Error(InvalidPasswordException().message))
+                        _state.mutate { copy(isLoading = false) }
+                    }
+                    !state.value.agreedToTAC -> {
+                        _event.trySend(SignUpViewEvent.Error(MissingTacException().message))
+                        _state.mutate { copy(isLoading = false) }
+                    }
+                    else -> {
+                        try {
+                            if (register(email, password).isSuccess) {
+                                if (setUserName(name).isSuccess) {
+                                    _event.trySend(SignUpViewEvent.SignUpSuccess)
+                                    _state.mutate { copy(isLoading = false) }
+                                } else {
+                                    _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
+                                    _state.mutate { copy(isLoading = false) }
+                                }
                             } else {
                                 _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
                                 _state.mutate { copy(isLoading = false) }
                             }
-                        } else {
-                            _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
+                        } catch (e: Exception) {
                             _state.mutate { copy(isLoading = false) }
+                            _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
                         }
-                    } catch (e: Exception) {
-                        _state.mutate { copy(isLoading = false) }
-                        _event.trySend(SignUpViewEvent.Error(AuthenticationException().message))
                     }
                 }
+            } catch (e: Exception) {
+                _event.trySend(SignUpViewEvent.Error(e.message))
+                _state.mutate { copy(isLoading = false) }
             }
         }
     }
